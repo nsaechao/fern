@@ -41,4 +41,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     public getAsIsFiles(): string[] {
         return [AsIsFiles.StringEnum, AsIsFiles.OneOfJsonConverter];
     }
+
+    public getRootClientClassName(): string {
+        return this.customConfig["client-class-name"] ?? `${this.getNamespace()}Client`;
+    }
 }

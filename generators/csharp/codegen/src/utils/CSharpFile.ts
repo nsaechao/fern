@@ -2,7 +2,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import path from "path";
 import { Class, Enum } from "../ast";
-import { File } from "./File";
+import { GeneratedFile } from "./File";
 
 export declare namespace CSharpFile {
     interface Args {
@@ -13,7 +13,7 @@ export declare namespace CSharpFile {
     }
 }
 
-export class CSharpFile extends File {
+export class CSharpFile extends GeneratedFile {
     constructor({ clazz, directory }: CSharpFile.Args) {
         super(`${clazz.name}.cs`, directory, clazz.toString());
     }

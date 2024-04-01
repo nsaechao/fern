@@ -1,7 +1,7 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
 
-export class File {
+export class GeneratedFile {
     public filename: string;
     public directory: RelativeFilePath;
     public fileContents: string | Buffer;

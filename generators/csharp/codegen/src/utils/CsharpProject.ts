@@ -6,7 +6,7 @@ import path from "path";
 import { AsIsFiles } from "../AsIs";
 import { AbstractCsharpGeneratorContext, BaseCsharpCustomConfigSchema } from "../cli";
 import { CSharpFile } from "./CSharpFile";
-import { File } from "./File";
+import { GeneratedFile } from "./File";
 
 const SRC_DIRECTORY_NAME = "src";
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
@@ -16,14 +16,14 @@ const CORE_DIRECTORY_NAME = "_Core";
  */
 export class CsharpProject {
     private sourceFiles: CSharpFile[] = [];
-    private coreFiles: File[] = [];
+    private coreFiles: GeneratedFile[] = [];
 
     public constructor(
         private readonly context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
         private readonly name: string
     ) {}
 
-    public addCoreFiles(file: File): void {
+    public addCoreFiles(file: GeneratedFile): void {
         this.coreFiles.push(file);
     }
 
@@ -130,9 +130,9 @@ export class CsharpProject {
         return absolutePathToCoreDirectory;
     }
 
-    private async createCoreAsIsFile(filename: string): Promise<File> {
+    private async createCoreAsIsFile(filename: string): Promise<GeneratedFile> {
         const contents = (await readFile(getAsIsFilepath(AsIsFiles.StringEnum))).toString();
-        return new File(
+        return new GeneratedFile(
             filename,
             RelativeFilePath.of(""),
             `namespace ${this.context.getCoreNamespace()}            

@@ -1,18 +1,18 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import { Annotation, ClassReference } from "../ast";
-import { File } from "../utils/File";
+import { GeneratedFile } from "../utils/File";
 
 export class PrebuiltUtilities {
     private utilitiesDirectory = RelativeFilePath.of("Utilities");
     private namespace: string;
-    private files: File[] = [];
+    private files: GeneratedFile[] = [];
 
     constructor(parentNamespace: string) {
         this.namespace = parentNamespace + "." + this.utilitiesDirectory;
     }
 
-    public addFileToProject(file_: File): void {
+    public addFileToProject(file_: GeneratedFile): void {
         this.files.push(file_);
     }
 
@@ -21,7 +21,7 @@ export class PrebuiltUtilities {
         const asIsFilenames = ["EnumConverter.cs", "OneOfJsonConverter.cs", "StringEnum.cs"];
         asIsFilenames.forEach(async (filename) => {
             const contents = await readFile(filename);
-            this.files.push(new File(filename, this.utilitiesDirectory, contents));
+            this.files.push(new GeneratedFile(filename, this.utilitiesDirectory, contents));
         });
 
         // Write these and any custom registered files to the output directory
