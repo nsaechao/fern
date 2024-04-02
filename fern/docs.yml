@@ -11,6 +11,8 @@ instances:
 title: Fern | Documentation
 
 tabs:
+  home:
+    display-name: Home
   overview:
     display-name: Overview
   sdks:
@@ -24,12 +26,12 @@ tabs:
     slug: api
 
 navigation:
+  - tab: home
+    layout:
+      - page: Welcome
+        path: docs/pages/welcome.mdx
   - tab: overview
     layout:
-      - page: Introduction
-        path: ./docs/pages/overview/introduction.mdx
-      - page: Why Fern?
-        path: ./docs/pages/overview/why-fern.mdx
       - page: Get started
         path: ./docs/pages/overview/get-started.mdx
       - section: Define your API
