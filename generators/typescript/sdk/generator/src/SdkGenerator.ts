@@ -395,12 +395,16 @@ export class SdkGenerator {
                     JSON.stringify(this.endpointSnippetTemplates, undefined, 4)
                 );
                 if (this.FdrClient != null) {
-                    await this.FdrClient.templates.registerBatch({
-                        orgId: this.config.organization,
-                        apiId: this.config.apiName,
-                        apiDefinitionId: uuidv4(),
-                        snippets: this.endpointSnippetTemplates
-                    });
+                    try {
+                        await this.FdrClient.templates.registerBatch({
+                            orgId: this.config.organization,
+                            apiId: this.config.apiName,
+                            apiDefinitionId: uuidv4(),
+                            snippets: this.endpointSnippetTemplates
+                        });
+                    } catch (e) {
+                        this.context.logger.warn("Failed to register snippet templates with FDR, this is ok.");
+                    }
                 }
             }
             if (this.config.includeApiReference && refGenerator !== undefined) {
