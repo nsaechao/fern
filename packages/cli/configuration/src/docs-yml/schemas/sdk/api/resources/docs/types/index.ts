@@ -30,6 +30,7 @@ export * from "./FontConfigVariant";
 export * from "./PageConfiguration";
 export * from "./SectionConfiguration";
 export * from "./ApiSectionConfiguration";
+export * from "./ApiScrollingConfiguration";
 export * from "./ApiNavigationItem";
 export * from "./ApiNavigationItems";
 export * from "./LinkConfiguration";

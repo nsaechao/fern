@@ -20,6 +20,8 @@ export const ApiSectionConfiguration: core.serialization.ObjectSchema<
     icon: core.serialization.string().optional(),
     hidden: core.serialization.boolean().optional(),
     skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
+    scrolling: core.serialization.lazy(async () => (await import("../../..")).ApiScrollingConfiguration).optional(),
+    unwrapped: core.serialization.boolean().optional(),
 });
 
 export declare namespace ApiSectionConfiguration {
@@ -34,5 +36,7 @@ export declare namespace ApiSectionConfiguration {
         icon?: string | null;
         hidden?: boolean | null;
         "skip-slug"?: boolean | null;
+        scrolling?: serializers.ApiScrollingConfiguration.Raw | null;
+        unwrapped?: boolean | null;
     }
 }

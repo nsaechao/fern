@@ -19,4 +19,8 @@ export interface ApiSectionConfiguration {
     icon?: string;
     hidden?: boolean;
     skipSlug?: boolean;
+    /** If `scrolling` is set to `infinite`, you will be able to scroll between endpoints. If set to `paginated`, each endpoint will be self-contained, and you will need to click the next endpoint to view it. If not specified, the default is `infinite`. */
+    scrolling?: FernDocsConfig.ApiScrollingConfiguration;
+    /** If `unwrapped` is set to true, every endpoint will be viewable in the side-panel. Else, every endpoint will be default collapsed within each service. */
+    unwrapped?: boolean;
 }
