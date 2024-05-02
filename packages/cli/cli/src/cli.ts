@@ -317,6 +317,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     string: true,
                     description: "If multiple docs sites, specify the name with --docs <name>. Otherwise just --docs."
                 })
+                .option("changelog", {
+                    string: true,
+                    description: "Generate a changelog for the API"
+                })
                 .option("instance", {
                     string: true,
                     description: "The url for the instance of docs (e.g. --instance acme.docs.buildwithfern.com)"
@@ -390,6 +394,26 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     cliContext,
                     instance: argv.instance,
                     preview: argv.preview
+                });
+            }
+
+            if (argv.changelog != null) {
+                if (argv.group != null) {
+                    cliContext.logger.warn("--group is ignored when generating docs");
+                }
+                if (argv.version != null) {
+                    cliContext.logger.warn("--version is ignored when generating docs");
+                }
+                return await generateDocsWorkspace({
+                    project: await loadProjectAndRegisterWorkspacesWithContext(
+                        cliContext,
+                        {
+                            commandLineApiWorkspace: argv.api,
+                            defaultToAllApiWorkspaces: false,
+                        },
+                        true
+                    ),
+                    cliContext,
                 });
             }
             // default to loading api workspace to preserve legacy behavior
