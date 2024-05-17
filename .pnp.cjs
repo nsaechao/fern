@@ -6602,6 +6602,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-preview", "workspace:packages/cli/docs-preview"],\
             ["@fern-api/docs-resolver", "workspace:packages/cli/docs-resolver"],\
             ["@fern-api/fdr-sdk", "npm:0.94.3-b6c3996ce"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
             ["@fern-api/project-loader", "workspace:packages/cli/project-loader"],\
             ["@fern-api/register", "workspace:packages/cli/register"],\
@@ -6614,6 +6615,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@types/uuid", "npm:9.0.8"],\
             ["@types/ws", "npm:8.5.10"],\
+            ["chalk", "npm:5.3.0"],\
             ["cors", "npm:2.8.5"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
