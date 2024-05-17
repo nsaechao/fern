@@ -3,7 +3,10 @@ import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import cors from "cors";
 import express from "express";
+import path from "path";
 import { getPreviewDocsDefinition } from "./previewDocs";
+
+const PATH_TO_NEXT = "/Volumes/git/fern-platform/packages/ui/local-preview-bundle/out";
 
 export async function runPreviewServer({
     docsWorkspace,
@@ -34,6 +37,13 @@ export async function runPreviewServer({
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
         res.send(response);
     });
+
+    app.use("/_next", express.static(path.join(PATH_TO_NEXT, "_next")));
+
+    app.use("*", async (_req, res) => {
+        return res.sendFile(path.join(PATH_TO_NEXT, "[[...slug]].html"));
+    });
+
     app.listen(3000);
 
     context.logger.info("Running server on https://localhost:3000");
