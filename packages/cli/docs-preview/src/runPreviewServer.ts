@@ -96,7 +96,7 @@ export async function runPreviewServer({
 
     app.listen(3000);
 
-    context.logger.info("Running server on https://localhost:3000");
+    context.logger.info("Running server on http://localhost:3000");
 
     // await infiinitely
     // eslint-disable-next-line @typescript-eslint/no-empty-function
