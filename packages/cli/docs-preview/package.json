@@ -30,6 +30,7 @@
     "@fern-api/docs-resolver": "workspace:*",
     "@fern-api/fdr-sdk": "0.94.3-b6c3996ce",
     "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/project-loader": "workspace:^",
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
