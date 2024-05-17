@@ -13,11 +13,6 @@ import { getPreviewDocsDefinition } from "./previewDocs";
 
 const PATH_TO_NEXT = "/Volumes/git/fern-platform/packages/ui/local-preview-bundle/out";
 
-const debouncedGetPreviewDocsDefinition = debounce(getPreviewDocsDefinition, 300, {
-    leading: false,
-    trailing: true
-});
-
 export async function runPreviewServer({
     docsWorkspace,
     apiWorkspaces,
@@ -45,7 +40,7 @@ export async function runPreviewServer({
 
     const instance = new URL(wrapWithHttps(docsWorkspace.config.instances[0]?.url ?? "localhost:3000"));
 
-    let docsDefinition = getPreviewDocsDefinition({
+    const docsDefinition = getPreviewDocsDefinition({
         domain: instance.host,
         docsWorkspace,
         apiWorkspaces,
@@ -55,15 +50,12 @@ export async function runPreviewServer({
     const watcher = new Watcher(docsWorkspace.absoluteFilepath, { recursive: true, ignoreInitial: true });
     watcher.on("all", (_event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(`File ${targetPath} has changed. Reloading...`);
-        const promise = debouncedGetPreviewDocsDefinition({
+        const promise = getPreviewDocsDefinition({
             domain: instance.host,
             docsWorkspace,
             apiWorkspaces,
             context
         });
-        if (promise != null) {
-            docsDefinition = promise;
-        }
     });
 
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {
