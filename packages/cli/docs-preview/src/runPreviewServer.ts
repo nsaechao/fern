@@ -5,7 +5,6 @@ import { APIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import cors from "cors";
 import express from "express";
 import http from "http";
-import { debounce } from "lodash-es";
 import path from "path";
 import Watcher from "watcher";
 import { WebSocketServer, type WebSocket } from "ws";
@@ -40,7 +39,7 @@ export async function runPreviewServer({
 
     const instance = new URL(wrapWithHttps(docsWorkspace.config.instances[0]?.url ?? "localhost:3000"));
 
-    const docsDefinition = getPreviewDocsDefinition({
+    let docsDefinition = getPreviewDocsDefinition({
         domain: instance.host,
         docsWorkspace,
         apiWorkspaces,
@@ -50,11 +49,21 @@ export async function runPreviewServer({
     const watcher = new Watcher(docsWorkspace.absoluteFilepath, { recursive: true, ignoreInitial: true });
     watcher.on("all", (_event: string, targetPath: string, _targetPathNext: string) => {
         context.logger.info(`File ${targetPath} has changed. Reloading...`);
-        const promise = getPreviewDocsDefinition({
+        docsDefinition = getPreviewDocsDefinition({
             domain: instance.host,
             docsWorkspace,
             apiWorkspaces,
             context
+        });
+
+        void docsDefinition.then(() => {
+            for (const connection of connections) {
+                connection.send(
+                    JSON.stringify({
+                        reload: true
+                    })
+                );
+            }
         });
     });
 
