@@ -6615,7 +6615,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@types/uuid", "npm:9.0.8"],\
             ["@types/ws", "npm:8.5.10"],\
-            ["chalk", "npm:5.3.0"],\
+            ["chalk", "npm:5.0.1"],\
             ["cors", "npm:2.8.5"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
