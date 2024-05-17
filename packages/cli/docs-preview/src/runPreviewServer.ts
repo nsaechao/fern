@@ -47,7 +47,7 @@ export async function runPreviewServer({
     watch(docsWorkspace.absoluteFilepath, opts, (_event, path) => {
         const lock = ++updates;
         context.logger.info(`File ${path} has been changed. Reloading...`);
-        getPreviewDocsDefinition({
+        void getPreviewDocsDefinition({
             docsWorkspace,
             apiWorkspaces,
             context
