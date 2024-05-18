@@ -7458,6 +7458,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/tar", "npm:6.1.11"],\
             ["@types/terminal-link", "npm:1.2.0"],\
             ["axios", "npm:0.28.0"],\
+            ["blurhash", "npm:2.0.5"],\
             ["chalk", "npm:5.0.1"],\
             ["decompress", "npm:4.2.1"],\
             ["depcheck", "npm:1.4.6"],\
@@ -13034,6 +13035,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/bluebird-npm-3.7.2-6a54136ee3-869417503c.zip/node_modules/bluebird/",\
           "packageDependencies": [\
             ["bluebird", "npm:3.7.2"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["blurhash", [\
+        ["npm:2.0.5", {\
+          "packageLocation": "./.yarn/cache/blurhash-npm-2.0.5-7648719b71-aa4d6855bb.zip/node_modules/blurhash/",\
+          "packageDependencies": [\
+            ["blurhash", "npm:2.0.5"]\
           ],\
           "linkType": "HARD"\
         }]\
