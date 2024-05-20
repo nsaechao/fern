@@ -50,6 +50,8 @@ export function convertParameters({
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
         const generatedName = getGeneratedTypeName(parameterBreadcrumbs);
 
+        const example = getParameterExample({ parameter: resolvedParameter, context });
+
         let schema =
             resolvedParameter.schema != null
                 ? convertSchema(resolvedParameter.schema, !isRequired, context, parameterBreadcrumbs)
@@ -60,7 +62,7 @@ export function convertParameters({
                       schema: PrimitiveSchemaValueWithExample.string({
                           minLength: undefined,
                           maxLength: undefined,
-                          example: getExamplesString(resolvedParameter.example),
+                          example: example,
                           format: undefined
                       }),
                       description: undefined,
@@ -75,7 +77,7 @@ export function convertParameters({
                           schema: PrimitiveSchemaValueWithExample.string({
                               minLength: undefined,
                               maxLength: undefined,
-                              example: getExamplesString(resolvedParameter.example),
+                              example: example,
                               format: undefined
                           }),
                           description: undefined,
@@ -134,6 +136,26 @@ export function convertParameters({
         }
     }
     return convertedParameters;
+}
+
+function getParameterExample({
+    parameter,
+    context
+}: {
+    parameter: OpenAPIV3.ParameterObject;
+    context: AbstractOpenAPIV3ParserContext;
+}): string | undefined {
+    const example = parameter.example;
+    if (example != null && typeof example === "string") {
+        return example;
+    }
+    for (const [_, example] of Object.entries(parameter.examples ?? {})) {
+        const resolvedExample = isReferenceObject(example) ? context.resolveExampleReference(example) : example;
+        if (resolvedExample.value != null && typeof resolvedExample.value === "string") {
+            return resolvedExample.value;
+        }
+    }
+    return undefined;
 }
 
 const HEADERS_TO_SKIP = new Set([

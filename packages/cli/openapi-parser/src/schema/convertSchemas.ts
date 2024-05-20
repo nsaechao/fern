@@ -124,14 +124,24 @@ export function convertSchemaObject(
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
 
-    const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES);
     const fullExamples: NamedFullExample[] = [];
     if (schema.example != null) {
         fullExamples.push({ name: undefined, value: schema.example, description: undefined });
     }
+    
+    const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, "examples");
     if (examples != null && Object.keys(examples).length > 0) {
         fullExamples.push(
             ...Object.entries(examples).map(([name, value]) => {
+                return { name: value.summary ?? name, value: value.value, description: value.description };
+            })
+        );
+    }
+
+    const xExamples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES);
+    if (xExamples != null && Object.keys(xExamples).length > 0) {
+        fullExamples.push(
+            ...Object.entries(xExamples).map(([name, value]) => {
                 return { name: value.summary ?? name, value: value.value, description: value.description };
             })
         );
