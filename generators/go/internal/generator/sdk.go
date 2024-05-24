@@ -1562,22 +1562,33 @@ func newGeneratedEndpoint(
 	example *ir.ExampleEndpointCall,
 ) *GeneratedEndpoint {
 	// TODO: Make this an assignment statement, then follow up with a defer cancel().
+	endpointCall := newEndpointSnippet(
+		f,
+		fernFilepath,
+		endpoint,
+		example,
+		nil,
+		nil,
+		nil,
+	)
 	return &GeneratedEndpoint{
 		Identifier: endpointToIdentifier(endpoint),
 		Usage: newEndpointSnippet(
 			f,
 			fernFilepath,
-			rootClientInstantiation,
 			endpoint,
 			example,
+			rootClientInstantiation,
+			nil,
 			nil,
 		),
 		Timeout: newEndpointSnippet(
 			f,
 			fernFilepath,
-			createContextWithTimeout(),
 			endpoint,
 			example,
+			createContextWithTimeout(),
+			nil,
 			nil,
 		),
 	}
@@ -1656,9 +1667,10 @@ func irMethodToGeneratorExecMethod(method ir.HttpMethod) generatorexec.EndpointM
 func newEndpointSnippet(
 	f *fileWriter,
 	fernFilepath *ir.FernFilepath,
-	setup ast.Expr,
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
+	setup ast.Expr,
+	finish ast.Expr,
 	extraParameters []ast.Expr,
 ) *ast.Block {
 	methodName := getEndpointMethodName(fernFilepath, endpoint)
@@ -1703,6 +1715,9 @@ func newEndpointSnippet(
 	}
 	if setup != nil {
 		exprs = append([]ast.Expr{setup}, exprs...)
+	}
+	if finish != nil {
+		exprs = append(exprs, finish)
 	}
 	return &ast.Block{
 		Exprs: exprs,
