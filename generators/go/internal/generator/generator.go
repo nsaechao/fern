@@ -740,6 +740,13 @@ func maybeWriteSnippets(
 	if len(generatedClient.Endpoints) == 0 {
 		return nil
 	}
+	generatedClientEndpoints := generatedClient.Endpoints
+	sort.Slice(
+		generatedClientEndpoints,
+		func(i, j int) bool {
+			return generatedEndpointToString(generatedClientEndpoints[i]) < generatedEndpointToString(generatedClientEndpoints[j])
+		},
+	)
 	var endpoints []*generatorexec.Endpoint
 	for _, generatedEndpoint := range generatedClient.Endpoints {
 		client, err := ast.NewSourceCodeBuilder(generatedEndpoint.Usage).BuildSnippet()
@@ -769,13 +776,6 @@ func maybeWriteSnippets(
 			},
 		)
 	}
-	// Sort the endpoints for deterministic results.
-	sort.Slice(
-		endpoints,
-		func(i, j int) bool {
-			return generatorexecEndpointSnippetToString(endpoints[i]) < generatorexecEndpointSnippetToString(endpoints[j])
-		},
-	)
 	snippets := &generatorexec.Snippets{
 		Types:     make(map[ir.TypeId]string),
 		Endpoints: endpoints,
@@ -1476,24 +1476,21 @@ func getRootPackageName(ir *fernir.IntermediateRepresentation, packageNameOverri
 	return strings.ToLower(ir.ApiName.CamelCase.SafeName)
 }
 
-// generatorexecEndpointSnippetToString returns the string representation of the given
+// generatedEndpointToString returns the string representation of the given
 // endpoint snippet.
-//
-// It isn't enough to sort based on the endpoint path and method along (there can be duplicates),
-// so we include the snippet's content to disambiguate.
-func generatorexecEndpointSnippetToString(endpointSnippet *generatorexec.Endpoint) string {
-	if endpointSnippet == nil || endpointSnippet.Id == nil {
+func generatedEndpointToString(generatedEndpoint *GeneratedEndpoint) string {
+	if generatedEndpoint == nil || generatedEndpoint.Identifier == nil {
 		return ""
 	}
-	var goSnippet string
-	if endpointSnippet.Snippet != nil && endpointSnippet.Snippet.Go != nil {
-		goSnippet = endpointSnippet.Snippet.Go.Client
+	var identifier string
+	if generatedEndpoint.Identifier.IdentifierOverride != nil {
+		identifier = *generatedEndpoint.Identifier.IdentifierOverride
 	}
 	return fmt.Sprintf(
 		"%s.%s.%s",
-		endpointSnippet.Id.Path,
-		endpointSnippet.Id.Method,
-		goSnippet,
+		generatedEndpoint.Identifier.Path,
+		generatedEndpoint.Identifier.Method,
+		identifier,
 	)
 }
 
