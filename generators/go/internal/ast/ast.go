@@ -10,6 +10,18 @@ type Expr interface {
 	WriteTo(*Writer)
 }
 
+// Code is a freeform code snippet, which is assumed to be a valid Go expression.
+// This makes it easier to construct static snippets of code.
+type Code struct {
+	Raw string
+}
+
+func (c *Code) isExpr() {}
+
+func (c *Code) WriteTo(w *Writer) {
+	w.Write(c.Raw)
+}
+
 // Block represents multiple expressions in a newline-delimited block of code, e.g.
 //
 //	foo := NewFoo()

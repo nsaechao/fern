@@ -1562,23 +1562,36 @@ func newGeneratedEndpoint(
 	example *ir.ExampleEndpointCall,
 ) *GeneratedEndpoint {
 	// TODO: Make this an assignment statement, then follow up with a defer cancel().
-	createTimeoutContext := &ast.CallExpr{
-		FunctionName: &ast.ImportedReference{
-			ImportPath: "context",
-			Name:       "WithTimeout",
+	createTimeoutContext := &ast.AssignStmt{
+		Left: []ast.Expr{
+			&ast.LocalReference{
+				Name: "ctx",
+			},
+			&ast.LocalReference{
+				Name: "cancel",
+			},
 		},
-		Parameters: []ast.Expr{
+		Right: []ast.Expr{
 			&ast.CallExpr{
-				FunctionName: &ast.ImportedReference{
-					ImportPath: "context",
-					Name:       "Background",
+					FunctionName: &ast.ImportedReference{
+						ImportPath: "context",
+						Name:       "WithTimeout",
+					},
+					Parameters: []ast.Expr{
+						&ast.CallExpr{
+							FunctionName: &ast.ImportedReference{
+								ImportPath: "context",
+								Name:       "Background",
+							},
+						},
+						&ast.ImportedReference{
+							ImportPath: "time",
+							Name:       "Second",
+						},
+					},
 				},
 			},
-			&ast.ImportedReference{
-				ImportPath: "time",
-				Name:       "Second",
-			},
-		},
+		}
 	}
 	endpointCall := newEndpointSnippet(
 		f,
