@@ -4,6 +4,13 @@ dockerCommand: docker build -f ./generators/go/docker/Dockerfile.sdk -t fernapi/
 language: go
 generatorType: sdk
 defaultOutputMode: github
+local: 
+  workingDirectory: generators/go
+  buildCommand: 
+    - go build ./...
+  runCommand: go run ./cmd/fern-go-sdk/main.go
+  env: 
+    NODE_ENV: test
 fixtures:
   undiscriminated-unions:
     - outputFolder: .
