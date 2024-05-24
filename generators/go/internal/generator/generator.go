@@ -3,7 +3,6 @@ package generator
 import (
 	_ "embed"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"os"
 	"path/filepath"
@@ -749,13 +748,13 @@ func maybeWriteSnippets(
 		},
 	)
 	// TODO: Clean this up.
-	var endpoints []*generatorexec.Endpoint
-	features := map[string]*generatorexec.Feature{
-		"errors":         new(generatorexec.Feature),
-		"requestoptions": new(generatorexec.Feature),
-		"timeouts":       new(generatorexec.Feature),
-		"optionals":      new(generatorexec.Feature),
-	}
+	var (
+		endpoints      []*generatorexec.Endpoint
+		errors         []*generatorexec.Endpoint
+		requestOptions []*generatorexec.Endpoint
+		timeouts       []*generatorexec.Endpoint
+		optionals      []*generatorexec.Endpoint
+	)
 	for _, generatedEndpoint := range generatedClient.Endpoints {
 		usage := buildEndpoint(
 			coordinator,
@@ -765,87 +764,72 @@ func maybeWriteSnippets(
 		endpoints = append(endpoints, usage)
 
 		if generatedEndpoint.Error != nil {
-			snippet, err := endpointToFeatureSnippet(
+			errors = append(
+				errors,
 				buildEndpoint(
 					coordinator,
 					generatedEndpoint.Identifier,
 					generatedEndpoint.Error,
 				),
 			)
-			if err != nil {
-				// TODO: Log a warning.
-				fmt.Println(err.Error())
-			}
-			features["errors"].Snippets = append(features["errors"].Snippets, snippet)
 		}
 
 		if generatedEndpoint.RequestOption != nil {
-			snippet, err := endpointToFeatureSnippet(
+			requestOptions = append(
+				requestOptions,
 				buildEndpoint(
 					coordinator,
 					generatedEndpoint.Identifier,
 					generatedEndpoint.RequestOption,
 				),
 			)
-			if err != nil {
-				// TODO: Log a warning.
-				fmt.Println(err.Error())
-			}
-			features["requestoptions"].Snippets = append(features["requestoptions"].Snippets, snippet)
 		}
 
 		if generatedEndpoint.Timeout != nil {
-			snippet, err := endpointToFeatureSnippet(
+			timeouts = append(
+				timeouts,
 				buildEndpoint(
 					coordinator,
 					generatedEndpoint.Identifier,
 					generatedEndpoint.Timeout,
 				),
 			)
-			if err != nil {
-				// TODO: Log a warning.
-				fmt.Println(err.Error())
-			}
-			features["timeouts"].Snippets = append(features["timeouts"].Snippets, snippet)
 		}
 
 		if generatedEndpoint.Optional != nil {
-			snippet, err := endpointToFeatureSnippet(
+			optionals = append(
+				optionals,
 				buildEndpoint(
 					coordinator,
 					generatedEndpoint.Identifier,
 					generatedEndpoint.Optional,
 				),
 			)
-			if err != nil {
-				// TODO: Log a warning.
-				fmt.Println(err.Error())
-			}
-			features["optionals"].Snippets = append(features["optionals"].Snippets, snippet)
 		}
+	}
+	features := make(map[string][]*generatorexec.Endpoint)
+	if len(errors) > 0 {
+		features["errors"] = errors
+	}
+	if len(requestOptions) > 0 {
+		features["requestoptions"] = requestOptions
+	}
+	if len(timeouts) > 0 {
+		features["timeouts"] = timeouts
+	}
+	if len(optionals) > 0 {
+		features["optionals"] = optionals
 	}
 	snippets := &generatorexec.Snippets{
 		Types:     make(map[ir.TypeId]string),
 		Endpoints: endpoints,
-		Features: &generatorexec.Features{
-			Unknown: features,
-		},
+		Features:  features,
 	}
 	bytes, err := json.MarshalIndent(snippets, "", "    ")
 	if err != nil {
 		return err
 	}
 	return os.WriteFile(snippetFilepath, bytes, 0644)
-}
-
-func endpointToFeatureSnippet(endpoint *generatorexec.Endpoint) (*generatorexec.FeatureSnippet, error) {
-	if endpoint.Id == nil || endpoint.Id.IdentifierOverride == nil {
-		return nil, errors.New("cannot map to feature snippet without an endpoint ID")
-	}
-	return &generatorexec.FeatureSnippet{
-		EndpointId: *endpoint.Id.IdentifierOverride,
-		Snippet:    endpoint.Snippet,
-	}, nil
 }
 
 func buildEndpoint(
