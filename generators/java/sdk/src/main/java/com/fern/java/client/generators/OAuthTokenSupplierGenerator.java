@@ -38,7 +38,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
 public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
@@ -106,10 +105,6 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .getName()
                 .getCamelCase()
                 .getUnsafeName();
-        List<GeneratedObject> generatedObjects = generatedFiles.stream()
-                .filter(file -> file instanceof GeneratedObject)
-                .map(file -> (GeneratedObject) file)
-                .collect(Collectors.toList());
 
         // builder order
         SdkRequest tokenSdkRequest = httpEndpoint
@@ -126,7 +121,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         .get();
                 ClassName className =
                         clientGeneratorContext.getPoetClassNameFactory().getTypeClassName(declaredTypeName);
-                return generatedObjects.stream()
+                return generatedFiles.stream()
+                        .filter(file -> file instanceof GeneratedObject)
+                        .map(file -> (GeneratedObject) file)
                         .filter(generatedObject ->
                                 generatedObject.getClassName().equals(className))
                         .findFirst()
