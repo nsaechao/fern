@@ -30,7 +30,7 @@ features:
       using the standard `context` library. Setting a one second timeout
       for an individual API call looks like the following:
 
-  - name: requestOptions
+  - name: requestoptions
     description: |
       A variety of request options are included to adapt the behavior of the library,
       which includes configuring authorization tokens, or providing your own instrumented

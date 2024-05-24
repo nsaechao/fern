@@ -809,7 +809,14 @@ type GeneratedClient struct {
 
 type GeneratedEndpoint struct {
 	Identifier *generatorexec.EndpointIdentifier
-	Snippet    ast.Expr
+	Usage      ast.Expr
+
+	// Features supported by the generator. These values are
+	// only non-nil if this endpoint supports this feature.
+	Error            ast.Expr
+	RequestOption    ast.Expr
+	Timeout          ast.Expr
+	IncludesOptional bool
 }
 
 // WriteClient writes a client for interacting with the given service.
@@ -1554,14 +1561,39 @@ func newGeneratedEndpoint(
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
 ) *GeneratedEndpoint {
+	endpointCall := newEndpointSnippet(
+		f,
+		fernFilepath,
+		rootClientInstantiation,
+		endpoint,
+		example,
+		nil,
+	)
+
 	return &GeneratedEndpoint{
 		Identifier: endpointToIdentifier(endpoint),
-		Snippet: newEndpointSnippet(
-			f,
-			fernFilepath,
-			rootClientInstantiation,
-			endpoint,
-			example,
+		Usage:      endpointCall,
+	}
+}
+
+func newErrorSnippet(
+	endpointCall *ast.Block,
+	endpoint *ir.HttpEndpoint,
+	responseErrors []*ir.ResponseError,
+) *ast.Block {
+	// TODO: We need to generate the following:
+	//
+	//  if err != nil {
+	//    var badRequestError *acme.BadRequestError
+	//    if errors.As(err, badRequestError) {
+	//      // Handle the error.
+	//    }
+	//    return nil, err
+	//  }
+	return &ast.Block{
+		Exprs: append(
+			endpointCall.Exprs,
+			nil,
 		),
 	}
 }
@@ -1610,6 +1642,7 @@ func newEndpointSnippet(
 	rootClientInstantiation *ast.AssignStmt,
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
+	extraParameters []ast.Expr,
 ) *ast.Block {
 	methodName := getEndpointMethodName(fernFilepath, endpoint)
 	parameters := getEndpointParameters(
@@ -1618,6 +1651,9 @@ func newEndpointSnippet(
 		endpoint,
 		example,
 	)
+	if len(extraParameters) > 0 {
+		parameters = append(parameters, extraParameters...)
+	}
 	call := &ast.CallExpr{
 		FunctionName: &ast.LocalReference{
 			Name: fmt.Sprintf("client.%s", methodName),

@@ -742,7 +742,7 @@ func maybeWriteSnippets(
 	}
 	var endpoints []*generatorexec.Endpoint
 	for _, generatedEndpoint := range generatedClient.Endpoints {
-		client, err := ast.NewSourceCodeBuilder(generatedEndpoint.Snippet).BuildSnippet()
+		client, err := ast.NewSourceCodeBuilder(generatedEndpoint.Usage).BuildSnippet()
 		if err != nil {
 			// Log the warning and continue. We don't want to fail generation just
 			// because there's a bug in the snippet generator.
