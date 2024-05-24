@@ -1561,6 +1561,25 @@ func newGeneratedEndpoint(
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
 ) *GeneratedEndpoint {
+	// TODO: Make this an assignment statement, then follow up with a defer cancel().
+	createTimeoutContext := &ast.CallExpr{
+		FunctionName: &ast.ImportedReference{
+			ImportPath: "context",
+			Name:       "WithTimeout",
+		},
+		Parameters: []ast.Expr{
+			&ast.CallExpr{
+				FunctionName: &ast.ImportedReference{
+					ImportPath: "context",
+					Name:       "Background",
+				},
+			},
+			&ast.ImportedReference{
+				ImportPath: "time",
+				Name:       "Second",
+			},
+		},
+	}
 	endpointCall := newEndpointSnippet(
 		f,
 		fernFilepath,
@@ -1569,7 +1588,6 @@ func newGeneratedEndpoint(
 		example,
 		nil,
 	)
-
 	return &GeneratedEndpoint{
 		Identifier: endpointToIdentifier(endpoint),
 		Usage:      endpointCall,
@@ -1714,11 +1732,8 @@ func getEndpointParameters(
 	example *ir.ExampleEndpointCall,
 ) []ast.Expr {
 	parameters := []ast.Expr{
-		&ast.CallExpr{
-			FunctionName: &ast.ImportedReference{
-				Name:       "TODO",
-				ImportPath: "context",
-			},
+		&ast.LocalReference{
+			Name: "ctx",
 		},
 	}
 
