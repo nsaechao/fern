@@ -9,15 +9,21 @@ import com.fern.irV42.model.http.HttpResponse;
 import com.fern.irV42.model.http.HttpService;
 import com.fern.irV42.model.http.JsonResponseBody;
 import com.fern.irV42.model.http.ResponseProperty;
+import com.fern.irV42.model.http.SdkRequest;
 import com.fern.irV42.model.http.SdkRequestBodyType;
 import com.fern.irV42.model.http.SdkRequestShape.Visitor;
 import com.fern.irV42.model.http.SdkRequestWrapper;
 import com.fern.irV42.model.ir.Subpackage;
+import com.fern.irV42.model.types.DeclaredTypeName;
 import com.fern.irV42.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
+import com.fern.java.client.GeneratedWrappedRequest;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
 import com.fern.java.generators.AbstractFileGenerator;
+import com.fern.java.output.AbstractGeneratedJavaFile.BuilderProperty;
+import com.fern.java.output.GeneratedFile;
 import com.fern.java.output.GeneratedJavaFile;
+import com.fern.java.output.GeneratedObject;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
@@ -29,8 +35,10 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeSpec.Builder;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
 public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
@@ -50,14 +58,18 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
     private final OAuthClientCredentials clientCredentials;
     private final ClientGeneratorContext clientGeneratorContext;
+    private final List<GeneratedFile> generatedFiles;
 
     public OAuthTokenSupplierGenerator(
-            ClientGeneratorContext clientGeneratorContext, OAuthClientCredentials clientCredentials) {
+            ClientGeneratorContext clientGeneratorContext,
+            OAuthClientCredentials clientCredentials,
+            List<GeneratedFile> generatedFiles) {
         super(
                 clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("OAuthTokenSupplier"),
                 clientGeneratorContext);
         this.clientCredentials = clientCredentials;
         this.clientGeneratorContext = clientGeneratorContext;
+        this.generatedFiles = generatedFiles;
     }
 
     @Override
@@ -79,6 +91,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 clientGeneratorContext.getPoetClassNameFactory().getClientClassName(subpackage);
         OAuthAccessTokenRequestProperties requestProperties =
                 clientCredentials.getTokenEndpoint().getRequestProperties();
+
         String clientIdPropertyName = requestProperties
                 .getClientId()
                 .getProperty()
@@ -93,6 +106,57 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .getName()
                 .getCamelCase()
                 .getUnsafeName();
+        List<GeneratedObject> generatedObjects = generatedFiles.stream()
+                .filter(file -> file instanceof GeneratedObject)
+                .map(file -> (GeneratedObject) file)
+                .collect(Collectors.toList());
+
+        // builder order
+        SdkRequest tokenSdkRequest = httpEndpoint
+                .getSdkRequest()
+                .orElseThrow(() -> new RuntimeException("Unexpected no SDK request in token endpoint"));
+        List<BuilderProperty> builderProperties = tokenSdkRequest.getShape().visit(new Visitor<>() {
+            @Override
+            public List<BuilderProperty> visitJustRequestBody(SdkRequestBodyType justRequestBody) {
+                DeclaredTypeName declaredTypeName = justRequestBody
+                        .getTypeReference()
+                        .get()
+                        .getRequestBodyType()
+                        .getNamed()
+                        .get();
+                ClassName className =
+                        clientGeneratorContext.getPoetClassNameFactory().getTypeClassName(declaredTypeName);
+                return generatedObjects.stream()
+                        .filter(generatedObject ->
+                                generatedObject.getClassName().equals(className))
+                        .findFirst()
+                        .get()
+                        .orderedBuilderProperties();
+            }
+
+            @Override
+            public List<BuilderProperty> visitWrapper(SdkRequestWrapper wrapper) {
+                ClassName className = clientGeneratorContext
+                        .getPoetClassNameFactory()
+                        .getRequestWrapperBodyClassName(httpService, wrapper);
+                return generatedFiles.stream()
+                        .filter(file -> file instanceof GeneratedWrappedRequest)
+                        .map(file -> (GeneratedWrappedRequest) file)
+                        .filter(generatedWrappedRequest ->
+                                generatedWrappedRequest.getClassName().equals(className))
+                        .findFirst()
+                        .get()
+                        .orderedBuilderProperties();
+            }
+
+            @Override
+            public List<BuilderProperty> _visitUnknown(Object unknownType) {
+                return null;
+            }
+        });
+
+        // todo: use builder properties to know builder order
+
         TypeName fetchTokenRequestType = getFetchTokenRequestType(httpEndpoint, httpService);
         // todo: handle other response types
         HttpResponse tokenHttpResponse = httpEndpoint.getResponse().get();

@@ -105,7 +105,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
         }
     }
 
-    private final List<GeneratedFile> generatedFiles = new ArrayList<>();
+    protected final List<GeneratedFile> generatedFiles = new ArrayList<>();
 
     private Path outputDirectory = null;
 

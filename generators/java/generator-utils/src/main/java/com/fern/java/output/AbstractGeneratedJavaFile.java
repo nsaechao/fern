@@ -1,5 +1,6 @@
 package com.fern.java.output;
 
+import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaFileWriter;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
@@ -7,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
+import org.immutables.value.Value;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,5 +57,17 @@ public abstract class AbstractGeneratedJavaFile extends GeneratedFile {
                     .resolve(javaFile().typeSpec.name + ".java");
         }
         JavaFileWriter.write(filepath, javaFile().toString());
+    }
+
+    @Value.Immutable
+    @StagedBuilderImmutablesStyle
+    public interface BuilderProperty {
+        String wireValue();
+
+        String propertyValue();
+
+        static ImmutableBuilderProperty.WireValueBuildStage builder() {
+            return ImmutableBuilderProperty.builder();
+        }
     }
 }

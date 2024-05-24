@@ -19,6 +19,8 @@ public abstract class GeneratedWrappedRequest extends AbstractGeneratedJavaFile 
 
     public abstract Optional<RequestBodyGetter> requestBodyGetter();
 
+    public abstract List<BuilderProperty> orderedBuilderProperties();
+
     public static ImmutableGeneratedWrappedRequest.ClassNameBuildStage builder() {
         return ImmutableGeneratedWrappedRequest.builder();
     }

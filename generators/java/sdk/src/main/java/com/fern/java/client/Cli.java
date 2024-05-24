@@ -203,16 +203,6 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .flatMap(Optional::stream)
                 .findFirst();
 
-        Optional<GeneratedJavaFile> generatedOAuthTokenSupplier =
-                maybeOAuthScheme.map(it -> new OAuthTokenSupplierGenerator(
-                                context,
-                                it.getConfiguration()
-                                        .getClientCredentials()
-                                        .orElseThrow(() ->
-                                                new RuntimeException("Only client credentials oAuth scheme supported")))
-                        .generateFile());
-        generatedOAuthTokenSupplier.ifPresent(this::addGeneratedFile);
-
         // subpackage clients
         ir.getSubpackages().values().forEach(subpackage -> {
             if (!subpackage.getHasEndpointsInTree()) {
@@ -232,6 +222,17 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             this.addGeneratedFile(generatedClient);
             generatedClient.wrappedRequests().forEach(this::addGeneratedFile);
         });
+
+        Optional<GeneratedJavaFile> generatedOAuthTokenSupplier =
+                maybeOAuthScheme.map(it -> new OAuthTokenSupplierGenerator(
+                                context,
+                                it.getConfiguration()
+                                        .getClientCredentials()
+                                        .orElseThrow(() ->
+                                                new RuntimeException("Only client credentials oAuth scheme supported")),
+                                generatedFiles)
+                        .generateFile());
+        generatedOAuthTokenSupplier.ifPresent(this::addGeneratedFile);
 
         // root client
         RootClientGenerator rootClientGenerator = new RootClientGenerator(

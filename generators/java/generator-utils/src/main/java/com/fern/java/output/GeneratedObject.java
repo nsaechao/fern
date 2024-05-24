@@ -31,6 +31,8 @@ public abstract class GeneratedObject extends AbstractGeneratedJavaFile {
 
     public abstract List<EnrichedObjectProperty> extendedObjectPropertyGetters();
 
+    public abstract List<BuilderProperty> orderedBuilderProperties();
+
     public static ImmutableGeneratedObject.ClassNameBuildStage builder() {
         return ImmutableGeneratedObject.builder();
     }
