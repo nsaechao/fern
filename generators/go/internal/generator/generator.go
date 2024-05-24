@@ -839,7 +839,7 @@ func maybeWriteSnippets(
 }
 
 func endpointToFeatureSnippet(endpoint *generatorexec.Endpoint) (*generatorexec.FeatureSnippet, error) {
-	if endpoint.ExampleIdentifier == nil || endpoint.Id.IdentifierOverride == nil {
+	if endpoint.Id == nil || endpoint.Id.IdentifierOverride == nil {
 		return nil, errors.New("cannot map to feature snippet without an endpoint ID")
 	}
 	return &generatorexec.FeatureSnippet{
