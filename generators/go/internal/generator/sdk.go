@@ -1562,48 +1562,34 @@ func newGeneratedEndpoint(
 	example *ir.ExampleEndpointCall,
 ) *GeneratedEndpoint {
 	// TODO: Make this an assignment statement, then follow up with a defer cancel().
-	createTimeoutContext := &ast.AssignStmt{
-		Left: []ast.Expr{
-			&ast.LocalReference{
-				Name: "ctx",
-			},
-			&ast.LocalReference{
-				Name: "cancel",
-			},
-		},
-		Right: []ast.Expr{
-			&ast.CallExpr{
-					FunctionName: &ast.ImportedReference{
-						ImportPath: "context",
-						Name:       "WithTimeout",
-					},
-					Parameters: []ast.Expr{
-						&ast.CallExpr{
-							FunctionName: &ast.ImportedReference{
-								ImportPath: "context",
-								Name:       "Background",
-							},
-						},
-						&ast.ImportedReference{
-							ImportPath: "time",
-							Name:       "Second",
-						},
-					},
-				},
-			},
-		}
-	}
-	endpointCall := newEndpointSnippet(
-		f,
-		fernFilepath,
-		rootClientInstantiation,
-		endpoint,
-		example,
-		nil,
-	)
 	return &GeneratedEndpoint{
 		Identifier: endpointToIdentifier(endpoint),
-		Usage:      endpointCall,
+		Usage: newEndpointSnippet(
+			f,
+			fernFilepath,
+			rootClientInstantiation,
+			endpoint,
+			example,
+			nil,
+		),
+		Timeout: newEndpointSnippet(
+			f,
+			fernFilepath,
+			createContextWithTimeout(),
+			endpoint,
+			example,
+			nil,
+		),
+	}
+}
+
+func createContextWithTimeout() ast.Expr {
+	return &ast.Code{
+		Raw: `
+ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+defer cancel()
+
+`,
 	}
 }
 
@@ -1670,7 +1656,7 @@ func irMethodToGeneratorExecMethod(method ir.HttpMethod) generatorexec.EndpointM
 func newEndpointSnippet(
 	f *fileWriter,
 	fernFilepath *ir.FernFilepath,
-	rootClientInstantiation *ast.AssignStmt,
+	setup ast.Expr,
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
 	extraParameters []ast.Expr,
@@ -1712,11 +1698,14 @@ func newEndpointSnippet(
 			call,
 		},
 	}
+	exprs := []ast.Expr{
+		endpointCall,
+	}
+	if setup != nil {
+		exprs = append([]ast.Expr{setup}, exprs...)
+	}
 	return &ast.Block{
-		Exprs: []ast.Expr{
-			rootClientInstantiation,
-			endpointCall,
-		},
+		Exprs: exprs,
 	}
 }
 
