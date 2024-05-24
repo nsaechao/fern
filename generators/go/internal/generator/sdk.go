@@ -1605,24 +1605,19 @@ defer cancel()
 }
 
 func newErrorSnippet(
-	endpointCall *ast.Block,
 	endpoint *ir.HttpEndpoint,
 	responseErrors []*ir.ResponseError,
-) *ast.Block {
-	// TODO: We need to generate the following:
-	//
-	//  if err != nil {
-	//    var badRequestError *acme.BadRequestError
-	//    if errors.As(err, badRequestError) {
-	//      // Handle the error.
-	//    }
-	//    return nil, err
-	//  }
-	return &ast.Block{
-		Exprs: append(
-			endpointCall.Exprs,
-			nil,
-		),
+) ast.Expr {
+	return &ast.Code{
+		Raw: `
+    if err != nil {
+		var apiError *core.APIError
+		if errors.As(err, &apiError) {
+			// Handle the error.
+		}
+		return nil, err
+	}
+`,
 	}
 }
 
