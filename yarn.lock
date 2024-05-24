@@ -3402,6 +3402,7 @@ __metadata:
     "@fern-api/yaml-migrations": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.552
+    "@fern-fern/generator-cli-sdk": ^0.0.6
     "@types/axios": ^0.14.0
     "@types/boxen": ^3.0.1
     "@types/get-port": ^4.2.0
@@ -4722,6 +4723,13 @@ __metadata:
     qs: 6.11.2
     url-join: 4.0.1
   checksum: 06e7d52bfa4daf19cfd77c4d3605ad44f1b89da41ee09e3ec0d6b2cbb3680469faf37db46d0086dd1dba0e2bed75a7209df7ee9b98d153251ede76d17a90dc8c
+  languageName: node
+  linkType: hard
+
+"@fern-fern/generator-cli-sdk@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@fern-fern/generator-cli-sdk@npm:0.0.6"
+  checksum: ecb0e76ca79ccff0f6ca159279a22e090a5aef80c9000cee96aeedaa949f00ac65f87527f29218bec14dae4fda5af7bd13c59ab24e923f36ade39d9c0508734c
   languageName: node
   linkType: hard
 
