@@ -813,10 +813,10 @@ type GeneratedEndpoint struct {
 
 	// Features supported by the generator. These values are
 	// only non-nil if this endpoint supports this feature.
-	Error            ast.Expr
-	RequestOption    ast.Expr
-	Timeout          ast.Expr
-	IncludesOptional bool
+	Error         ast.Expr
+	RequestOption ast.Expr
+	Timeout       ast.Expr
+	Optional      ast.Expr
 }
 
 // WriteClient writes a client for interacting with the given service.
@@ -1561,16 +1561,19 @@ func newGeneratedEndpoint(
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
 ) *GeneratedEndpoint {
-	// TODO: Make this an assignment statement, then follow up with a defer cancel().
-	endpointCall := newEndpointSnippet(
-		f,
-		fernFilepath,
-		endpoint,
-		example,
-		nil,
-		nil,
-		nil,
-	)
+	var errorSnippet ast.Expr
+	if len(endpoint.Errors) > 0 {
+		errorSnippet = newEndpointSnippet(
+			f,
+			fernFilepath,
+			endpoint,
+			example,
+			nil,
+			createErrorCheckSnippet(endpoint, endpoint.Errors),
+			nil,
+		)
+	}
+	// TODO: Add support for a request options snippet.
 	return &GeneratedEndpoint{
 		Identifier: endpointToIdentifier(endpoint),
 		Usage: newEndpointSnippet(
@@ -1582,6 +1585,7 @@ func newGeneratedEndpoint(
 			nil,
 			nil,
 		),
+		Error: errorSnippet,
 		Timeout: newEndpointSnippet(
 			f,
 			fernFilepath,
@@ -1604,7 +1608,7 @@ defer cancel()
 	}
 }
 
-func newErrorSnippet(
+func createErrorCheckSnippet(
 	endpoint *ir.HttpEndpoint,
 	responseErrors []*ir.ResponseError,
 ) ast.Expr {
