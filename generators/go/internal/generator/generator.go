@@ -829,8 +829,9 @@ func maybeWriteSnippets(
 	if len(optionals) > 0 {
 		features["optionals"] = optionals
 	}
+	// TODO: We need to upgrade the Go generator os that types doesn't have the omitempty tag.
 	snippets := &generatorexec.Snippets{
-		Types:     make(map[ir.TypeId]string),
+		Types:     map[string]string{"_type": "placeholder"},
 		Endpoints: endpoints,
 		Features:  features,
 	}
