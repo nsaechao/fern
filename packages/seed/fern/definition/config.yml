@@ -23,10 +23,6 @@ types:
         docs: | 
           List any fixtures that are okay to fail. For normal fixtures 
           just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
-      featuresConfig:
-        docs: |
-          The relative path to the generator's features.yml configuration.
-        type: optional<string>
       features: optional<features.GeneratorFeatures>
   
   LocalBuildInfo: 
