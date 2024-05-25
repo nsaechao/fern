@@ -1600,8 +1600,7 @@ func newGeneratedEndpoint(
 
 func createContextWithTimeout() ast.Expr {
 	return &ast.Code{
-		Raw: `
-ctx, cancel := context.WithTimeout(context.Background(), time.Second)
+		Raw: `ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 defer cancel()
 
 `,
@@ -1613,15 +1612,13 @@ func createErrorCheckSnippet(
 	responseErrors []*ir.ResponseError,
 ) ast.Expr {
 	return &ast.Code{
-		Raw: `
-    if err != nil {
+		Raw: `if err != nil {
 		var apiError *core.APIError
 		if errors.As(err, &apiError) {
 			// Handle the error.
 		}
 		return nil, err
-	}
-`,
+	}`,
 	}
 }
 

@@ -772,6 +772,7 @@ func maybeWriteSnippets(
 					coordinator,
 					generatedEndpoint.Identifier,
 					generatedEndpoint.Error,
+					ast.WithoutImports(),
 				),
 			)
 		}
@@ -783,6 +784,7 @@ func maybeWriteSnippets(
 					coordinator,
 					generatedEndpoint.Identifier,
 					generatedEndpoint.RequestOption,
+					ast.WithoutImports(),
 				),
 			)
 		}
@@ -794,6 +796,7 @@ func maybeWriteSnippets(
 					coordinator,
 					generatedEndpoint.Identifier,
 					generatedEndpoint.Timeout,
+					ast.WithoutImports(),
 				),
 			)
 		}
@@ -805,6 +808,7 @@ func maybeWriteSnippets(
 					coordinator,
 					generatedEndpoint.Identifier,
 					generatedEndpoint.Optional,
+					ast.WithoutImports(),
 				),
 			)
 		}
@@ -841,8 +845,9 @@ func buildEndpoint(
 	coordinator *coordinator.Client,
 	id *generatorexec.EndpointIdentifier,
 	expr ast.Expr,
+	opts ...ast.BuildSnippetOption,
 ) *generatorexec.Endpoint {
-	client, err := ast.NewSourceCodeBuilder(expr).BuildSnippet()
+	client, err := ast.NewSourceCodeBuilder(expr).BuildSnippet(opts...)
 	if err != nil {
 		// Log the warning and continue. We don't want to fail generation just
 		// because there's a bug in the snippet generator.

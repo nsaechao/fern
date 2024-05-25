@@ -63,8 +63,23 @@ func (s *SourceCodeBuilder) AddExpr(expr ...Expr) *SourceCodeBuilder {
 	return s
 }
 
+// BuildSnippetOption adapts the behavior of the BuildSnippet method.
+type BuildSnippetOption func(*buildSnippetOptions)
+
+// WithoutImports instructs the source code builder to ignore imports
+// in the generated snippet.
+func WithoutImports() BuildSnippetOption {
+	return func(opts *buildSnippetOptions) {
+		opts.withoutImports = true
+	}
+}
+
 // BuildSnippet builds a source code snippet.
-func (s *SourceCodeBuilder) BuildSnippet() (string, error) {
+func (s *SourceCodeBuilder) BuildSnippet(opts ...BuildSnippetOption) (string, error) {
+	options := new(buildSnippetOptions)
+	for _, opt := range opts {
+		opt(options)
+	}
 	writer := &Writer{
 		buffer: bytes.NewBuffer(nil),
 		scope:  gospec.NewScope(),
@@ -75,13 +90,20 @@ func (s *SourceCodeBuilder) BuildSnippet() (string, error) {
 		}
 		writer.WriteExpr(expr)
 	}
-	var prefix []byte
-	if len(writer.scope.Imports.Values) > 0 {
-		prefix = []byte(writer.scope.Imports.String() + "\n")
-	}
 	bytes, err := format.Source(writer.buffer.Bytes())
 	if err != nil {
 		return "", fmt.Errorf("failed to format snippet: %v\n%s", err, writer.buffer.String())
 	}
+	if options.withoutImports {
+		return string(bytes), nil
+	}
+	var prefix []byte
+	if len(writer.scope.Imports.Values) > 0 {
+		prefix = []byte(writer.scope.Imports.String() + "\n")
+	}
 	return string(append(prefix, bytes...)), nil
+}
+
+type buildSnippetOptions struct {
+	withoutImports bool
 }
