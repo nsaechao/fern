@@ -750,6 +750,7 @@ func maybeWriteSnippets(
 	// TODO: Clean this up.
 	var (
 		endpoints      []*generatorexec.Endpoint
+		usages         []*generatorexec.Endpoint
 		errors         []*generatorexec.Endpoint
 		requestOptions []*generatorexec.Endpoint
 		timeouts       []*generatorexec.Endpoint
@@ -762,6 +763,7 @@ func maybeWriteSnippets(
 			generatedEndpoint.Usage,
 		)
 		endpoints = append(endpoints, usage)
+		usages = append(usages, usage)
 
 		if generatedEndpoint.Error != nil {
 			errors = append(
@@ -808,6 +810,9 @@ func maybeWriteSnippets(
 		}
 	}
 	features := make(map[string][]*generatorexec.Endpoint)
+	if len(usages) > 0 {
+		features["usage"] = usages
+	}
 	if len(errors) > 0 {
 		features["errors"] = errors
 	}
