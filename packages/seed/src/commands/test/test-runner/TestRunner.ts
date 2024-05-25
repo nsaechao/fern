@@ -215,18 +215,6 @@ export abstract class TestRunner {
                 });
             }
 
-            // Should this actually exist in the local generator package? We want to
-            // generate the README.md in every environment possible.
-            //
-            // if (this.generator.workspaceConfig.featuresConfig != null) {
-            // Generate the README.md. For now, we just manually call the
-            // generator-cli command here. This will actually need to happen elsewhere.
-            //
-            // TODO: Create a new FernGeneratorCli.ReadmeConfig.
-            // TODO: Write the features.json file
-            // TOOD: Call the generator-cli with the required flags
-            // }
-
             if (this.skipScripts) {
                 return {
                     type: "success",
