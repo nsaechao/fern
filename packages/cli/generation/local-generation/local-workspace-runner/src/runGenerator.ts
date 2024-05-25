@@ -75,8 +75,6 @@ export async function writeFilesToDiskAndRunGenerator({
     const absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpOutputDirectory.path);
     context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory);
 
-    const absolutePathToFernDefinition = workspace.definition.absoluteFilepath;
-
     let absolutePathToTmpSnippetJSON = undefined;
     if (absolutePathToLocalSnippetJSON != null) {
         const snippetJsonFile = await tmp.file({
@@ -94,6 +92,8 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToTmpSnippetTemplatesJSON = AbsoluteFilePath.of(snippetTemplatesJsonFile.path);
         context.logger.debug("Will write snippet-templates.json to: " + absolutePathToTmpSnippetTemplatesJSON);
     }
+
+    // TODO: We need to wire up the generator-cli command in the container.
 
     await runGenerator({
         absolutePathToOutput: absolutePathToTmpOutputDirectory,
@@ -236,4 +236,9 @@ export async function runGenerator({
         binds,
         removeAfterCompletion: !keepDocker
     });
+
+    // After we run the container, run the generator-cli to generate the README.md.
+    //
+    // TODO: This should actually happen within the docker container, but this demonstrates
+    // the flow for now.
 }
