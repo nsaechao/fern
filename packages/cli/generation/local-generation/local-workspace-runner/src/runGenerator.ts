@@ -112,6 +112,9 @@ export async function writeFilesToDiskAndRunGenerator({
         generatePaginatedClients
     });
 
+    // TODO: Is this where we would create the ReadmeConfig, extract the features.yml
+    // and call the generator-cli?
+
     const taskHandler = new LocalTaskHandler({
         context,
         absolutePathToLocalOutput,
