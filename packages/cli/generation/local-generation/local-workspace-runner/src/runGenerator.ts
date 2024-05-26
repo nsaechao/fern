@@ -182,6 +182,10 @@ export declare namespace runGenerator {
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
     }
+
+    export interface Result {
+        featuresYml: string | undefined;
+    }
 }
 
 export async function runGenerator({
@@ -239,4 +243,7 @@ export async function runGenerator({
         binds,
         removeAfterCompletion: !keepDocker
     });
+
+    // TODO: Can we return the features.yml file from here so that it can be used to generate
+    // the README.md at another layer?
 }

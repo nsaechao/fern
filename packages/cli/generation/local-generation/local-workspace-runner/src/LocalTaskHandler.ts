@@ -1,4 +1,4 @@
-import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
+import { FERNIGNORE_FILENAME, README_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -71,6 +71,14 @@ export class LocalTaskHandler {
                 absolutePathToTmpSnippetJSON: this.absolutePathToTmpSnippetTemplatesJSON,
                 absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetTemplateJSON
             });
+        }
+
+        // TODO: This is where we should copy out the features.yml, and generate the README.md.
+        const absolutePathToReadme = AbsoluteFilePath.of(
+            join(this.absolutePathToLocalOutput, RelativeFilePath.of(README_FILENAME))
+        );
+        if (absolutePathToReadme != null) {
+            // Use this as the original README.md
         }
     }
 
