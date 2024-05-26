@@ -27,6 +27,7 @@ import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
 import { MavenOutputLocationSchema } from "./schemas/MavenOutputLocationSchema";
 import { OutputMetadataSchema } from "./schemas/OutputMetadataSchema";
 import { PypiOutputMetadataSchema } from "./schemas/PypiOutputMetadataSchema";
+import { ReadmeSchema } from "./schemas/ReadmeSchema";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -36,6 +37,7 @@ export async function convertGeneratorsConfiguration({
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
 }): Promise<GeneratorsConfiguration> {
     const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata);
+    const readme = rawGeneratorsConfiguration.readme;
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: await parseAPIConfiguration(rawGeneratorsConfiguration),
@@ -49,7 +51,8 @@ export async function convertGeneratorsConfiguration({
                               absolutePathToGeneratorsConfiguration,
                               groupName,
                               group,
-                              maybeTopLevelMetadata
+                              maybeTopLevelMetadata,
+                              readme
                           })
                       )
                   )
@@ -152,12 +155,14 @@ async function convertGroup({
     absolutePathToGeneratorsConfiguration,
     groupName,
     group,
-    maybeTopLevelMetadata
+    maybeTopLevelMetadata,
+    readme
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
     group: GeneratorGroupSchema;
     maybeTopLevelMetadata: OutputMetadata | undefined;
+    readme: ReadmeSchema | undefined;
 }): Promise<GeneratorGroup> {
     const maybeGroupLevelMetadata = getOutputMetadata(group.metadata);
     return {
@@ -170,6 +175,7 @@ async function convertGroup({
                     generator,
                     maybeTopLevelMetadata,
                     maybeGroupLevelMetadata
+                    readme,
                 })
             )
         )
@@ -180,12 +186,14 @@ async function convertGenerator({
     absolutePathToGeneratorsConfiguration,
     generator,
     maybeGroupLevelMetadata,
-    maybeTopLevelMetadata
+    maybeTopLevelMetadata,
+    readme
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
     maybeGroupLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelMetadata: OutputMetadata | undefined;
+    readme: ReadmeSchema | undefined;
 }): Promise<GeneratorInvocation> {
     return {
         name: generator.name,
@@ -209,7 +217,15 @@ async function convertGenerator({
                 : undefined,
         language: getLanguageFromGeneratorName(generator.name),
         irVersionOverride: generator["ir-version"] ?? undefined,
-        publishMetadata: getPublishMetadata({ generatorInvocation: generator })
+        publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
+        readme: readme != null ? {
+            language: getLanguageDisplayFromGeneratorName(generator.name),
+            organization: readme.organization,
+            bannerLink: readme.bannerLink,
+            docsLink: readme.docsLink,
+            //
+            // TODO: We need to parse this later - we need to reference the endpoints in the IR.
+        } : undefined
     };
 }
 
@@ -525,6 +541,28 @@ function getLanguageFromGeneratorName(generatorName: string) {
     }
     if (generatorName.includes("csharp")) {
         return GenerationLanguage.CSHARP;
+    }
+    return undefined;
+}
+
+function getLanguageDisplayFromGeneratorName(generatorName: string): string {
+    if (generatorName.includes("typescript")) {
+        return "TypeScript";
+    }
+    if (generatorName.includes("java") || generatorName.includes("spring")) {
+        return "Java";
+    }
+    if (generatorName.includes("python") || generatorName.includes("fastapi") || generatorName.includes("pydantic")) {
+        return "Python";
+    }
+    if (generatorName.includes("go")) {
+        return "Go";
+    }
+    if (generatorName.includes("ruby")) {
+        return "Ruby";
+    }
+    if (generatorName.includes("csharp")) {
+        return "C#";
     }
     return undefined;
 }
