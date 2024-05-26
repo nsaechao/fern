@@ -3455,7 +3455,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.552
-    "@fern-fern/generator-cli-sdk": ^0.0.6
+    "@fern-fern/generator-cli-sdk": ^0.0.9
     "@types/dockerode": ^3.3.9
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -4731,6 +4731,19 @@ __metadata:
   version: 0.0.6
   resolution: "@fern-fern/generator-cli-sdk@npm:0.0.6"
   checksum: ecb0e76ca79ccff0f6ca159279a22e090a5aef80c9000cee96aeedaa949f00ac65f87527f29218bec14dae4fda5af7bd13c59ab24e923f36ade39d9c0508734c
+  languageName: node
+  linkType: hard
+
+"@fern-fern/generator-cli-sdk@npm:^0.0.9":
+  version: 0.0.9
+  resolution: "@fern-fern/generator-cli-sdk@npm:0.0.9"
+  dependencies:
+    form-data: 4.0.0
+    js-base64: 3.7.2
+    node-fetch: 2.7.0
+    qs: 6.11.2
+    url-join: 4.0.1
+  checksum: f30cc7f549430fd93eaf1f30e9b08db316416a85a7150898dc553870ce4af01f20178944ad8eeba93d02e1b1e36422fbcbe33b7fd554a931d0fbdde9e9106056
   languageName: node
   linkType: hard
 

@@ -6489,7 +6489,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.552"],\
-            ["@fern-fern/generator-cli-sdk", "npm:0.0.6"],\
+            ["@fern-fern/generator-cli-sdk", "npm:0.0.9"],\
             ["@types/dockerode", "npm:3.3.9"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
@@ -7847,6 +7847,18 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fern-fern-generator-cli-sdk-npm-0.0.6-0c8de9a297-ecb0e76ca7.zip/node_modules/@fern-fern/generator-cli-sdk/",\
           "packageDependencies": [\
             ["@fern-fern/generator-cli-sdk", "npm:0.0.6"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:0.0.9", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-generator-cli-sdk-npm-0.0.9-ee439c452d-f30cc7f549.zip/node_modules/@fern-fern/generator-cli-sdk/",\
+          "packageDependencies": [\
+            ["@fern-fern/generator-cli-sdk", "npm:0.0.9"],\
+            ["form-data", "npm:4.0.0"],\
+            ["js-base64", "npm:3.7.2"],\
+            ["node-fetch", "virtual:25958c3cdea01727abe9184cd62ebdcb7f32f5bd5b1d13e8a0e1d5080a9e9f7be886906e1af797d4fcc43965772a072bf87bbcb6b0a29bf8dd97020f3fa1ccf2#npm:2.7.0"],\
+            ["qs", "npm:6.11.2"],\
+            ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

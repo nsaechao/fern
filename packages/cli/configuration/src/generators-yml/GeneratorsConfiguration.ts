@@ -1,6 +1,7 @@
 import { Values } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { Audiences } from "../commons";
 import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfigurationSchema";
 
@@ -47,7 +48,7 @@ export interface GeneratorInvocation {
     disableExamples: boolean;
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
-    // readme: FernGeneratorCli.ReadmeConfig | undefined;
+    readme: FernGeneratorCli.ReadmeConfig | undefined;
 }
 
 export const GenerationLanguage = {
