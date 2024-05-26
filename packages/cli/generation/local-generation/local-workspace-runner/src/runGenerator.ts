@@ -6,7 +6,12 @@ import { FernWorkspace } from "@fern-api/workspace-loader";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import tmp, { DirectoryResult } from "tmp-promise";
-import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
+import {
+    DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+    DOCKER_GENERATOR_CONFIG_PATH,
+    DOCKER_PATH_TO_FEATURES,
+    DOCKER_PATH_TO_IR
+} from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation";
 import { LocalTaskHandler } from "./LocalTaskHandler";
@@ -75,8 +80,6 @@ export async function writeFilesToDiskAndRunGenerator({
     const absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpOutputDirectory.path);
     context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory);
 
-    const absolutePathToFernDefinition = workspace.definition.absoluteFilepath;
-
     let absolutePathToTmpSnippetJSON = undefined;
     if (absolutePathToLocalSnippetJSON != null) {
         const snippetJsonFile = await tmp.file({
@@ -95,10 +98,20 @@ export async function writeFilesToDiskAndRunGenerator({
         context.logger.debug("Will write snippet-templates.json to: " + absolutePathToTmpSnippetTemplatesJSON);
     }
 
+    let absolutePathToTmpFeaturesYml = undefined;
+    if (absolutePathToLocalSnippetJSON != null) {
+        const feautresYmlFile = await tmp.file({
+            tmpdir: workspaceTempDir.path
+        });
+        absolutePathToTmpFeaturesYml = AbsoluteFilePath.of(feautresYmlFile.path);
+        context.logger.debug("Will write features.yml to: " + absolutePathToTmpFeaturesYml);
+    }
+
     await runGenerator({
         absolutePathToOutput: absolutePathToTmpOutputDirectory,
         absolutePathToSnippet: absolutePathToTmpSnippetJSON,
         absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
+        absolutePathToFeaturesYml: absolutePathToTmpFeaturesYml,
         absolutePathToIr,
         absolutePathToWriteConfigJson,
         workspaceName: workspace.name,
@@ -174,6 +187,7 @@ export declare namespace runGenerator {
         absolutePathToOutput: AbsoluteFilePath;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
         absolutePathToSnippetTemplates: AbsoluteFilePath | undefined;
+        absolutePathToFeaturesYml: AbsoluteFilePath | undefined;
         absolutePathToWriteConfigJson: AbsoluteFilePath;
         keepDocker: boolean;
         context: TaskContext;
@@ -196,6 +210,7 @@ export async function runGenerator({
     absolutePathToSnippet,
     absolutePathToSnippetTemplates,
     absolutePathToIr,
+    absolutePathToFeaturesYml,
     absolutePathToWriteConfigJson,
     keepDocker,
     generatorInvocation,
@@ -209,6 +224,7 @@ export async function runGenerator({
     const binds = [
         `${absolutePathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
         `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
+        `${absolutePathToFeaturesYml}:${DOCKER_PATH_TO_FEATURES}`,
         `${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`
     ];
     const { config, binds: bindsForGenerators } = getGeneratorConfig({
@@ -243,7 +259,4 @@ export async function runGenerator({
         binds,
         removeAfterCompletion: !keepDocker
     });
-
-    // TODO: Can we return the features.yml file from here so that it can be used to generate
-    // the README.md at another layer?
 }

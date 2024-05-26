@@ -12,6 +12,7 @@ export declare namespace LocalTaskHandler {
         absolutePathToTmpOutputDirectory: AbsoluteFilePath;
         absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
+        absolutePathToTmpFeaturesYml: AbsoluteFilePath | undefined;
         absolutePathToLocalOutput: AbsoluteFilePath;
         absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
@@ -23,6 +24,7 @@ export class LocalTaskHandler {
     private absolutePathToTmpOutputDirectory: AbsoluteFilePath;
     private absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
     private absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
+    private absolutePathToTmpFeaturesYml: AbsoluteFilePath | undefined;
     private absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
     private absolutePathToLocalOutput: AbsoluteFilePath;
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
@@ -34,7 +36,8 @@ export class LocalTaskHandler {
         absolutePathToLocalSnippetTemplateJSON,
         absolutePathToLocalOutput,
         absolutePathToLocalSnippetJSON,
-        absolutePathToTmpSnippetTemplatesJSON
+        absolutePathToTmpSnippetTemplatesJSON,
+        absolutePathToTmpFeaturesYml
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -43,6 +46,7 @@ export class LocalTaskHandler {
         this.absolutePathToLocalSnippetJSON = absolutePathToLocalSnippetJSON;
         this.absolutePathToLocalSnippetTemplateJSON = absolutePathToLocalSnippetTemplateJSON;
         this.absolutePathToTmpSnippetTemplatesJSON = absolutePathToTmpSnippetTemplatesJSON;
+        this.absolutePathToTmpFeaturesYml = absolutePathToTmpFeaturesYml;
     }
 
     public async copyGeneratedFiles(): Promise<void> {
@@ -74,11 +78,31 @@ export class LocalTaskHandler {
         }
 
         // TODO: This is where we should copy out the features.yml, and generate the README.md.
-        const absolutePathToReadme = AbsoluteFilePath.of(
-            join(this.absolutePathToLocalOutput, RelativeFilePath.of(README_FILENAME))
-        );
-        if (absolutePathToReadme != null) {
-            // Use this as the original README.md
+        if (this.absolutePathToTmpFeaturesYml != null) {
+            // TODO: Read the features.yml as JSON.
+            // TODO: Call the generator-cli with the features.yml, snippet.json and readme config.
+            const absolutePathToReadme = AbsoluteFilePath.of(
+                join(this.absolutePathToLocalOutput, RelativeFilePath.of(README_FILENAME))
+            );
+            const { stdout } = await execa(
+                "node",
+                [
+                    "~/code/",
+                    "generate readme",
+                    "--readme-config",
+                    // TODO: Parse this value and pass it in here.
+                    "~/code/fern/fern-platform/packages/generator-cli/src/__test__/fixtures/cohere-go/readme.json",
+                    "--feature-config",
+                    this.absolutePathToTmpFeaturesYml,
+                    "--snippets",
+                    this.absolutePathToTmpSnippetJSON,
+                    "--output",
+                    absolutePathToReadme
+                ],
+                {
+                    reject: false
+                }
+            );
         }
     }
 
