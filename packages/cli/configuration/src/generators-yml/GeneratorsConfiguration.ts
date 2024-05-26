@@ -47,6 +47,7 @@ export interface GeneratorInvocation {
     disableExamples: boolean;
     language: GenerationLanguage | undefined;
     publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
+    // readme: FernGeneratorCli.ReadmeConfig | undefined;
 }
 
 export const GenerationLanguage = {
