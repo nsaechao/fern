@@ -174,8 +174,8 @@ async function convertGroup({
                     absolutePathToGeneratorsConfiguration,
                     generator,
                     maybeTopLevelMetadata,
-                    maybeGroupLevelMetadata
-                    readme,
+                    maybeGroupLevelMetadata,
+                    readme
                 })
             )
         )
@@ -218,14 +218,7 @@ async function convertGenerator({
         language: getLanguageFromGeneratorName(generator.name),
         irVersionOverride: generator["ir-version"] ?? undefined,
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
-        readme: readme != null ? {
-            language: getLanguageDisplayFromGeneratorName(generator.name),
-            organization: readme.organization,
-            bannerLink: readme.bannerLink,
-            docsLink: readme.docsLink,
-            //
-            // TODO: We need to parse this later - we need to reference the endpoints in the IR.
-        } : undefined
+        readme
     };
 }
 
@@ -545,6 +538,7 @@ function getLanguageFromGeneratorName(generatorName: string) {
     return undefined;
 }
 
+// TODO: Move this elsewhere.
 function getLanguageDisplayFromGeneratorName(generatorName: string): string {
     if (generatorName.includes("typescript")) {
         return "TypeScript";
@@ -564,7 +558,7 @@ function getLanguageDisplayFromGeneratorName(generatorName: string): string {
     if (generatorName.includes("csharp")) {
         return "C#";
     }
-    return undefined;
+    return "";
 }
 
 function getMavenRegistryUrl(maven: MavenOutputLocationSchema) {
