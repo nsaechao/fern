@@ -3,7 +3,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
-import { cp, readdir, readFile, rm, rmdir, writeFile } from "fs/promises";
+import { cp, readdir, readFile, rm, rmdir, stat, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
 export declare namespace LocalTaskHandler {
@@ -90,27 +90,32 @@ export class LocalTaskHandler {
             (await doesPathExist(this.absolutePathToTmpFeaturesYml)) &&
             (await doesPathExist(this.absolutePathToTmpReadmeConfig))
         ) {
-            this.context.logger.debug("Calling generator-cli to generate README.md");
-            const absolutePathToReadme = AbsoluteFilePath.of(
-                join(this.absolutePathToLocalOutput, RelativeFilePath.of(README_FILENAME))
-            );
-            const args = [
-                "generate",
-                "readme",
-                "--readme-config",
-                this.absolutePathToTmpReadmeConfig as string,
-                "--feature-config",
-                this.absolutePathToTmpFeaturesYml as string,
-                "--snippets",
-                this.absolutePathToTmpSnippetJSON as string
-            ];
-            if (await doesPathExist(absolutePathToReadme)) {
-                args.push(...["--original-readme", absolutePathToReadme as string]);
+            const stats = await stat(this.absolutePathToTmpFeaturesYml);
+            if (stats.size === 0) {
+                this.context.logger.debug("This generator doesn't specify any features. Skipping README.md generation");
+            } else {
+                this.context.logger.debug("Calling generator-cli to generate README.md");
+                const absolutePathToReadme = AbsoluteFilePath.of(
+                    join(this.absolutePathToLocalOutput, RelativeFilePath.of(README_FILENAME))
+                );
+                const args = [
+                    "generate",
+                    "readme",
+                    "--readme-config",
+                    this.absolutePathToTmpReadmeConfig as string,
+                    "--feature-config",
+                    this.absolutePathToTmpFeaturesYml as string,
+                    "--snippets",
+                    this.absolutePathToTmpSnippetJSON as string
+                ];
+                if (await doesPathExist(absolutePathToReadme)) {
+                    args.push(...["--original-readme", absolutePathToReadme as string]);
+                }
+                const response = await loggingExeca(this.context.logger, "generator-cli", args, {
+                    doNotPipeOutput: true
+                });
+                await writeFile(absolutePathToReadme, response.stdout);
             }
-            const response = await loggingExeca(this.context.logger, "generator-cli", args, {
-                doNotPipeOutput: true
-            });
-            await writeFile(absolutePathToReadme, response.stdout);
         }
     }
 
