@@ -103,6 +103,7 @@ Fern's model generators will output schemas or types defined in your OpenAPI spe
 | `fernapi/fern-pydantic-model` | [![Pydantic Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-pydantic-model)](./generators/python/pydantic/VERSION) | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)           |
 | `fernapi/java-model`     | [![Java Model Generator Version](https://img.shields.io/docker/v/fernapi/java-model)](./generators/java/model/VERSION) | [CHANGELOG.md](./generators/java/model/CHANGELOG.md)        | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java) |
 | `fernapi/fern-ruby-model`     | [![Ruby Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-model)](./generators/ruby/model/VERSION)| [CHANGELOG.md](./generators/ruby/model/CHANGELOG.md)      | [cli.ts](./generators/ruby/model/src/cli.ts)                                  |
+| `fernapi/fern-csharp-model`     | [![C# Model Generator Version](https://img.shields.io/docker/v/fernapi/fern-csharp-model)](./generators/csharp/model/VERSION)| [CHANGELOG.md](./generators/csharp/model/CHANGELOG.md)      | [Cli.cs](./generators/csharp/model/src/Cli.cs)                                  |
 
 ### Spec Generators
 
@@ -123,11 +124,9 @@ Here's a quick look at the most popular CLI commands. View the documentation for
 
 `fern check`: validate your API definition and Fern configuration.
 
-`fern generate`: run the generators specified in `generators.yml` in the cloud.
+`fern generate`: run the generators specified in `generators.yml` in the cloud. (Paid plan required.)
 
 `fern generate --local`: run the generators specified in `generators.yml` in docker locally.
-
-`fern add <generator>`: include a new generator in your `generators.yml`. For example, `fern add fern-python-sdk`.
 
 ## Advanced
 
@@ -217,7 +216,6 @@ errors:
 Checkout open source projects that are using Fern Definitions:
 
 - [Metriport](https://github.com/metriport/metriport/tree/develop/fern/definition)
-- [Rivet](https://github.com/rivet-gg/rivet/tree/main/fern/definition)
 - [Revert](https://github.com/revertinc/revert/tree/main/fern/definition)
 
 ## Community
