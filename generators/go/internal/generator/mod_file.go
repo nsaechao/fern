@@ -8,6 +8,9 @@ import (
 )
 
 const (
+	// DefaultGoVersion represents the default version generated into the go.mod.
+	DefaultGoVersion = minimumGoVersion
+
 	// minimumGoVersion specifies the minimum Go version required to
 	// use this library. We require at least 1.13, which is when
 	// modules were officially introduced.

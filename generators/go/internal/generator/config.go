@@ -23,6 +23,7 @@ type Config struct {
 	Version                    string
 	IRFilepath                 string
 	SnippetFilepath            string
+	FeaturesFilepath           string
 	ImportPath                 string
 	UnionVersion               UnionVersion
 	PackageName                string
@@ -58,6 +59,7 @@ func NewConfig(
 	version string,
 	irFilepath string,
 	snippetFilepath string,
+	featuresFilepath string,
 	importPath string,
 	packageName string,
 	unionVersion string,
@@ -77,6 +79,7 @@ func NewConfig(
 		Version:                    version,
 		IRFilepath:                 irFilepath,
 		SnippetFilepath:            snippetFilepath,
+		FeaturesFilepath:           featuresFilepath,
 		ImportPath:                 importPath,
 		PackageName:                packageName,
 		UnionVersion:               uv,

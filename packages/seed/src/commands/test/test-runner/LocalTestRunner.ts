@@ -1,4 +1,4 @@
-import { SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
+import { FEATURES_FILENAME, SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LocalTaskHandler } from "@fern-api/local-workspace-runner/src/LocalTaskHandler";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
@@ -64,11 +64,15 @@ export class LocalTestRunner extends TestRunner {
                     outputDir,
                     RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME)
                 ),
+                absolutePathToTmpFeaturesYml: join(outputDir, RelativeFilePath.of(FEATURES_FILENAME)),
                 absolutePathToTmpSnippetJSON: join(outputDir, RelativeFilePath.of(SNIPPET_JSON_FILENAME)),
                 absolutePathToTmpSnippetTemplatesJSON:
                     generatorConfig.output.snippetTemplateFilepath != null
                         ? AbsoluteFilePath.of(generatorConfig.output.snippetTemplateFilepath)
-                        : undefined
+                        : undefined,
+
+                // TODO: Generate the readme configuration from the generator configuration.
+                absolutePathToTmpReadmeConfig: undefined
             });
             await localTaskHandler.copyGeneratedFiles();
             taskContext.logger.info(`Wrote generated files to ${outputDir}`);

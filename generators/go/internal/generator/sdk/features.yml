@@ -1,3 +1,6 @@
+# TODO: This is a copy of the features.yml at the root of the module.
+# Go cannot embed files in a parent directory and symlinks aren't compatible,
+# so this is included here while we figure out the best approach for features.yml.
 features:
   - id: USAGE
     description: |

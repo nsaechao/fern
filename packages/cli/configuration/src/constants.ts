@@ -15,6 +15,7 @@ export const FERNIGNORE_FILENAME = ".fernignore";
 export const README_FILENAME = "README.md";
 export const SNIPPET_JSON_FILENAME = "snippet.json";
 export const SNIPPET_TEMPLATES_JSON_FILENAME = "snippet-templates.json";
+export const FEATURES_FILENAME = "features.yml";
 export const DEFAULT_GROUP_GENERATORS_CONFIG_KEY = "default-group";
 
 export const DOCS_DIRECTORY = "docs";

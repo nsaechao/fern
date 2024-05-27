@@ -538,28 +538,6 @@ function getLanguageFromGeneratorName(generatorName: string) {
     return undefined;
 }
 
-// TODO: Move this elsewhere.
-function getLanguageDisplayFromGeneratorName(generatorName: string): string {
-    if (generatorName.includes("typescript")) {
-        return "TypeScript";
-    }
-    if (generatorName.includes("java") || generatorName.includes("spring")) {
-        return "Java";
-    }
-    if (generatorName.includes("python") || generatorName.includes("fastapi") || generatorName.includes("pydantic")) {
-        return "Python";
-    }
-    if (generatorName.includes("go")) {
-        return "Go";
-    }
-    if (generatorName.includes("ruby")) {
-        return "Ruby";
-    }
-    if (generatorName.includes("csharp")) {
-        return "C#";
-    }
-    return "";
-}
 
 function getMavenRegistryUrl(maven: MavenOutputLocationSchema) {
     if (maven.url != null) {

@@ -1,17 +1,17 @@
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { runDocker } from "@fern-api/docker-utils";
 import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
+import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import tmp, { DirectoryResult } from "tmp-promise";
-import {
-    DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-    DOCKER_GENERATOR_CONFIG_PATH,
-    DOCKER_PATH_TO_FEATURES,
-    DOCKER_PATH_TO_IR
-} from "./constants";
+import urlJoin from "url-join";
+import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation";
 import { LocalTaskHandler } from "./LocalTaskHandler";
@@ -100,12 +100,23 @@ export async function writeFilesToDiskAndRunGenerator({
 
     let absolutePathToTmpFeaturesYml = undefined;
     if (absolutePathToLocalSnippetJSON != null) {
+        // We only write the README.md when snippets are available.
         const feautresYmlFile = await tmp.file({
             tmpdir: workspaceTempDir.path
         });
         absolutePathToTmpFeaturesYml = AbsoluteFilePath.of(feautresYmlFile.path);
         context.logger.debug("Will write features.yml to: " + absolutePathToTmpFeaturesYml);
     }
+
+    const absolutePathToTmpReadmeConfig = await writeReadmeConfig({
+        workspace,
+        organization,
+        outputVersionOverride,
+        audiences,
+        generatorInvocation,
+        workspaceTempDir,
+        context
+    });
 
     await runGenerator({
         absolutePathToOutput: absolutePathToTmpOutputDirectory,
@@ -125,24 +136,232 @@ export async function writeFilesToDiskAndRunGenerator({
         generatePaginatedClients
     });
 
-    // TODO: Is this where we would create the ReadmeConfig, extract the features.yml
-    // and call the generator-cli?
-
     const taskHandler = new LocalTaskHandler({
         context,
         absolutePathToLocalOutput,
         absolutePathToTmpOutputDirectory,
         absolutePathToLocalSnippetJSON,
         absolutePathToLocalSnippetTemplateJSON,
+        absolutePathToTmpFeaturesYml,
+        absolutePathToTmpReadmeConfig,
         absolutePathToTmpSnippetJSON,
         absolutePathToTmpSnippetTemplatesJSON
     });
+
     await taskHandler.copyGeneratedFiles();
 
     return {
         absolutePathToIr,
         absolutePathToConfigJson: absolutePathToWriteConfigJson
     };
+}
+
+async function writeReadmeConfig({
+    workspace,
+    organization,
+    outputVersionOverride,
+    audiences,
+    generatorInvocation,
+    workspaceTempDir,
+    context
+}: {
+    workspace: FernWorkspace;
+    organization: string;
+    outputVersionOverride: string | undefined;
+    audiences: Audiences;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    workspaceTempDir: DirectoryResult;
+    context: TaskContext;
+}): Promise<AbsoluteFilePath> {
+    // We can't use the IR used by the generator beacause it's shape is unknown.
+    //
+    // Although duplicative, we'll generate the IR again and use it to find the
+    // endpoint IDs referenced by the user-defined generator configuration.
+    const intermediateRepresentation = await generateIntermediateRepresentation({
+        workspace,
+        audiences,
+        generationLanguage: generatorInvocation.language,
+        smartCasing: generatorInvocation.smartCasing,
+        disableExamples: generatorInvocation.disableExamples
+    });
+
+    const readmeConfig = await generateReadmeConfig({
+        organization,
+        outputVersionOverride,
+        intermediateRepresentation,
+        generatorInvocation,
+        context
+    });
+
+    const readmeConfigFile = await tmp.file({
+        tmpdir: workspaceTempDir.path
+    });
+    const absolutePathToReadmeConfig = AbsoluteFilePath.of(readmeConfigFile.path);
+    await writeFile(absolutePathToReadmeConfig, JSON.stringify(readmeConfig, undefined, 4));
+    context.logger.debug(`Wrote readme configuration to ${absolutePathToReadmeConfig}`);
+    return absolutePathToReadmeConfig;
+}
+
+async function generateReadmeConfig({
+    organization,
+    outputVersionOverride,
+    intermediateRepresentation,
+    generatorInvocation,
+    context
+}: {
+    organization: string;
+    outputVersionOverride: string | undefined;
+    intermediateRepresentation: IntermediateRepresentation;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    context: TaskContext;
+}): Promise<FernGeneratorCli.ReadmeConfig> {
+    return {
+        organization,
+        language: generatorInvocation.language ?? "",
+        bannerLink: generatorInvocation.readme?.bannerLink,
+        docsLink: generatorInvocation.readme?.docsLink,
+        publishInfo: await getReadmePublishInfo({
+            outputVersionOverride,
+            generatorInvocation
+        }),
+        featureEndpoints: await resolveFeatureEndpoints({
+            intermediateRepresentation,
+            generatorInvocation
+        })
+    };
+}
+
+// TODO: This is terribly inefficient. Refactor this.
+async function resolveFeatureEndpoints({
+    intermediateRepresentation,
+    generatorInvocation
+}: {
+    intermediateRepresentation: IntermediateRepresentation;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+}): Promise<Record<FernGeneratorCli.FeatureId, FernGeneratorCli.EndpointId[]>> {
+    const featureEndpoints: Record<FernGeneratorCli.FeatureId, FernGeneratorCli.EndpointId[]> = {};
+    for (const [featureId, endpoints] of Object.entries(generatorInvocation.readme?.features ?? {})) {
+        const endpointObjects = endpoints.map((endpoint) => getReadmeEndpointObject({ endpoint }));
+        const endpointIds: FernGeneratorCli.EndpointId[] = [];
+        let found = false;
+        for (const endpointObject of endpointObjects) {
+            for (const service of Object.values(intermediateRepresentation.services)) {
+                if (found) {
+                    break;
+                }
+                for (const endpoint of service.endpoints) {
+                    if (
+                        matchEndpointObjectToEndpoint({
+                            endpointObject,
+                            endpoint
+                        })
+                    ) {
+                        endpointIds.push(FernGeneratorCli.EndpointId(endpoint.id));
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (!found) {
+                throw new Error(
+                    `Could not find endpoint with method ${endpointObject.method} and path ${endpointObject.path}`
+                );
+            }
+            found = false;
+        }
+        featureEndpoints[FernGeneratorCli.FeatureId(featureId)] = endpointIds;
+    }
+    return featureEndpoints;
+}
+
+function matchEndpointObjectToEndpoint({
+    endpointObject,
+    endpoint
+}: {
+    endpointObject: generatorsYml.ReadmeFeatureObjectSchema;
+    endpoint: HttpEndpoint;
+}): boolean {
+    return (
+        endpointObject.method === endpoint.method &&
+        getFullPathForEndpoint(endpoint) === endpointObject.path &&
+        (!endpointObject.stream || endpoint.response?.body?.type === "streaming")
+    );
+}
+
+async function getReadmePublishInfo({
+    outputVersionOverride,
+    generatorInvocation
+}: {
+    outputVersionOverride: string | undefined;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+}): Promise<FernGeneratorCli.PublishInfo | undefined> {
+    switch (generatorInvocation.outputMode.type) {
+        case "github":
+            return getReadmePublishInfoForGithub({
+                outputVersionOverride,
+                language: generatorInvocation.language,
+                outputMode: generatorInvocation.outputMode
+            });
+        case "githubV2":
+            return getReadmePublishInfoForGithub({
+                outputVersionOverride,
+                language: generatorInvocation.language,
+                outputMode: generatorInvocation.outputMode.githubV2
+            });
+    }
+    return undefined;
+}
+
+async function getReadmePublishInfoForGithub({
+    outputVersionOverride,
+    language,
+    outputMode
+}: {
+    outputVersionOverride: string | undefined;
+    language: generatorsYml.GenerationLanguage | undefined;
+    outputMode: FernFiddle.GithubOutputMode;
+}): Promise<FernGeneratorCli.PublishInfo | undefined> {
+    if (language === "go") {
+        return FernGeneratorCli.PublishInfo.go({
+            owner: outputMode.owner,
+            repo: outputMode.repo,
+            version: outputVersionOverride ?? "0.0.1"
+        });
+    }
+    return undefined;
+}
+
+function getReadmeEndpointObject({
+    endpoint
+}: {
+    endpoint: generatorsYml.ReadmeFeatureSchema;
+}): generatorsYml.ReadmeFeatureObjectSchema {
+    if (typeof endpoint === "string") {
+        const split = endpoint.split(" ");
+        if (split.length !== 2 || split[0] == null || split[1] == null) {
+            throw new Error(`Invalid endpoint string: ${endpoint}`);
+        }
+        return {
+            method: split[0],
+            path: split[1]
+        };
+    }
+    return endpoint;
+}
+
+// TODO: Move this to the IR.
+function getFullPathForEndpoint(endpoint: HttpEndpoint): string {
+    let url = "";
+    if (endpoint.fullPath.head.length > 0) {
+        url = urlJoin(url, endpoint.fullPath.head);
+    }
+    for (const part of endpoint.fullPath.parts) {
+        url = urlJoin(url, "{" + part.pathParameter + "}");
+        if (part.tail.length > 0) {
+            url = urlJoin(url, part.tail);
+        }
+    }
+    return url.startsWith("/") ? url : `/${url}`;
 }
 
 async function writeIrToFile({
@@ -224,7 +443,6 @@ export async function runGenerator({
     const binds = [
         `${absolutePathToWriteConfigJson}:${DOCKER_GENERATOR_CONFIG_PATH}:ro`,
         `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
-        `${absolutePathToFeaturesYml}:${DOCKER_PATH_TO_FEATURES}`,
         `${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`
     ];
     const { config, binds: bindsForGenerators } = getGeneratorConfig({
@@ -235,6 +453,7 @@ export async function runGenerator({
         organization,
         absolutePathToSnippet,
         absolutePathToSnippetTemplates,
+        absolutePathToFeaturesYml,
         writeUnitTests,
         generateOauthClients,
         generatePaginatedClients

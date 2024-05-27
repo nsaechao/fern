@@ -12,6 +12,9 @@ COPY internal /workspace/internal
 COPY version.go /workspace/version.go
 
 # Copy the features supported by the generator so it can be extracted.
+#
+# TODO: this isn't actually used right now; the generator writes out
+# the features.yml based on the generator-exec configuration.
 COPY sdk/features.yml /fern/features.yml
 
 RUN CGO_ENABLED=0 go build -ldflags "-s -w" -trimpath -buildvcs=false -o /fern-go-sdk ./cmd/fern-go-sdk

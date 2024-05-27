@@ -38,7 +38,9 @@ export function getGeneratorInvocation({
         smartCasing: false,
         disableExamples: false,
         irVersionOverride: irVersion,
-        publishMetadata: publishMetadata != null ? (publishMetadata as FernFiddle.PublishingMetadata) : undefined
+        publishMetadata: publishMetadata != null ? (publishMetadata as FernFiddle.PublishingMetadata) : undefined,
+        // TODO: Fix this.
+        readme: undefined
     };
 }
 

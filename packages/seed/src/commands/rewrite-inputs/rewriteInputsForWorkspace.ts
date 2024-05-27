@@ -134,6 +134,8 @@ export async function writeInputs({
     workspaceName: string;
     context: TaskContext;
 }): Promise<void> {
+    // TODO: We should be able to do something similar to map the endpoints between
+    // the generator configuration and the IR.
     const generatorInvocation = getGeneratorInvocation({
         absolutePathToOutput,
         docker,
@@ -166,7 +168,8 @@ export async function writeInputs({
         generatePaginatedClients: true,
         absolutePathToSnippet: AbsoluteFilePath.of(
             join(absolutePathToOutput, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
-        )
+        ),
+        absolutePathToFeaturesYml: undefined
     }).config;
     const absolutePathToInputsDirectory = AbsoluteFilePath.of(
         join(absolutePathToOutput, RelativeFilePath.of(INPUTS_DIRECTORY_NAME))

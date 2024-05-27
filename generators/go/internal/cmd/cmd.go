@@ -61,6 +61,7 @@ type Config struct {
 	Version                    string
 	IrFilepath                 string
 	SnippetFilepath            string
+	FeaturesFilepath           string
 	ImportPath                 string
 	PackageName                string
 	UnionVersion               string
@@ -196,6 +197,11 @@ func newConfig(configFilename string) (*Config, error) {
 		snippetFilepath = *config.Output.SnippetFilepath
 	}
 
+	var featuresFilepath string
+	if config.Output != nil && config.Output.FeaturesFilepath != nil {
+		featuresFilepath = *config.Output.FeaturesFilepath
+	}
+
 	return &Config{
 		DryRun:                     config.DryRun,
 		IncludeLegacyClientOptions: customConfig.IncludeLegacyClientOptions,
@@ -207,6 +213,7 @@ func newConfig(configFilename string) (*Config, error) {
 		Version:                    outputVersionFromGeneratorConfig(config),
 		IrFilepath:                 config.IrFilepath,
 		SnippetFilepath:            snippetFilepath,
+		FeaturesFilepath:           featuresFilepath,
 		ImportPath:                 customConfig.ImportPath,
 		PackageName:                customConfig.PackageName,
 		UnionVersion:               customConfig.UnionVersion,

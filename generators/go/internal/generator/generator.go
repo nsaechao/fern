@@ -21,6 +21,11 @@ const (
 	packageDocsFilename = "doc.go"
 )
 
+var (
+	//go:embed sdk/features.yml
+	featuresFile string
+)
+
 // Mode is an enum for different generator modes (i.e. types, client, etc).
 type Mode uint8
 
@@ -587,16 +592,11 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			generatedRootClient.Endpoints = append(generatedRootClient.Endpoints, generatedClient.Endpoints...)
 		}
 	}
-	// Write the snippets, if any.
-	if g.config.SnippetFilepath != "" {
-		if err := maybeWriteSnippets(g.coordinator, generatedRootClient, g.config.SnippetFilepath); err != nil {
-			return nil, err
-		}
-	}
-	// Finally, generate the go.mod file, if needed.
+	// Generate the go.mod file, if needed.
 	//
 	// The go.sum file will be generated after the
 	// go.mod file is written to disk.
+	goModuleVersion := DefaultGoVersion
 	if g.config.ModuleConfig != nil {
 		requiresGenerics := g.config.EnableExplicitNull || ir.SdkConfig.HasStreamingEndpoints || generatedPagination
 		file, generatedGoVersion, err := NewModFile(g.coordinator, g.config.ModuleConfig, requiresGenerics)
@@ -610,6 +610,19 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				return nil, err
 			}
 			files = append(files, file)
+		}
+		goModuleVersion = generatedGoVersion
+	}
+	// Write the snippets, if any.
+	if g.config.SnippetFilepath != "" {
+		if err := maybeWriteSnippets(g.coordinator, generatedRootClient, g.config.SnippetFilepath, goModuleVersion); err != nil {
+			return nil, err
+		}
+	}
+	// Write the features.yml, if any.
+	if g.config.FeaturesFilepath != "" {
+		if err := os.WriteFile(g.config.FeaturesFilepath, []byte(featuresFile), 0644); err != nil {
+			return nil, err
 		}
 	}
 	return files, nil
@@ -736,6 +749,7 @@ func maybeWriteSnippets(
 	coordinator *coordinator.Client,
 	generatedClient *GeneratedClient,
 	snippetFilepath string,
+	goModuleVersion string,
 ) error {
 	if len(generatedClient.Endpoints) == 0 {
 		return nil
@@ -815,25 +829,27 @@ func maybeWriteSnippets(
 	}
 	features := make(map[string][]*generatorexec.Endpoint)
 	if len(usages) > 0 {
-		features["usage"] = usages
+		features[generatorexec.FeatureTypeUsage.String()] = usages
 	}
 	if len(errors) > 0 {
-		features["errors"] = errors
+		features[generatorexec.FeatureTypeErrors.String()] = errors
 	}
 	if len(requestOptions) > 0 {
-		features["requestoptions"] = requestOptions
+		features[generatorexec.FeatureTypeRequestOptions.String()] = requestOptions
 	}
 	if len(timeouts) > 0 {
-		features["timeouts"] = timeouts
+		features[generatorexec.FeatureTypeTimeouts.String()] = timeouts
 	}
 	if len(optionals) > 0 {
-		features["optionals"] = optionals
+		features["OPTIONALS"] = optionals
 	}
-	// TODO: We need to upgrade the Go generator os that types doesn't have the omitempty tag.
 	snippets := &generatorexec.Snippets{
-		Types:     map[string]string{"_type": "placeholder"},
+		Types:     map[string]string{"_type": "placeholder"}, // TODO: Upgrade the Go generator to drop the omitempty tag. This field isn't used anywhere.
 		Endpoints: endpoints,
 		Features:  features,
+		Requirements: []string{
+			fmt.Sprintf("Go version >= %s", goModuleVersion),
+		},
 	}
 	bytes, err := json.MarshalIndent(snippets, "", "    ")
 	if err != nil {

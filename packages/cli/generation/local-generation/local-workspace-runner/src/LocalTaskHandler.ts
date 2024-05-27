@@ -3,7 +3,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
-import { cp, readdir, readFile, rm, rmdir } from "fs/promises";
+import { cp, readdir, readFile, rm, rmdir, writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
 export declare namespace LocalTaskHandler {
@@ -13,6 +13,7 @@ export declare namespace LocalTaskHandler {
         absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
         absolutePathToTmpFeaturesYml: AbsoluteFilePath | undefined;
+        absolutePathToTmpReadmeConfig: AbsoluteFilePath | undefined;
         absolutePathToLocalOutput: AbsoluteFilePath;
         absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
@@ -25,6 +26,7 @@ export class LocalTaskHandler {
     private absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
     private absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
     private absolutePathToTmpFeaturesYml: AbsoluteFilePath | undefined;
+    private absolutePathToTmpReadmeConfig: AbsoluteFilePath | undefined;
     private absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
     private absolutePathToLocalOutput: AbsoluteFilePath;
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
@@ -37,7 +39,8 @@ export class LocalTaskHandler {
         absolutePathToLocalOutput,
         absolutePathToLocalSnippetJSON,
         absolutePathToTmpSnippetTemplatesJSON,
-        absolutePathToTmpFeaturesYml
+        absolutePathToTmpFeaturesYml,
+        absolutePathToTmpReadmeConfig
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -47,6 +50,7 @@ export class LocalTaskHandler {
         this.absolutePathToLocalSnippetTemplateJSON = absolutePathToLocalSnippetTemplateJSON;
         this.absolutePathToTmpSnippetTemplatesJSON = absolutePathToTmpSnippetTemplatesJSON;
         this.absolutePathToTmpFeaturesYml = absolutePathToTmpFeaturesYml;
+        this.absolutePathToTmpReadmeConfig = absolutePathToTmpReadmeConfig;
     }
 
     public async copyGeneratedFiles(): Promise<void> {
@@ -77,32 +81,37 @@ export class LocalTaskHandler {
             });
         }
 
-        // TODO: This is where we should copy out the features.yml, and generate the README.md.
-        if (this.absolutePathToTmpFeaturesYml != null) {
-            // TODO: Read the features.yml as JSON.
-            // TODO: Call the generator-cli with the features.yml, snippet.json and readme config.
+        // TODO: We should refactor this as a function call rather than running a CLI.
+        // Users would otherwise need to install the generator-cli package to use the
+        // --local flag.
+        if (
+            this.absolutePathToTmpFeaturesYml != null &&
+            this.absolutePathToTmpReadmeConfig != null &&
+            (await doesPathExist(this.absolutePathToTmpFeaturesYml)) &&
+            (await doesPathExist(this.absolutePathToTmpReadmeConfig))
+        ) {
+            this.context.logger.debug("Calling generator-cli to generate README.md");
             const absolutePathToReadme = AbsoluteFilePath.of(
                 join(this.absolutePathToLocalOutput, RelativeFilePath.of(README_FILENAME))
             );
-            const { stdout } = await execa(
-                "node",
-                [
-                    "~/code/",
-                    "generate readme",
-                    "--readme-config",
-                    // TODO: Parse this value and pass it in here.
-                    "~/code/fern/fern-platform/packages/generator-cli/src/__test__/fixtures/cohere-go/readme.json",
-                    "--feature-config",
-                    this.absolutePathToTmpFeaturesYml,
-                    "--snippets",
-                    this.absolutePathToTmpSnippetJSON,
-                    "--output",
-                    absolutePathToReadme
-                ],
-                {
-                    reject: false
-                }
-            );
+            const args = [
+                "/Users/alex/code/fern/fern-platform/packages/generator-cli/dist/cli.cjs",
+                "generate",
+                "readme",
+                "--readme-config",
+                this.absolutePathToTmpReadmeConfig as string,
+                "--feature-config",
+                this.absolutePathToTmpFeaturesYml as string,
+                "--snippets",
+                this.absolutePathToTmpSnippetJSON as string
+            ];
+            if (await doesPathExist(absolutePathToReadme)) {
+                args.push(...["--original-readme", absolutePathToReadme as string]);
+            }
+            const response = await loggingExeca(this.context.logger, "node", args, {
+                doNotPipeOutput: true
+            });
+            await writeFile(absolutePathToReadme, response.stdout);
         }
     }
 

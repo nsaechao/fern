@@ -15,6 +15,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
 import {
     DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+    DOCKER_PATH_TO_FEATURES,
     DOCKER_PATH_TO_IR,
     DOCKER_PATH_TO_SNIPPET,
     DOCKER_PATH_TO_SNIPPET_TEMPLATES
@@ -31,6 +32,7 @@ export declare namespace getGeneratorConfig {
         generatorInvocation: generatorsYml.GeneratorInvocation;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
         absolutePathToSnippetTemplates: AbsoluteFilePath | undefined;
+        absolutePathToFeaturesYml: AbsoluteFilePath | undefined;
         writeUnitTests: boolean;
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
@@ -105,6 +107,7 @@ export function getGeneratorConfig({
     outputVersion = DEFAULT_OUTPUT_VERSION,
     absolutePathToSnippet,
     absolutePathToSnippetTemplates,
+    absolutePathToFeaturesYml,
     writeUnitTests,
     generateOauthClients,
     generatePaginatedClients
@@ -148,6 +151,10 @@ export function getGeneratorConfig({
                 binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
                 outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
             }
+            if (absolutePathToFeaturesYml !== undefined) {
+                binds.push(`${absolutePathToFeaturesYml}:${DOCKER_PATH_TO_FEATURES}`);
+                outputConfig.featuresFilepath = DOCKER_PATH_TO_FEATURES;
+            }
             return outputConfig;
         },
         githubV2: (value) => {
@@ -175,6 +182,10 @@ export function getGeneratorConfig({
             if (absolutePathToSnippetTemplates !== undefined) {
                 binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
                 outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
+            }
+            if (absolutePathToFeaturesYml !== undefined) {
+                binds.push(`${absolutePathToFeaturesYml}:${DOCKER_PATH_TO_FEATURES}`);
+                outputConfig.featuresFilepath = DOCKER_PATH_TO_FEATURES;
             }
             return outputConfig;
         },
