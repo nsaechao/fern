@@ -761,7 +761,6 @@ func maybeWriteSnippets(
 			return generatedEndpointToString(generatedClientEndpoints[i]) < generatedEndpointToString(generatedClientEndpoints[j])
 		},
 	)
-	// TODO: Clean this up.
 	var (
 		endpoints      []*generatorexec.Endpoint
 		usages         []*generatorexec.Endpoint

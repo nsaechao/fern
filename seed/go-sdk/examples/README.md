@@ -56,6 +56,39 @@ response, err := client.Echo(
 )
 ```
 
+## Request Options
+
+A variety of request options are included to adapt the behavior of the library,
+which includes configuring authorization tokens, or providing your own instrumented
+`*http.Client`. Both of these options are shown below:
+
+```go
+client := fernclient.NewClient(
+	option.WithToken(
+		"<YOUR_AUTH_TOKEN>",
+	),
+	option.WithBaseURL(
+		fern.Environments.Production,
+	),
+)
+response, err := client.Echo(
+	ctx,
+	"Hello world!\\n\\nwith\\n\\tnewlines",
+	option.WithHTTPClient(
+		&http.Client{
+			Timeout: 5 * time.Second,
+		},
+	),
+)
+```
+As you can see, these request options can either be specified on the client so that
+they're applied on _every_ request or for an individual request.
+
+> Providing your own `*http.Client` on the client constructor is recommended. Otherwise,
+> the `http.DefaultClient` is used, and your client will wait indefinitely for a response
+> (unless the per-request, context-based timeout is used).
+
+
 ## Errors
 
 Structured error types are returned from API calls that return non-success status codes.

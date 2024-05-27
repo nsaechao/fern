@@ -1585,6 +1585,17 @@ func newGeneratedEndpoint(
 			nil,
 			nil,
 		),
+		RequestOption: newEndpointSnippet(
+			f,
+			fernFilepath,
+			endpoint,
+			example,
+			rootClientInstantiation,
+			nil,
+			[]ast.Expr{
+				createRequestOptionParameter(),
+			},
+		),
 		Error: errorSnippet,
 		Timeout: newEndpointSnippet(
 			f,
@@ -1604,6 +1615,16 @@ func createContextWithTimeout() ast.Expr {
 defer cancel()
 
 `,
+	}
+}
+
+func createRequestOptionParameter() ast.Expr {
+	return &ast.Code{
+		Raw: `option.WithHTTPClient(
+			&http.Client{
+				Timeout: 5 * time.Second,
+			},
+		)`,
 	}
 }
 
