@@ -204,6 +204,8 @@ async function writeReadmeConfig({
 // TODO: This will need to be used in the remote generator, too.
 // We'll use this (or something similar) to call the remote generation
 // service with these values.
+//
+// TODO: Add support for the rest of the languages (e.g. TypeScript).
 async function generateReadmeConfig({
     organization,
     outputVersionOverride,
