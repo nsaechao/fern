@@ -173,7 +173,7 @@ async function writeReadmeConfig({
     workspaceTempDir: DirectoryResult;
     context: TaskContext;
 }): Promise<AbsoluteFilePath> {
-    // We can't use the IR used by the generator beacause it's shape is unknown.
+    // We can't use the IR used by the generator beacause its shape is unknown.
     //
     // Although duplicative, we'll generate the IR again and use it to find the
     // endpoint IDs referenced by the user-defined generator configuration.
@@ -189,8 +189,7 @@ async function writeReadmeConfig({
         organization,
         outputVersionOverride,
         intermediateRepresentation,
-        generatorInvocation,
-        context
+        generatorInvocation
     });
 
     const readmeConfigFile = await tmp.file({
@@ -202,18 +201,19 @@ async function writeReadmeConfig({
     return absolutePathToReadmeConfig;
 }
 
+// TODO: This will need to be used in the remote generator, too.
+// We'll use this (or something similar) to call the remote generation
+// service with these values.
 async function generateReadmeConfig({
     organization,
     outputVersionOverride,
     intermediateRepresentation,
-    generatorInvocation,
-    context
+    generatorInvocation
 }: {
     organization: string;
     outputVersionOverride: string | undefined;
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: generatorsYml.GeneratorInvocation;
-    context: TaskContext;
 }): Promise<FernGeneratorCli.ReadmeConfig> {
     return {
         organization,
@@ -229,63 +229,6 @@ async function generateReadmeConfig({
             generatorInvocation
         })
     };
-}
-
-// TODO: This is terribly inefficient. Refactor this.
-async function resolveFeatureEndpoints({
-    intermediateRepresentation,
-    generatorInvocation
-}: {
-    intermediateRepresentation: IntermediateRepresentation;
-    generatorInvocation: generatorsYml.GeneratorInvocation;
-}): Promise<Record<FernGeneratorCli.FeatureId, FernGeneratorCli.EndpointId[]>> {
-    const featureEndpoints: Record<FernGeneratorCli.FeatureId, FernGeneratorCli.EndpointId[]> = {};
-    for (const [featureId, endpoints] of Object.entries(generatorInvocation.readme?.features ?? {})) {
-        const endpointObjects = endpoints.map((endpoint) => getReadmeEndpointObject({ endpoint }));
-        const endpointIds: FernGeneratorCli.EndpointId[] = [];
-        let found = false;
-        for (const endpointObject of endpointObjects) {
-            for (const service of Object.values(intermediateRepresentation.services)) {
-                if (found) {
-                    break;
-                }
-                for (const endpoint of service.endpoints) {
-                    if (
-                        matchEndpointObjectToEndpoint({
-                            endpointObject,
-                            endpoint
-                        })
-                    ) {
-                        endpointIds.push(FernGeneratorCli.EndpointId(endpoint.id));
-                        found = true;
-                        break;
-                    }
-                }
-            }
-            if (!found) {
-                throw new Error(
-                    `Could not find endpoint with method ${endpointObject.method} and path ${endpointObject.path}`
-                );
-            }
-            found = false;
-        }
-        featureEndpoints[FernGeneratorCli.FeatureId(featureId)] = endpointIds;
-    }
-    return featureEndpoints;
-}
-
-function matchEndpointObjectToEndpoint({
-    endpointObject,
-    endpoint
-}: {
-    endpointObject: generatorsYml.ReadmeFeatureObjectSchema;
-    endpoint: HttpEndpoint;
-}): boolean {
-    return (
-        endpointObject.method === endpoint.method &&
-        getFullPathForEndpoint(endpoint) === endpointObject.path &&
-        (!endpointObject.stream || endpoint.response?.body?.type === "streaming")
-    );
 }
 
 async function getReadmePublishInfo({
@@ -329,39 +272,6 @@ async function getReadmePublishInfoForGithub({
         });
     }
     return undefined;
-}
-
-function getReadmeEndpointObject({
-    endpoint
-}: {
-    endpoint: generatorsYml.ReadmeFeatureSchema;
-}): generatorsYml.ReadmeFeatureObjectSchema {
-    if (typeof endpoint === "string") {
-        const split = endpoint.split(" ");
-        if (split.length !== 2 || split[0] == null || split[1] == null) {
-            throw new Error(`Invalid endpoint string: ${endpoint}`);
-        }
-        return {
-            method: split[0],
-            path: split[1]
-        };
-    }
-    return endpoint;
-}
-
-// TODO: Move this to the IR.
-function getFullPathForEndpoint(endpoint: HttpEndpoint): string {
-    let url = "";
-    if (endpoint.fullPath.head.length > 0) {
-        url = urlJoin(url, endpoint.fullPath.head);
-    }
-    for (const part of endpoint.fullPath.parts) {
-        url = urlJoin(url, "{" + part.pathParameter + "}");
-        if (part.tail.length > 0) {
-            url = urlJoin(url, part.tail);
-        }
-    }
-    return url.startsWith("/") ? url : `/${url}`;
 }
 
 async function writeIrToFile({
@@ -478,4 +388,95 @@ export async function runGenerator({
         binds,
         removeAfterCompletion: !keepDocker
     });
+}
+
+// TODO: We don't actually support setting this in seed yet, so this is effectively a no-op.
+// TODO: This is terribly inefficient. Refactor this.
+async function resolveFeatureEndpoints({
+    intermediateRepresentation,
+    generatorInvocation
+}: {
+    intermediateRepresentation: IntermediateRepresentation;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+}): Promise<Record<FernGeneratorCli.FeatureId, FernGeneratorCli.EndpointId[]>> {
+    const featureEndpoints: Record<FernGeneratorCli.FeatureId, FernGeneratorCli.EndpointId[]> = {};
+    for (const [featureId, endpoints] of Object.entries(generatorInvocation.readme?.features ?? {})) {
+        const endpointObjects = endpoints.map((endpoint) => getReadmeEndpointObject({ endpoint }));
+        const endpointIds: FernGeneratorCli.EndpointId[] = [];
+        let found = false;
+        for (const endpointObject of endpointObjects) {
+            for (const service of Object.values(intermediateRepresentation.services)) {
+                if (found) {
+                    break;
+                }
+                for (const endpoint of service.endpoints) {
+                    if (
+                        matchEndpointObjectToEndpoint({
+                            endpointObject,
+                            endpoint
+                        })
+                    ) {
+                        endpointIds.push(FernGeneratorCli.EndpointId(endpoint.id));
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (!found) {
+                throw new Error(
+                    `Could not find endpoint with method ${endpointObject.method} and path ${endpointObject.path}`
+                );
+            }
+            found = false;
+        }
+        featureEndpoints[FernGeneratorCli.FeatureId(featureId)] = endpointIds;
+    }
+    return featureEndpoints;
+}
+
+function matchEndpointObjectToEndpoint({
+    endpointObject,
+    endpoint
+}: {
+    endpointObject: generatorsYml.ReadmeFeatureObjectSchema;
+    endpoint: HttpEndpoint;
+}): boolean {
+    return (
+        endpointObject.method === endpoint.method &&
+        getFullPathForEndpoint(endpoint) === endpointObject.path &&
+        (!endpointObject.stream || endpoint.response?.body?.type === "streaming")
+    );
+}
+
+// TODO: Move this to the IR.
+function getFullPathForEndpoint(endpoint: HttpEndpoint): string {
+    let url = "";
+    if (endpoint.fullPath.head.length > 0) {
+        url = urlJoin(url, endpoint.fullPath.head);
+    }
+    for (const part of endpoint.fullPath.parts) {
+        url = urlJoin(url, "{" + part.pathParameter + "}");
+        if (part.tail.length > 0) {
+            url = urlJoin(url, part.tail);
+        }
+    }
+    return url.startsWith("/") ? url : `/${url}`;
+}
+
+function getReadmeEndpointObject({
+    endpoint
+}: {
+    endpoint: generatorsYml.ReadmeFeatureSchema;
+}): generatorsYml.ReadmeFeatureObjectSchema {
+    if (typeof endpoint === "string") {
+        const split = endpoint.split(" ");
+        if (split.length !== 2 || split[0] == null || split[1] == null) {
+            throw new Error(`Invalid endpoint string: ${endpoint}`);
+        }
+        return {
+            method: split[0],
+            path: split[1]
+        };
+    }
+    return endpoint;
 }
