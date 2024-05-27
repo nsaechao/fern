@@ -95,7 +95,6 @@ export class LocalTaskHandler {
                 join(this.absolutePathToLocalOutput, RelativeFilePath.of(README_FILENAME))
             );
             const args = [
-                "/Users/alex/code/fern/fern-platform/packages/generator-cli/dist/cli.cjs",
                 "generate",
                 "readme",
                 "--readme-config",
@@ -108,7 +107,7 @@ export class LocalTaskHandler {
             if (await doesPathExist(absolutePathToReadme)) {
                 args.push(...["--original-readme", absolutePathToReadme as string]);
             }
-            const response = await loggingExeca(this.context.logger, "node", args, {
+            const response = await loggingExeca(this.context.logger, "generator-cli", args, {
                 doNotPipeOutput: true
             });
             await writeFile(absolutePathToReadme, response.stdout);
