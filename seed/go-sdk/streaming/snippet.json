@@ -1,4 +1,7 @@
 {
+    "types": {
+        "_type": "placeholder"
+    },
     "endpoints": [
         {
             "id": {
@@ -8,8 +11,52 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tv2 \"github.com/fern-api/stream-go/v2\"\n\tv2client \"github.com/fern-api/stream-go/v2/client\"\n)\n\nclient := v2client.NewClient()\nresponse, err := client.Dummy.GenerateStream(\n\tcontext.TODO(),\n\t\u0026v2.GenerateStreamRequestzs{\n\t\tNumEvents: 1,\n\t},\n)\n"
+                "client": "import (\n\tv2 \"github.com/fern-api/stream-go/v2\"\n\tv2client \"github.com/fern-api/stream-go/v2/client\"\n)\n\nclient := v2client.NewClient()\nresponse, err := client.Dummy.GenerateStream(\n\tctx,\n\t\u0026v2.GenerateStreamRequestzs{\n\t\tNumEvents: 1,\n\t},\n)\n"
             }
         }
+    ],
+    "features": {
+        "REQUEST_OPTIONS": [
+            {
+                "id": {
+                    "path": "/generate-stream",
+                    "method": "POST",
+                    "identifier_override": "endpoint_dummy.generate-stream"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := v2client.NewClient()\nresponse, err := client.Dummy.GenerateStream(\n\tctx,\n\t\u0026v2.GenerateStreamRequestzs{\n\t\tNumEvents: 1,\n\t},\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            }
+        ],
+        "TIMEOUTS": [
+            {
+                "id": {
+                    "path": "/generate-stream",
+                    "method": "POST",
+                    "identifier_override": "endpoint_dummy.generate-stream"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Dummy.GenerateStream(\n\tctx,\n\t\u0026v2.GenerateStreamRequestzs{\n\t\tNumEvents: 1,\n\t},\n)\n"
+                }
+            }
+        ],
+        "USAGE": [
+            {
+                "id": {
+                    "path": "/generate-stream",
+                    "method": "POST",
+                    "identifier_override": "endpoint_dummy.generate-stream"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tv2 \"github.com/fern-api/stream-go/v2\"\n\tv2client \"github.com/fern-api/stream-go/v2/client\"\n)\n\nclient := v2client.NewClient()\nresponse, err := client.Dummy.GenerateStream(\n\tctx,\n\t\u0026v2.GenerateStreamRequestzs{\n\t\tNumEvents: 1,\n\t},\n)\n"
+                }
+            }
+        ]
+    },
+    "requirements": [
+        "Go version \u003e= 1.18"
     ]
 }

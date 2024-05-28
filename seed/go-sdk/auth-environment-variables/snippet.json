@@ -1,4 +1,7 @@
 {
+    "types": {
+        "_type": "placeholder"
+    },
     "endpoints": [
         {
             "id": {
@@ -8,7 +11,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/auth-environment-variables/fern/client\"\n\toption \"github.com/auth-environment-variables/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Service.GetWithApiKey(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tfernclient \"github.com/auth-environment-variables/fern/client\"\n\toption \"github.com/auth-environment-variables/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Service.GetWithApiKey(\n\tctx,\n)\n"
             }
         },
         {
@@ -19,8 +22,85 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/auth-environment-variables/fern\"\n\tfernclient \"github.com/auth-environment-variables/fern/client\"\n\toption \"github.com/auth-environment-variables/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Service.GetWithHeader(\n\tcontext.TODO(),\n\t\u0026fern.HeaderAuthRequest{\n\t\tXEndpointHeader: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tfern \"github.com/auth-environment-variables/fern\"\n\tfernclient \"github.com/auth-environment-variables/fern/client\"\n\toption \"github.com/auth-environment-variables/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Service.GetWithHeader(\n\tctx,\n\t\u0026fern.HeaderAuthRequest{\n\t\tXEndpointHeader: \"string\",\n\t},\n)\n"
             }
         }
+    ],
+    "features": {
+        "REQUEST_OPTIONS": [
+            {
+                "id": {
+                    "path": "/apiKey",
+                    "method": "GET",
+                    "identifier_override": "endpoint_service.getWithApiKey"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Service.GetWithApiKey(\n\tctx,\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/apiKeyInHeader",
+                    "method": "GET",
+                    "identifier_override": "endpoint_service.getWithHeader"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Service.GetWithHeader(\n\tctx,\n\t\u0026fern.HeaderAuthRequest{\n\t\tXEndpointHeader: \"string\",\n\t},\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            }
+        ],
+        "TIMEOUTS": [
+            {
+                "id": {
+                    "path": "/apiKey",
+                    "method": "GET",
+                    "identifier_override": "endpoint_service.getWithApiKey"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Service.GetWithApiKey(\n\tctx,\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/apiKeyInHeader",
+                    "method": "GET",
+                    "identifier_override": "endpoint_service.getWithHeader"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Service.GetWithHeader(\n\tctx,\n\t\u0026fern.HeaderAuthRequest{\n\t\tXEndpointHeader: \"string\",\n\t},\n)\n"
+                }
+            }
+        ],
+        "USAGE": [
+            {
+                "id": {
+                    "path": "/apiKey",
+                    "method": "GET",
+                    "identifier_override": "endpoint_service.getWithApiKey"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tfernclient \"github.com/auth-environment-variables/fern/client\"\n\toption \"github.com/auth-environment-variables/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Service.GetWithApiKey(\n\tctx,\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/apiKeyInHeader",
+                    "method": "GET",
+                    "identifier_override": "endpoint_service.getWithHeader"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tfern \"github.com/auth-environment-variables/fern\"\n\tfernclient \"github.com/auth-environment-variables/fern/client\"\n\toption \"github.com/auth-environment-variables/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithApiKey(\n\t\t\"\u003cYOUR_ApiKey\u003e\",\n\t),\n)\nresponse, err := client.Service.GetWithHeader(\n\tctx,\n\t\u0026fern.HeaderAuthRequest{\n\t\tXEndpointHeader: \"string\",\n\t},\n)\n"
+                }
+            }
+        ]
+    },
+    "requirements": [
+        "Go version \u003e= 1.13"
     ]
 }

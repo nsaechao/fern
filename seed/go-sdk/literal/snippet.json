@@ -1,4 +1,7 @@
 {
+    "types": {
+        "_type": "placeholder"
+    },
     "endpoints": [
         {
             "id": {
@@ -8,7 +11,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Headers.Send(\n\tcontext.TODO(),\n\t\u0026fern.SendLiteralsInHeadersRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
+                "client": "import (\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Headers.Send(\n\tctx,\n\t\u0026fern.SendLiteralsInHeadersRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
             }
         },
         {
@@ -19,7 +22,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Inlined.Send(\n\tcontext.TODO(),\n\t\u0026fern.SendLiteralsInlinedRequest{\n\t\tTemperature: fern.Float64(\n\t\t\t10.1,\n\t\t),\n\t},\n)\n"
+                "client": "import (\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Inlined.Send(\n\tctx,\n\t\u0026fern.SendLiteralsInlinedRequest{\n\t\tTemperature: fern.Float64(\n\t\t\t10.1,\n\t\t),\n\t},\n)\n"
             }
         },
         {
@@ -30,7 +33,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Path.Send(\n\tcontext.TODO(),\n\t\"123\",\n)\n"
+                "client": "import fernclient \"github.com/literal/fern/client\"\n\nclient := fernclient.NewClient()\nresponse, err := client.Path.Send(\n\tctx,\n\t\"123\",\n)\n"
             }
         },
         {
@@ -41,7 +44,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Query.Send(\n\tcontext.TODO(),\n\t\u0026fern.SendLiteralsInQueryRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
+                "client": "import (\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Query.Send(\n\tctx,\n\t\u0026fern.SendLiteralsInQueryRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
             }
         },
         {
@@ -52,8 +55,184 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Reference.Send(\n\tcontext.TODO(),\n\t\u0026fern.SendRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
+                "client": "import (\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Reference.Send(\n\tctx,\n\t\u0026fern.SendRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
             }
         }
+    ],
+    "features": {
+        "REQUEST_OPTIONS": [
+            {
+                "id": {
+                    "path": "/headers",
+                    "method": "POST",
+                    "identifier_override": "endpoint_headers.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nresponse, err := client.Headers.Send(\n\tctx,\n\t\u0026fern.SendLiteralsInHeadersRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/inlined",
+                    "method": "POST",
+                    "identifier_override": "endpoint_inlined.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nresponse, err := client.Inlined.Send(\n\tctx,\n\t\u0026fern.SendLiteralsInlinedRequest{\n\t\tTemperature: fern.Float64(\n\t\t\t10.1,\n\t\t),\n\t},\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/path/{id}",
+                    "method": "POST",
+                    "identifier_override": "endpoint_path.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nresponse, err := client.Path.Send(\n\tctx,\n\t\"123\",\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/query",
+                    "method": "POST",
+                    "identifier_override": "endpoint_query.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nresponse, err := client.Query.Send(\n\tctx,\n\t\u0026fern.SendLiteralsInQueryRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/reference",
+                    "method": "POST",
+                    "identifier_override": "endpoint_reference.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nresponse, err := client.Reference.Send(\n\tctx,\n\t\u0026fern.SendRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            }
+        ],
+        "TIMEOUTS": [
+            {
+                "id": {
+                    "path": "/headers",
+                    "method": "POST",
+                    "identifier_override": "endpoint_headers.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Headers.Send(\n\tctx,\n\t\u0026fern.SendLiteralsInHeadersRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/inlined",
+                    "method": "POST",
+                    "identifier_override": "endpoint_inlined.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Inlined.Send(\n\tctx,\n\t\u0026fern.SendLiteralsInlinedRequest{\n\t\tTemperature: fern.Float64(\n\t\t\t10.1,\n\t\t),\n\t},\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/path/{id}",
+                    "method": "POST",
+                    "identifier_override": "endpoint_path.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Path.Send(\n\tctx,\n\t\"123\",\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/query",
+                    "method": "POST",
+                    "identifier_override": "endpoint_query.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Query.Send(\n\tctx,\n\t\u0026fern.SendLiteralsInQueryRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/reference",
+                    "method": "POST",
+                    "identifier_override": "endpoint_reference.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Reference.Send(\n\tctx,\n\t\u0026fern.SendRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
+                }
+            }
+        ],
+        "USAGE": [
+            {
+                "id": {
+                    "path": "/headers",
+                    "method": "POST",
+                    "identifier_override": "endpoint_headers.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Headers.Send(\n\tctx,\n\t\u0026fern.SendLiteralsInHeadersRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/inlined",
+                    "method": "POST",
+                    "identifier_override": "endpoint_inlined.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Inlined.Send(\n\tctx,\n\t\u0026fern.SendLiteralsInlinedRequest{\n\t\tTemperature: fern.Float64(\n\t\t\t10.1,\n\t\t),\n\t},\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/path/{id}",
+                    "method": "POST",
+                    "identifier_override": "endpoint_path.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import fernclient \"github.com/literal/fern/client\"\n\nclient := fernclient.NewClient()\nresponse, err := client.Path.Send(\n\tctx,\n\t\"123\",\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/query",
+                    "method": "POST",
+                    "identifier_override": "endpoint_query.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Query.Send(\n\tctx,\n\t\u0026fern.SendLiteralsInQueryRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/reference",
+                    "method": "POST",
+                    "identifier_override": "endpoint_reference.send"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tfern \"github.com/literal/fern\"\n\tfernclient \"github.com/literal/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Reference.Send(\n\tctx,\n\t\u0026fern.SendRequest{\n\t\tQuery: \"What is the weather today\",\n\t},\n)\n"
+                }
+            }
+        ]
+    },
+    "requirements": [
+        "Go version \u003e= 1.13"
     ]
 }

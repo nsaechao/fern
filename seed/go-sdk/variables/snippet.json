@@ -1,4 +1,7 @@
 {
+    "types": {
+        "_type": "placeholder"
+    },
     "endpoints": [
         {
             "id": {
@@ -8,8 +11,52 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/variables/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Service.Post(\n\tcontext.TODO(),\n\t\"string\",\n)\n"
+                "client": "import fernclient \"github.com/variables/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.Service.Post(\n\tctx,\n\t\"string\",\n)\n"
             }
         }
+    ],
+    "features": {
+        "REQUEST_OPTIONS": [
+            {
+                "id": {
+                    "path": "/{endpointParam}",
+                    "method": "POST",
+                    "identifier_override": "endpoint_service.post"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nerr := client.Service.Post(\n\tctx,\n\t\"string\",\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            }
+        ],
+        "TIMEOUTS": [
+            {
+                "id": {
+                    "path": "/{endpointParam}",
+                    "method": "POST",
+                    "identifier_override": "endpoint_service.post"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nerr := client.Service.Post(\n\tctx,\n\t\"string\",\n)\n"
+                }
+            }
+        ],
+        "USAGE": [
+            {
+                "id": {
+                    "path": "/{endpointParam}",
+                    "method": "POST",
+                    "identifier_override": "endpoint_service.post"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import fernclient \"github.com/variables/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.Service.Post(\n\tctx,\n\t\"string\",\n)\n"
+                }
+            }
+        ]
+    },
+    "requirements": [
+        "Go version \u003e= 1.13"
     ]
 }

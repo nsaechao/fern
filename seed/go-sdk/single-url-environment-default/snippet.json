@@ -1,4 +1,7 @@
 {
+    "types": {
+        "_type": "placeholder"
+    },
     "endpoints": [
         {
             "id": {
@@ -8,8 +11,52 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/single-url-environment-default/fern/client\"\n\toption \"github.com/single-url-environment-default/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Dummy.GetDummy(\n\tcontext.TODO(),\n)\n"
+                "client": "import (\n\tfernclient \"github.com/single-url-environment-default/fern/client\"\n\toption \"github.com/single-url-environment-default/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Dummy.GetDummy(\n\tctx,\n)\n"
             }
         }
+    ],
+    "features": {
+        "REQUEST_OPTIONS": [
+            {
+                "id": {
+                    "path": "/dummy",
+                    "method": "GET",
+                    "identifier_override": "endpoint_dummy.getDummy"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Dummy.GetDummy(\n\tctx,\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            }
+        ],
+        "TIMEOUTS": [
+            {
+                "id": {
+                    "path": "/dummy",
+                    "method": "GET",
+                    "identifier_override": "endpoint_dummy.getDummy"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Dummy.GetDummy(\n\tctx,\n)\n"
+                }
+            }
+        ],
+        "USAGE": [
+            {
+                "id": {
+                    "path": "/dummy",
+                    "method": "GET",
+                    "identifier_override": "endpoint_dummy.getDummy"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tfernclient \"github.com/single-url-environment-default/fern/client\"\n\toption \"github.com/single-url-environment-default/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.Dummy.GetDummy(\n\tctx,\n)\n"
+                }
+            }
+        ]
+    },
+    "requirements": [
+        "Go version \u003e= 1.13"
     ]
 }

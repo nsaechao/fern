@@ -1,4 +1,7 @@
 {
+    "types": {
+        "_type": "placeholder"
+    },
     "endpoints": [
         {
             "id": {
@@ -8,7 +11,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/multi-url-environment/fern\"\n\tfernclient \"github.com/multi-url-environment/fern/client\"\n\toption \"github.com/multi-url-environment/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Ec2.BootInstance(\n\tcontext.TODO(),\n\t\u0026fern.BootInstanceRequest{\n\t\tSize: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tfern \"github.com/multi-url-environment/fern\"\n\tfernclient \"github.com/multi-url-environment/fern/client\"\n\toption \"github.com/multi-url-environment/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Ec2.BootInstance(\n\tctx,\n\t\u0026fern.BootInstanceRequest{\n\t\tSize: \"string\",\n\t},\n)\n"
             }
         },
         {
@@ -19,8 +22,85 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/multi-url-environment/fern\"\n\tfernclient \"github.com/multi-url-environment/fern/client\"\n\toption \"github.com/multi-url-environment/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.S3.GetPresignedUrl(\n\tcontext.TODO(),\n\t\u0026fern.GetPresignedUrlRequest{\n\t\tS3Key: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tfern \"github.com/multi-url-environment/fern\"\n\tfernclient \"github.com/multi-url-environment/fern/client\"\n\toption \"github.com/multi-url-environment/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.S3.GetPresignedUrl(\n\tctx,\n\t\u0026fern.GetPresignedUrlRequest{\n\t\tS3Key: \"string\",\n\t},\n)\n"
             }
         }
+    ],
+    "features": {
+        "REQUEST_OPTIONS": [
+            {
+                "id": {
+                    "path": "/ec2/boot",
+                    "method": "POST",
+                    "identifier_override": "endpoint_ec2.bootInstance"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Ec2.BootInstance(\n\tctx,\n\t\u0026fern.BootInstanceRequest{\n\t\tSize: \"string\",\n\t},\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/s3/presigned-url",
+                    "method": "POST",
+                    "identifier_override": "endpoint_s3.getPresignedUrl"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.S3.GetPresignedUrl(\n\tctx,\n\t\u0026fern.GetPresignedUrlRequest{\n\t\tS3Key: \"string\",\n\t},\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            }
+        ],
+        "TIMEOUTS": [
+            {
+                "id": {
+                    "path": "/ec2/boot",
+                    "method": "POST",
+                    "identifier_override": "endpoint_ec2.bootInstance"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nerr := client.Ec2.BootInstance(\n\tctx,\n\t\u0026fern.BootInstanceRequest{\n\t\tSize: \"string\",\n\t},\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/s3/presigned-url",
+                    "method": "POST",
+                    "identifier_override": "endpoint_s3.getPresignedUrl"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.S3.GetPresignedUrl(\n\tctx,\n\t\u0026fern.GetPresignedUrlRequest{\n\t\tS3Key: \"string\",\n\t},\n)\n"
+                }
+            }
+        ],
+        "USAGE": [
+            {
+                "id": {
+                    "path": "/ec2/boot",
+                    "method": "POST",
+                    "identifier_override": "endpoint_ec2.bootInstance"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tfern \"github.com/multi-url-environment/fern\"\n\tfernclient \"github.com/multi-url-environment/fern/client\"\n\toption \"github.com/multi-url-environment/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nerr := client.Ec2.BootInstance(\n\tctx,\n\t\u0026fern.BootInstanceRequest{\n\t\tSize: \"string\",\n\t},\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/s3/presigned-url",
+                    "method": "POST",
+                    "identifier_override": "endpoint_s3.getPresignedUrl"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tfern \"github.com/multi-url-environment/fern\"\n\tfernclient \"github.com/multi-url-environment/fern/client\"\n\toption \"github.com/multi-url-environment/fern/option\"\n)\n\nclient := fernclient.NewClient(\n\toption.WithToken(\n\t\t\"\u003cYOUR_AUTH_TOKEN\u003e\",\n\t),\n)\nresponse, err := client.S3.GetPresignedUrl(\n\tctx,\n\t\u0026fern.GetPresignedUrlRequest{\n\t\tS3Key: \"string\",\n\t},\n)\n"
+                }
+            }
+        ]
+    },
+    "requirements": [
+        "Go version \u003e= 1.13"
     ]
 }

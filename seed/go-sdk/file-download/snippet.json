@@ -1,4 +1,7 @@
 {
+    "types": {
+        "_type": "placeholder"
+    },
     "endpoints": [
         {
             "id": {
@@ -8,8 +11,52 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/file-download/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.DownloadFile(\n\tcontext.TODO(),\n)\n"
+                "client": "import fernclient \"github.com/file-download/fern/client\"\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.DownloadFile(\n\tctx,\n)\n"
             }
         }
+    ],
+    "features": {
+        "REQUEST_OPTIONS": [
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_service.downloadFile"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nresponse, err := client.Service.DownloadFile(\n\tctx,\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            }
+        ],
+        "TIMEOUTS": [
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_service.downloadFile"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Service.DownloadFile(\n\tctx,\n)\n"
+                }
+            }
+        ],
+        "USAGE": [
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_service.downloadFile"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import fernclient \"github.com/file-download/fern/client\"\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.DownloadFile(\n\tctx,\n)\n"
+                }
+            }
+        ]
+    },
+    "requirements": [
+        "Go version \u003e= 1.13"
     ]
 }

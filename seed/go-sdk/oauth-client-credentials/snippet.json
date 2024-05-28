@@ -1,4 +1,7 @@
 {
+    "types": {
+        "_type": "placeholder"
+    },
     "endpoints": [
         {
             "id": {
@@ -8,7 +11,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials/fern\"\n\tfernclient \"github.com/oauth-client-credentials/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tcontext.TODO(),\n\t\u0026fern.GetTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tfern \"github.com/oauth-client-credentials/fern\"\n\tfernclient \"github.com/oauth-client-credentials/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tctx,\n\t\u0026fern.GetTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t},\n)\n"
             }
         },
         {
@@ -19,8 +22,85 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/oauth-client-credentials/fern\"\n\tfernclient \"github.com/oauth-client-credentials/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.RefreshToken(\n\tcontext.TODO(),\n\t\u0026fern.RefreshTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t\tRefreshToken: \"string\",\n\t},\n)\n"
+                "client": "import (\n\tfern \"github.com/oauth-client-credentials/fern\"\n\tfernclient \"github.com/oauth-client-credentials/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.RefreshToken(\n\tctx,\n\t\u0026fern.RefreshTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t\tRefreshToken: \"string\",\n\t},\n)\n"
             }
         }
+    ],
+    "features": {
+        "REQUEST_OPTIONS": [
+            {
+                "id": {
+                    "path": "/token",
+                    "method": "POST",
+                    "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tctx,\n\t\u0026fern.GetTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t},\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/token",
+                    "method": "POST",
+                    "identifier_override": "endpoint_auth.refreshToken"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nresponse, err := client.Auth.RefreshToken(\n\tctx,\n\t\u0026fern.RefreshTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t\tRefreshToken: \"string\",\n\t},\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            }
+        ],
+        "TIMEOUTS": [
+            {
+                "id": {
+                    "path": "/token",
+                    "method": "POST",
+                    "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tctx,\n\t\u0026fern.GetTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t},\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/token",
+                    "method": "POST",
+                    "identifier_override": "endpoint_auth.refreshToken"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Auth.RefreshToken(\n\tctx,\n\t\u0026fern.RefreshTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t\tRefreshToken: \"string\",\n\t},\n)\n"
+                }
+            }
+        ],
+        "USAGE": [
+            {
+                "id": {
+                    "path": "/token",
+                    "method": "POST",
+                    "identifier_override": "endpoint_auth.getTokenWithClientCredentials"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tfern \"github.com/oauth-client-credentials/fern\"\n\tfernclient \"github.com/oauth-client-credentials/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.GetTokenWithClientCredentials(\n\tctx,\n\t\u0026fern.GetTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t},\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/token",
+                    "method": "POST",
+                    "identifier_override": "endpoint_auth.refreshToken"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tfern \"github.com/oauth-client-credentials/fern\"\n\tfernclient \"github.com/oauth-client-credentials/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Auth.RefreshToken(\n\tctx,\n\t\u0026fern.RefreshTokenRequest{\n\t\tClientId:     \"string\",\n\t\tClientSecret: \"string\",\n\t\tRefreshToken: \"string\",\n\t},\n)\n"
+                }
+            }
+        ]
+    },
+    "requirements": [
+        "Go version \u003e= 1.13"
     ]
 }

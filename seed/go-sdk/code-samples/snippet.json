@@ -1,4 +1,7 @@
 {
+    "types": {
+        "_type": "placeholder"
+    },
     "endpoints": [
         {
             "id": {
@@ -8,8 +11,52 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/code-samples/fern\"\n\tfernclient \"github.com/code-samples/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Hello(\n\tcontext.TODO(),\n\t\u0026fern.MyRequest{\n\t\tNumEvents: 5,\n\t},\n)\n"
+                "client": "import (\n\tfern \"github.com/code-samples/fern\"\n\tfernclient \"github.com/code-samples/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Hello(\n\tctx,\n\t\u0026fern.MyRequest{\n\t\tNumEvents: 5,\n\t},\n)\n"
             }
         }
+    ],
+    "features": {
+        "REQUEST_OPTIONS": [
+            {
+                "id": {
+                    "path": "/hello",
+                    "method": "POST",
+                    "identifier_override": "endpoint_service.hello"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nresponse, err := client.Service.Hello(\n\tctx,\n\t\u0026fern.MyRequest{\n\t\tNumEvents: 5,\n\t},\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            }
+        ],
+        "TIMEOUTS": [
+            {
+                "id": {
+                    "path": "/hello",
+                    "method": "POST",
+                    "identifier_override": "endpoint_service.hello"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nresponse, err := client.Service.Hello(\n\tctx,\n\t\u0026fern.MyRequest{\n\t\tNumEvents: 5,\n\t},\n)\n"
+                }
+            }
+        ],
+        "USAGE": [
+            {
+                "id": {
+                    "path": "/hello",
+                    "method": "POST",
+                    "identifier_override": "endpoint_service.hello"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import (\n\tfern \"github.com/code-samples/fern\"\n\tfernclient \"github.com/code-samples/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Service.Hello(\n\tctx,\n\t\u0026fern.MyRequest{\n\t\tNumEvents: 5,\n\t},\n)\n"
+                }
+            }
+        ]
+    },
+    "requirements": [
+        "Go version \u003e= 1.13"
     ]
 }

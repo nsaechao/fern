@@ -1,5 +1,19 @@
 {
+    "types": {
+        "_type": "placeholder"
+    },
     "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST",
+                "identifier_override": "endpoint_.foo"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import fernclient \"github.com/folders/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.Foo(\n\tctx,\n)\n"
+            }
+        },
         {
             "id": {
                 "path": "/",
@@ -8,7 +22,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.A.B.Foo(\n\tcontext.TODO(),\n)\n"
+                "client": "import fernclient \"github.com/folders/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.A.B.Foo(\n\tctx,\n)\n"
             }
         },
         {
@@ -19,7 +33,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.A.C.Foo(\n\tcontext.TODO(),\n)\n"
+                "client": "import fernclient \"github.com/folders/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.A.C.Foo(\n\tctx,\n)\n"
             }
         },
         {
@@ -30,18 +44,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Folder.Foo(\n\tcontext.TODO(),\n)\n"
-            }
-        },
-        {
-            "id": {
-                "path": "/",
-                "method": "POST",
-                "identifier_override": "endpoint_.foo"
-            },
-            "snippet": {
-                "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Foo(\n\tcontext.TODO(),\n)\n"
+                "client": "import fernclient \"github.com/folders/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.Folder.Foo(\n\tctx,\n)\n"
             }
         },
         {
@@ -52,7 +55,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Folder.Service.Endpoint(\n\tcontext.TODO(),\n)\n"
+                "client": "import fernclient \"github.com/folders/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.Folder.Service.Endpoint(\n\tctx,\n)\n"
             }
         },
         {
@@ -63,8 +66,230 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/folders/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Folder.Service.UnknownRequest(\n\tcontext.TODO(),\n\tmap[string]interface{}{\n\t\t\"key\": \"value\",\n\t},\n)\n"
+                "client": "import fernclient \"github.com/folders/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.Folder.Service.UnknownRequest(\n\tctx,\n\tmap[string]interface{}{\n\t\t\"key\": \"value\",\n\t},\n)\n"
             }
         }
+    ],
+    "features": {
+        "ERRORS": [
+            {
+                "id": {
+                    "path": "/service",
+                    "method": "POST",
+                    "identifier_override": "endpoint_folder/service.unknownRequest"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "err := client.Folder.Service.UnknownRequest(\n\tctx,\n\tmap[string]interface{}{\n\t\t\"key\": \"value\",\n\t},\n)\nif err != nil {\n\tvar apiError *core.APIError\n\tif errors.As(err, \u0026apiError) {\n\t\t// Handle the error.\n\t}\n\treturn nil, err\n}\n"
+                }
+            }
+        ],
+        "REQUEST_OPTIONS": [
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_.foo"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nerr := client.Foo(\n\tctx,\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_a/b.foo"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nerr := client.A.B.Foo(\n\tctx,\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_a/c.foo"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nerr := client.A.C.Foo(\n\tctx,\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_folder.foo"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nerr := client.Folder.Foo(\n\tctx,\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/service",
+                    "method": "GET",
+                    "identifier_override": "endpoint_folder/service.endpoint"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nerr := client.Folder.Service.Endpoint(\n\tctx,\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/service",
+                    "method": "POST",
+                    "identifier_override": "endpoint_folder/service.unknownRequest"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "client := fernclient.NewClient()\nerr := client.Folder.Service.UnknownRequest(\n\tctx,\n\tmap[string]interface{}{\n\t\t\"key\": \"value\",\n\t},\n\toption.WithHTTPClient(\n\t\t\u0026http.Client{\n\t\t\tTimeout: 5 * time.Second,\n\t\t},\n\t),\n)\n"
+                }
+            }
+        ],
+        "TIMEOUTS": [
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_.foo"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nerr := client.Foo(\n\tctx,\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_a/b.foo"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nerr := client.A.B.Foo(\n\tctx,\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_a/c.foo"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nerr := client.A.C.Foo(\n\tctx,\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_folder.foo"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nerr := client.Folder.Foo(\n\tctx,\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/service",
+                    "method": "GET",
+                    "identifier_override": "endpoint_folder/service.endpoint"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nerr := client.Folder.Service.Endpoint(\n\tctx,\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/service",
+                    "method": "POST",
+                    "identifier_override": "endpoint_folder/service.unknownRequest"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "ctx, cancel := context.WithTimeout(context.Background(), time.Second)\ndefer cancel()\n\nerr := client.Folder.Service.UnknownRequest(\n\tctx,\n\tmap[string]interface{}{\n\t\t\"key\": \"value\",\n\t},\n)\n"
+                }
+            }
+        ],
+        "USAGE": [
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_.foo"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import fernclient \"github.com/folders/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.Foo(\n\tctx,\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_a/b.foo"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import fernclient \"github.com/folders/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.A.B.Foo(\n\tctx,\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_a/c.foo"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import fernclient \"github.com/folders/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.A.C.Foo(\n\tctx,\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/",
+                    "method": "POST",
+                    "identifier_override": "endpoint_folder.foo"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import fernclient \"github.com/folders/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.Folder.Foo(\n\tctx,\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/service",
+                    "method": "GET",
+                    "identifier_override": "endpoint_folder/service.endpoint"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import fernclient \"github.com/folders/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.Folder.Service.Endpoint(\n\tctx,\n)\n"
+                }
+            },
+            {
+                "id": {
+                    "path": "/service",
+                    "method": "POST",
+                    "identifier_override": "endpoint_folder/service.unknownRequest"
+                },
+                "snippet": {
+                    "type": "go",
+                    "client": "import fernclient \"github.com/folders/fern/client\"\n\nclient := fernclient.NewClient()\nerr := client.Folder.Service.UnknownRequest(\n\tctx,\n\tmap[string]interface{}{\n\t\t\"key\": \"value\",\n\t},\n)\n"
+                }
+            }
+        ]
+    },
+    "requirements": [
+        "Go version \u003e= 1.13"
     ]
 }
