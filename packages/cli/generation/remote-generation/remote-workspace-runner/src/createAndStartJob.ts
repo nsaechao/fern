@@ -81,6 +81,7 @@ async function createJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
+    // TODO: Map the GeneratorInvocation's ReadmeConfig to the FernFiddle.ReadmeConfig.
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
         id: generatorInvocation.name,
         version: generatorInvocation.version,
