@@ -7,6 +7,7 @@ import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
+from fern_python.pydantic_codegen.pydantic_field import PydanticField
 
 from ..core_utilities import CoreUtilities
 
@@ -88,4 +89,10 @@ class PydanticGeneratorContext(ABC):
 
     @abstractmethod
     def get_all_properties_including_extensions(self, type_id: ir_types.TypeId) -> List[ir_types.ObjectProperty]:
+        ...
+
+    # Returns the defaulted discriminant fields for the object if the same field is not used
+    # in multiple union discriminant fields.
+    @abstractmethod
+    def get_union_discriminant_fields(self, type_id: ir_types.TypeId, should_reuse_union_members: bool) -> List[PydanticField]:
         ...

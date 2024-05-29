@@ -88,6 +88,14 @@ class FernAwarePydanticModel:
     def get_class_name(self) -> str:
         return self._class_name
 
+    def add_created_field(
+        self,
+        *,
+        field: PydanticField,
+    ) -> PydanticField:
+        self._pydantic_model.add_field(field)
+        return field
+
     def add_field(
         self,
         *,

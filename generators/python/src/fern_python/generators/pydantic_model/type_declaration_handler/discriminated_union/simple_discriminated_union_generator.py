@@ -79,12 +79,12 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
         return extended_types
 
     def generate(self) -> None:
-        single_union_type_references: List[LocalClassReference] = []
+        single_union_type_references: List[ClassReference] = []
         all_referenced_types: List[ir_types.TypeReference] = []
 
         class_reference_for_base = None
+        is_base_class_name_present = False
         if len(self._union.base_properties) > 0:
-            is_base_class_name_present = False
             for single_union_type in self._union.types:
                 type_union = single_union_type.shape.get_as_union()
                 if (
@@ -109,15 +109,24 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 snippet=self._snippet,
                 should_export=False,
             ) as base_union_pydantic_model:
+                defaulted_discriminant_fields = self._context.get_union_discriminant_fields(self._name.type_id, should_reuse_union_members=self._custom_config.reuse_union_members)
+                defaulted_discriminant_field_names = [field.name for field in defaulted_discriminant_fields]
+
                 for property in self._union.base_properties:
+                    property_name = property.name.name.snake_case.safe_name
+                    if property_name in defaulted_discriminant_field_names:
+                        continue
                     base_union_pydantic_model.add_field(
-                        name=property.name.name.snake_case.safe_name,
+                        name=property_name,
                         pascal_case_field_name=property.name.name.pascal_case.safe_name,
                         type_reference=property.value_type,
                         json_field_name=property.name.wire_value,
                         description=property.docs,
                     )
                     all_referenced_types.append(property.value_type)
+                for field in defaulted_discriminant_fields:
+                    base_union_pydantic_model.add_created_field(field=field)
+                
                 class_reference_for_base = ClassReference(
                     qualified_name_excluding_import=(base_class_name,),
                 )
@@ -170,38 +179,45 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                     )
 
             elif shape.properties_type == "samePropertiesAsObject":
-                with FernAwarePydanticModel(
-                    type_name=None,
-                    class_name=get_single_union_type_class_name(self._name, single_union_type.discriminant_value),
-                    context=self._context,
-                    custom_config=self._custom_config,
-                    source_file=self._source_file,
-                    docstring=self._docs,
-                    snippet=self._snippet,
-                ) as internal_pydantic_model_for_single_union_type:
+                object_properties = self._context.get_all_properties_including_extensions(shape.type_id)
+                object_property_names = [prop.name for prop in object_properties]
 
-                    object_properties = self._context.get_all_properties_including_extensions(shape.type_id)
-                    for object_property in object_properties:
-                        internal_pydantic_model_for_single_union_type.add_field(
-                            name=object_property.name.name.snake_case.safe_name,
-                            pascal_case_field_name=object_property.name.name.pascal_case.safe_name,
-                            json_field_name=object_property.name.wire_value,
-                            type_reference=object_property.value_type,
-                        )
-                    internal_pydantic_model_for_single_union_type.add_field(
-                        name=get_discriminant_parameter_name(self._union.discriminant),
-                        pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
-                        type_reference=ir_types.TypeReference.factory.container(
-                            ir_types.ContainerType.factory.literal(
-                                ir_types.Literal.factory.string(single_union_type.discriminant_value.wire_value)
+                # If the object has the discriminant property, then we've already handled it's defaulting to a literal
+                # so you should be able to use the object without any modifications, nor creating a new object
+                if self._union.discriminant in object_property_names and self._custom_config.reuse_union_members and not is_base_class_name_present:
+                    external_single_union_type = self._context.get_class_reference_for_type_id(shape.type_id)
+                    single_union_type_references.append(external_single_union_type)
+                else:
+                    with FernAwarePydanticModel(
+                        type_name=None,
+                        class_name=get_single_union_type_class_name(self._name, single_union_type.discriminant_value),
+                        context=self._context,
+                        custom_config=self._custom_config,
+                        source_file=self._source_file,
+                        docstring=self._docs,
+                        snippet=self._snippet,
+                    ) as internal_pydantic_model_for_single_union_type:
+                        for object_property in object_properties:
+                            internal_pydantic_model_for_single_union_type.add_field(
+                                name=object_property.name.name.snake_case.safe_name,
+                                pascal_case_field_name=object_property.name.name.pascal_case.safe_name,
+                                json_field_name=object_property.name.wire_value,
+                                type_reference=object_property.value_type,
                             )
-                        ),
-                        json_field_name=self._union.discriminant.wire_value,
-                        default_value=discriminant_value,
-                    )
+                        internal_pydantic_model_for_single_union_type.add_field(
+                            name=get_discriminant_parameter_name(self._union.discriminant),
+                            pascal_case_field_name=self._union.discriminant.name.pascal_case.safe_name,
+                            type_reference=ir_types.TypeReference.factory.container(
+                                ir_types.ContainerType.factory.literal(
+                                    ir_types.Literal.factory.string(single_union_type.discriminant_value.wire_value)
+                                )
+                            ),
+                            json_field_name=self._union.discriminant.wire_value,
+                            default_value=discriminant_value,
+                        )
 
-                    internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
-                    single_union_type_references.append(internal_single_union_type)
+                        internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
+                        single_union_type_references.append(internal_single_union_type)
 
             if self._custom_config.skip_validation:
                 type_hint = AST.TypeHint.annotated(

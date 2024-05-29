@@ -51,14 +51,26 @@ class ObjectGenerator(AbstractTypeGenerator):
             docstring=self._docs,
             snippet=self._snippet,
         ) as pydantic_model:
+            if self._name is not None:
+                defaulted_discriminant_fields = self._context.get_union_discriminant_fields(self._name.type_id, should_reuse_union_members=self._custom_config.reuse_union_members)
+                defaulted_discriminant_field_names = [field.name for field in defaulted_discriminant_fields]
+            else:
+                defaulted_discriminant_fields = []
+                defaulted_discriminant_field_names = []
+
             for property in self._properties:
+                property_name = property.name.name.snake_case.safe_name
+                if property_name in defaulted_discriminant_field_names:
+                    continue
                 pydantic_model.add_field(
-                    name=property.name.name.snake_case.safe_name,
+                    name=property_name,
                     pascal_case_field_name=property.name.name.pascal_case.safe_name,
                     type_reference=property.value_type,
                     json_field_name=property.name.wire_value,
                     description=property.docs,
                 )
+            for field in defaulted_discriminant_fields:
+                pydantic_model.add_created_field(field=field)
 
 
 class ObjectSnippetGenerator:

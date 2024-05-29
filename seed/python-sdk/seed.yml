@@ -5,7 +5,7 @@ language: python
 generatorType: sdk
 defaultOutputMode: github
 fixtures:
-  examples: 
+  examples:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig: 
@@ -82,6 +82,10 @@ fixtures:
     - customConfig:
         inline_request_params: true
       outputFolder: inline_request_params
+    - customConfig:
+        pydantic_config:
+          reuse_union_members: true
+      outputFolder: share_union_types
   streaming:
     - customConfig: null
       outputFolder: no-custom-config

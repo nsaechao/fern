@@ -24,3 +24,6 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     use_str_enums: bool = True
     # Skip validation of fields (automatically includes additional fields)
     skip_validation: bool = False
+    # Reuse the same models for discriminated unions where possible
+    # False for backwards compatibility
+    reuse_union_members: bool = False
