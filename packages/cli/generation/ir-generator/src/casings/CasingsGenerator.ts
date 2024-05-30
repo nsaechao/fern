@@ -13,7 +13,7 @@ export interface CasingsGenerator {
     }): NameAndWireValue;
 }
 
-const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby"];
+const CAPITALIZE_INITIALISM: generatorsYml.GenerationLanguage[] = ["go", "ruby", "python"];
 
 export function constructCasingsGenerator({
     generationLanguage,
@@ -150,6 +150,8 @@ const COMMON_ITIALISMS = new Set<string>([
     "API",
     "ASCII",
     "CPU",
+    "GPU",
+    "CSP", // Cloud service provider
     "CSS",
     "DNS",
     "EOF",
@@ -195,6 +197,8 @@ const PLURAL_COMMON_ITIALISMS = new Map<string, string>([
     ["ACLS", "ACLs"],
     ["APIS", "APIs"],
     ["CPUS", "CPUs"],
+    ["GPUS", "GPUs"],
+    ["CSPS", "CSPs"],
     ["GUIDS", "GUIDs"],
     ["IDS", "IDs"],
     ["UIDS", "UIDs"],
