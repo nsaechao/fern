@@ -9,6 +9,8 @@ export * from "./JsonResponseWithExample";
 export * from "./PathParameterWithExample";
 export * from "./QueryParameterWithExample";
 export * from "./HeaderWithExample";
+export * from "./WebhookWithExample";
+export * from "./WebhookExample";
 export * from "./SchemaWithExample";
 export * from "./ArraySchemaWithExample";
 export * from "./MapSchemaWithExample";

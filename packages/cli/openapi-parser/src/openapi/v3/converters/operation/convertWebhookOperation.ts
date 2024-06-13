@@ -1,4 +1,4 @@
-import { NamedFullExample, Webhook, WebhookExampleCall } from "@fern-api/openapi-ir-sdk";
+import { NamedFullExample, WebhookExample, WebhookWithExample } from "@fern-api/openapi-ir-sdk";
 import { convertToFullExample } from "../../../../schema/examples/convertToFullExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
@@ -12,7 +12,7 @@ export function convertWebhookOperation({
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
-}): Webhook | undefined {
+}): WebhookWithExample | undefined {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
     const payloadBreadcrumbs = [...baseBreadcrumbs, "Payload"];
 
@@ -65,21 +65,21 @@ export function convertWebhookOperation({
     };
 }
 
-function convertWebhookExamples(payloadExamples: NamedFullExample[] | undefined): WebhookExampleCall[] {
+function convertWebhookExamples(payloadExamples: NamedFullExample[] | undefined): WebhookExample[] {
     if (payloadExamples == null) {
         return [];
     }
-    const webhookExampleCalls: WebhookExampleCall[] = [];
+    const webhookExamples: WebhookExample[] = [];
     for (const payloadExample of payloadExamples) {
         const fullExample = convertToFullExample(payloadExample.value);
         if (fullExample == null) {
             continue;
         }
-        webhookExampleCalls.push({
+        webhookExamples.push({
             description: payloadExample.description,
             name: payloadExample.name,
             payload: fullExample
         });
     }
-    return webhookExampleCalls;
+    return webhookExamples;
 }

@@ -14,7 +14,7 @@ import {
     SchemaId,
     SchemaWithExample,
     SecurityScheme,
-    Webhook
+    WebhookWithExample
 } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { mapValues } from "lodash-es";
@@ -94,7 +94,7 @@ export function generateIr({
     const idempotencyHeaders = getIdempotencyHeaders(openApi);
 
     const endpointsWithExample: EndpointWithExample[] = [];
-    const webhooks: Webhook[] = [];
+    const webhooks: WebhookWithExample[] = [];
     Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
             return;
