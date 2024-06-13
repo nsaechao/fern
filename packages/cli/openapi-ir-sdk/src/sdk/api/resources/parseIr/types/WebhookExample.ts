@@ -4,7 +4,67 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface WebhookExample extends FernOpenapiIr.WithDescription {
-    name: string | undefined;
-    payload: FernOpenapiIr.FernExample | undefined;
+export type WebhookExample = FernOpenapiIr.WebhookExample.Unknown | FernOpenapiIr.WebhookExample.Full;
+
+export declare namespace WebhookExample {
+    interface Unknown extends _Utils {
+        type: "unknown";
+        value: FernOpenapiIr.FernExample | undefined;
+    }
+
+    interface Full extends FernOpenapiIr.WebhookExampleCall, _Utils {
+        type: "full";
+    }
+
+    interface _Utils {
+        _visit: <_Result>(visitor: FernOpenapiIr.WebhookExample._Visitor<_Result>) => _Result;
+    }
+
+    interface _Visitor<_Result> {
+        unknown: (value: FernOpenapiIr.FernExample | undefined) => _Result;
+        full: (value: FernOpenapiIr.WebhookExampleCall) => _Result;
+        _other: (value: { type: string }) => _Result;
+    }
 }
+
+export const WebhookExample = {
+    unknown: (value?: FernOpenapiIr.FernExample): FernOpenapiIr.WebhookExample.Unknown => {
+        return {
+            value: value,
+            type: "unknown",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.WebhookExample.Unknown,
+                visitor: FernOpenapiIr.WebhookExample._Visitor<_Result>
+            ) {
+                return FernOpenapiIr.WebhookExample._visit(this, visitor);
+            },
+        };
+    },
+
+    full: (value: FernOpenapiIr.WebhookExampleCall): FernOpenapiIr.WebhookExample.Full => {
+        return {
+            ...value,
+            type: "full",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.WebhookExample.Full,
+                visitor: FernOpenapiIr.WebhookExample._Visitor<_Result>
+            ) {
+                return FernOpenapiIr.WebhookExample._visit(this, visitor);
+            },
+        };
+    },
+
+    _visit: <_Result>(
+        value: FernOpenapiIr.WebhookExample,
+        visitor: FernOpenapiIr.WebhookExample._Visitor<_Result>
+    ): _Result => {
+        switch (value.type) {
+            case "unknown":
+                return visitor.unknown(value.value);
+            case "full":
+                return visitor.full(value);
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

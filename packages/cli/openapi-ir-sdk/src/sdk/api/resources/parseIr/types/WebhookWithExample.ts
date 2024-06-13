@@ -13,6 +13,6 @@ export interface WebhookWithExample extends FernOpenapiIr.WithDescription {
     headers: FernOpenapiIr.Header[];
     /** Populated as ${operationId}Payload */
     generatedPayloadName: string;
-    payload: FernOpenapiIr.Schema;
+    payload: FernOpenapiIr.SchemaWithExample;
     examples: FernOpenapiIr.WebhookExample[];
 }

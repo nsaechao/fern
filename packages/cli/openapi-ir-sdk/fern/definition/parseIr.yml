@@ -140,14 +140,13 @@ types:
         type: string
         docs: |
           Populated as ${operationId}Payload
-      payload: finalIr.Schema
+      payload: SchemaWithExample
       examples: list<WebhookExample>
 
   WebhookExample:
-    extends: commons.WithDescription
-    properties:
-      name: optional<string>
-      payload: finalIr.FernExample
+    union:
+      unknown: finalIr.FernExample
+      full: finalIr.WebhookExampleCall
 
   SchemaWithExample:
     union:

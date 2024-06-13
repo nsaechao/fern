@@ -18,9 +18,9 @@ export const WebhookWithExample: core.serialization.ObjectSchema<
         tags: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).TagId)),
         headers: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Header)),
         generatedPayloadName: core.serialization.string(),
-        payload: core.serialization.lazy(async () => (await import("../../..")).Schema),
+        payload: core.serialization.lazy(async () => (await import("../../..")).SchemaWithExample),
         examples: core.serialization.list(
-            core.serialization.lazyObject(async () => (await import("../../..")).WebhookExample)
+            core.serialization.lazy(async () => (await import("../../..")).WebhookExample)
         ),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
@@ -34,7 +34,7 @@ export declare namespace WebhookWithExample {
         tags: serializers.TagId.Raw[];
         headers: serializers.Header.Raw[];
         generatedPayloadName: string;
-        payload: serializers.Schema.Raw;
+        payload: serializers.SchemaWithExample.Raw;
         examples: serializers.WebhookExample.Raw[];
     }
 }

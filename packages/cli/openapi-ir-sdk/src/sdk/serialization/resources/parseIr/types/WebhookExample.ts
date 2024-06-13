@@ -6,19 +6,37 @@ import * as serializers from "../../..";
 import * as FernOpenapiIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const WebhookExample: core.serialization.ObjectSchema<
-    serializers.WebhookExample.Raw,
-    FernOpenapiIr.WebhookExample
-> = core.serialization
-    .objectWithoutOptionalProperties({
-        name: core.serialization.string().optional(),
-        payload: core.serialization.lazy(async () => (await import("../../..")).FernExample),
-    })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+export const WebhookExample: core.serialization.Schema<serializers.WebhookExample.Raw, FernOpenapiIr.WebhookExample> =
+    core.serialization
+        .union("type", {
+            unknown: core.serialization.object({
+                value: core.serialization.lazy(async () => (await import("../../..")).FernExample),
+            }),
+            full: core.serialization.lazyObject(async () => (await import("../../..")).WebhookExampleCall),
+        })
+        .transform<FernOpenapiIr.WebhookExample>({
+            transform: (value) => {
+                switch (value.type) {
+                    case "unknown":
+                        return FernOpenapiIr.WebhookExample.unknown(value.value);
+                    case "full":
+                        return FernOpenapiIr.WebhookExample.full(value);
+                    default:
+                        return value as FernOpenapiIr.WebhookExample;
+                }
+            },
+            untransform: ({ _visit, ...value }) => value as any,
+        });
 
 export declare namespace WebhookExample {
-    interface Raw extends serializers.WithDescription.Raw {
-        name?: string | null;
-        payload?: serializers.FernExample.Raw;
+    type Raw = WebhookExample.Unknown | WebhookExample.Full;
+
+    interface Unknown {
+        type: "unknown";
+        value?: serializers.FernExample.Raw;
+    }
+
+    interface Full extends serializers.WebhookExampleCall.Raw {
+        type: "full";
     }
 }
