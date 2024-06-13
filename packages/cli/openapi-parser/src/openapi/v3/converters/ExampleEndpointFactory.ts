@@ -36,6 +36,43 @@ export class ExampleEndpointFactory {
 
     public buildWebhookExample(webhook: WebhookWithExample): WebhookExample[] {
         this.logger.debug(`Building webhook example for ${webhook.method.toUpperCase()} ${webhook.operationId}`);
+
+        const webhookExamples: WebhookExample[] = [];
+        if (webhook.examples.length === 0) {
+            const example = this.exampleTypeFactory.buildExample({
+                schema: webhook.payload,
+                exampleId: undefined,
+                example: undefined,
+                options: {
+                    isParameter: false,
+                    ignoreOptionals: true
+                }
+            });
+            if (example != null) {
+                webhookExamples.push(
+                    WebhookExample.full({
+                        description: undefined,
+                        name: undefined,
+                        payload: example
+                    })
+                );
+            }
+        } else {
+            for (const { name: exampleId, payload: rawExample } of webhook.examples) {
+                const example = this.exampleTypeFactory.buildExample({
+                    schema: webhook.payload,
+                    exampleId,
+                    example: rawExample,
+                    options: {
+                        isParameter: false,
+                        ignoreOptionals: true
+                    }
+                });
+                if (example != null) {
+                    webhookExamples.push(example);
+                }
+            }
+        }
     }
 
     public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample[] {
