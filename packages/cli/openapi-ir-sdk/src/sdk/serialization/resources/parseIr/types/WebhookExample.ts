@@ -12,13 +12,13 @@ export const WebhookExample: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         name: core.serialization.string().optional(),
-        payload: core.serialization.lazy(async () => (await import("../../..")).SchemaWithExample),
+        payload: core.serialization.lazy(async () => (await import("../../..")).FernExample),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
 export declare namespace WebhookExample {
     interface Raw extends serializers.WithDescription.Raw {
         name?: string | null;
-        payload: serializers.SchemaWithExample.Raw;
+        payload?: serializers.FernExample.Raw;
     }
 }

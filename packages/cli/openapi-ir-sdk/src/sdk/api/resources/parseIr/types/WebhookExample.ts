@@ -6,5 +6,5 @@ import * as FernOpenapiIr from "../../..";
 
 export interface WebhookExample extends FernOpenapiIr.WithDescription {
     name: string | undefined;
-    payload: FernOpenapiIr.SchemaWithExample;
+    payload: FernOpenapiIr.FernExample | undefined;
 }

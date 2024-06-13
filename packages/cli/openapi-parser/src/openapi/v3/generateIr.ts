@@ -14,6 +14,9 @@ import {
     SchemaId,
     SchemaWithExample,
     SecurityScheme,
+    Webhook,
+    WebhookExample,
+    WebhookExampleCall,
     WebhookWithExample
 } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -94,7 +97,7 @@ export function generateIr({
     const idempotencyHeaders = getIdempotencyHeaders(openApi);
 
     const endpointsWithExample: EndpointWithExample[] = [];
-    const webhooks: WebhookWithExample[] = [];
+    const webhooksWithExample: WebhookWithExample[] = [];
     Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
             return;
@@ -122,7 +125,7 @@ export function generateIr({
                     }
                     break;
                 case "webhook":
-                    webhooks.push(operation.value);
+                    webhooksWithExample.push(operation.value);
                     break;
                 default:
                     assertNever(operation);
@@ -140,7 +143,7 @@ export function generateIr({
             if (audiences.length > 0 && !audiences.some((audience) => webhookAudiences.includes(audience))) {
                 continue;
             }
-            webhooks.push(webhook.value);
+            webhooksWithExample.push(webhook.value);
         }
     });
 
@@ -268,6 +271,36 @@ export function generateIr({
                         .filter(isNonNullish)
                 };
             })
+        };
+    });
+
+    const webhooks = webhooksWithExample.map((webhookWithExample): Webhook => {
+        // if x-fern-examples is not present, generate an example
+        const extensionExamples = webhookWithExample.examples;
+        let examples: WebhookExample[] = extensionExamples;
+        if (!disableExamples && extensionExamples.length === 0) {
+            const webhookExample = exampleEndpointFactory.buildWebhookExample(webhookWithExample);
+            if (webhookExample.length > 0) {
+                examples = [...webhookExample];
+            }
+        }
+
+        const webhookExamples: WebhookExampleCall[] = [];
+        for (const example of examples) {
+            const fullExample = convertToFullExample(example);
+            if (fullExample == null) {
+                continue;
+            }
+            webhookExamples.push({
+                description: example.description,
+                name: example.name,
+                payload: fullExample
+            });
+        }
+
+        return {
+            ...webhookWithExample,
+            examples: webhookExamples
         };
     });
 

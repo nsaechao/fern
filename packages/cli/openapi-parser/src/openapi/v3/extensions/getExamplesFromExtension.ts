@@ -1,4 +1,4 @@
-import { EndpointExample, SchemaWithExample, WebhookExample } from "@fern-api/openapi-ir-sdk";
+import { EndpointExample, WebhookExample } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtensionAndValidate } from "../../../getExtension";
@@ -74,13 +74,11 @@ export function getWebhookExamplesFromExtension(
             context,
             [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
-
-    // TODO: Should we just model them as FernExample?
     return exampleWebhooks.map((exampleWebhook) => {
         return {
             description: exampleWebhook.docs,
             name: exampleWebhook.name,
-            payload: SchemaWithExample.unknown(exampleWebhook)
+            payload: exampleWebhook.payload
         };
     });
 }

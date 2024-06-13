@@ -13,7 +13,9 @@ import {
     RequestWithExample,
     ResponseWithExample,
     SchemaWithExample,
-    SupportedSdkLanguage
+    SupportedSdkLanguage,
+    WebhookExample,
+    WebhookWithExample
 } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
@@ -30,6 +32,10 @@ export class ExampleEndpointFactory {
         this.schemas = schemas;
         this.exampleTypeFactory = new ExampleTypeFactory(schemas);
         this.logger = logger;
+    }
+
+    public buildWebhookExample(webhook: WebhookWithExample): WebhookExample[] {
+        this.logger.debug(`Building webhook example for ${webhook.method.toUpperCase()} ${webhook.operationId}`);
     }
 
     public buildEndpointExample(endpoint: EndpointWithExample): EndpointExample[] {
