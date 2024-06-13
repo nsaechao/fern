@@ -127,6 +127,28 @@ types:
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
 
+  WebhookWithExample:
+    extends: commons.WithDescription
+    properties:
+      sdkName: optional<finalIr.EndpointSdkName>
+      method: finalIr.WebhookHttpMethod
+      summary: optional<string>
+      operationId: string
+      tags: list<commons.TagId>
+      headers: list<finalIr.Header>
+      generatedPayloadName:
+        type: string
+        docs: |
+          Populated as ${operationId}Payload
+      payload: finalIr.Schema
+      examples: list<WebhookExample>
+
+  WebhookExample:
+    extends: commons.WithDescription
+    properties:
+      name: optional<string>
+      payload: SchemaWithExample
+
   SchemaWithExample:
     union:
       primitive: PrimitiveSchemaWithExample
