@@ -174,7 +174,7 @@ class UsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None
-    ) -> ListUsersPaginationResponse:
+    ) -> SyncPager[User]:
         """
         Parameters
         ----------
@@ -193,7 +193,7 @@ class UsersClient:
 
         Returns
         -------
-        ListUsersPaginationResponse
+        SyncPager[User]
 
         Examples
         --------
@@ -209,6 +209,7 @@ class UsersClient:
             order="asc",
         )
         """
+        page = page or 1
         _response = self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -217,7 +218,13 @@ class UsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _has_next = True
+                _get_next = lambda: self.list_with_offset_step_pagination(
+                    page=page + 1, limit=limit, order=order, request_options=request_options
+                )
+                _items = _parsed_response.data
+                return SyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
@@ -526,7 +533,7 @@ class AsyncUsersClient:
         limit: typing.Optional[int] = None,
         order: typing.Optional[Order] = None,
         request_options: typing.Optional[RequestOptions] = None
-    ) -> ListUsersPaginationResponse:
+    ) -> AsyncPager[User]:
         """
         Parameters
         ----------
@@ -545,7 +552,7 @@ class AsyncUsersClient:
 
         Returns
         -------
-        ListUsersPaginationResponse
+        AsyncPager[User]
 
         Examples
         --------
@@ -561,6 +568,7 @@ class AsyncUsersClient:
             order="asc",
         )
         """
+        page = page or 1
         _response = await self._client_wrapper.httpx_client.request(
             "users",
             method="GET",
@@ -569,7 +577,13 @@ class AsyncUsersClient:
         )
         try:
             if 200 <= _response.status_code < 300:
-                return pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _parsed_response = pydantic_v1.parse_obj_as(ListUsersPaginationResponse, _response.json())  # type: ignore
+                _has_next = True
+                _get_next = lambda: self.list_with_offset_step_pagination(
+                    page=page + 1, limit=limit, order=order, request_options=request_options
+                )
+                _items = _parsed_response.data
+                return AsyncPager(has_next=_has_next, items=_items, get_next=_get_next)
             _response_json = _response.json()
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
