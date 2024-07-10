@@ -1,0 +1,13 @@
+irVersion: $VERSION
+docker: fernapi/fern-$LANG-model:latest
+dockerCommand: yarn workspace @fern-api/fern-$LANG-model dockerTagLatest
+language: $LANG
+generatorType: model
+defaultOutputMode: github
+fixtures: []
+scripts: []
+local:
+  workingDirectory: generators/$LANG
+  buildCommand:
+    - yarn workspace @fern-api/fern-$LANG-model dist:cli
+  runCommand: node model/dist/bundle.cjs

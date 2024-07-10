@@ -36,9 +36,7 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
 
 // BaseSwiftCustomConfigSchema
 
-export const BaseSwiftCustomConfigSchema = z.object({
-    namespace: z.string().optional()
-});
+export const BaseSwiftCustomConfigSchema = z.object({});
 
 export type BaseSwiftCustomConfigSchema = z.infer<typeof BaseSwiftCustomConfigSchema>;
 
