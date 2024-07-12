@@ -11,19 +11,19 @@ import {
 import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
 import {
     BundledTypescriptProject,
-    convertExportedFilePathToFilePath,
     CoreUtilitiesManager,
     DependencyManager,
     ExportedDirectory,
     ExportedFilePath,
     ExportsManager,
-    getTextOfTsNode,
     ImportsManager,
     JavaScriptRuntime,
     NpmPackage,
     PackageId,
     SimpleTypescriptProject,
-    TypescriptProject
+    TypescriptProject,
+    convertExportedFilePathToFilePath,
+    getTextOfTsNode
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
@@ -44,6 +44,8 @@ import { writeFile } from "fs/promises";
 import { Directory, Project, SourceFile, ts } from "ts-morph";
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
+import { ReferenceGenerator, ReferenceParameterDeclaration } from "./ReferenceGenerator";
+import { TemplateGenerator } from "./TemplateGenerator";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
@@ -55,8 +57,6 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-refere
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { GeneratorCli } from "./generator-cli/Client";
-import { ReferenceGenerator, ReferenceParameterDeclaration } from "./ReferenceGenerator";
-import { TemplateGenerator } from "./TemplateGenerator";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
 
 const FILE_HEADER = `/**
@@ -503,8 +503,14 @@ export class SdkGenerator {
               });
     }
 
-    public async copyCoreUtilities({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc });
+    public async copyCoreUtilities({
+        pathToSrc,
+        pathToRoot
+    }: {
+        pathToSrc: AbsoluteFilePath;
+        pathToRoot: AbsoluteFilePath;
+    }): Promise<void> {
+        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
     }
 
     private generateTypeDeclarations() {
