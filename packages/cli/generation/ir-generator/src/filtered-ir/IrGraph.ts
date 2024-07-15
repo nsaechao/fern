@@ -25,6 +25,7 @@ import {
     AudienceId,
     EndpointId,
     EndpointNode,
+    EnvironmentId,
     ErrorId,
     ErrorNode,
     InlinedRequestPropertiesNode,
@@ -39,6 +40,7 @@ import {
 } from "./ids";
 
 export class IrGraph {
+    private environments: Set<EnvironmentId> = new Set();
     private types: Record<TypeId, TypeNode> = {};
     private properties: Record<TypeId, TypePropertiesNode> = {};
     private requestProperties: Record<EndpointId, InlinedRequestPropertiesNode> = {};
@@ -53,9 +55,20 @@ export class IrGraph {
     private endpointsNeededForAudience: Set<EndpointId> = new Set();
     private webhooksNeededForAudience: Set<WebhookId> = new Set();
     private subpackagesNeededForAudience: Set<SubpackageId> = new Set();
+    private environmentsNeededForAudience: Set<EnvironmentId> = new Set();
 
     public constructor(audiences: ConfigAudiences) {
         this.audiences = audiencesFromConfig(audiences);
+    }
+
+    public addEnvironment(environmentId: EnvironmentId): void {
+        this.environments.add(environmentId);
+    }
+
+    public markEnvironmentForAudience(environmentId: EnvironmentId, audiences: AudienceId | AudienceId[]): void {
+        if (this.hasAudience(audiences)) {
+            this.environmentsNeededForAudience.add(environmentId);
+        }
     }
 
     public addType({
@@ -250,7 +263,7 @@ export class IrGraph {
     public markEndpointForAudience(
         declaredServiceName: DeclaredServiceName,
         httpEndpoints: HttpEndpoint[],
-        audiences: AudienceId[]
+        audiences: AudienceId | AudienceId[]
     ): void {
         if (this.hasAudience(audiences)) {
             const serviceId = IdGenerator.generateServiceId(declaredServiceName);
@@ -312,7 +325,11 @@ export class IrGraph {
         };
     }
 
-    public markWebhookForAudiences(file: FernFileContext, webhook: Webhook, audiences: AudienceId[]): void {
+    public markWebhookForAudiences(
+        file: FernFileContext,
+        webhook: Webhook,
+        audiences: AudienceId | AudienceId[]
+    ): void {
         const webhookId = webhook.id;
         if (webhookId == null) {
             return;
@@ -416,7 +433,8 @@ export class IrGraph {
             endpoints: this.endpointsNeededForAudience,
             webhooks: this.webhooksNeededForAudience,
             webhookPayloadProperties,
-            subpackages: this.subpackagesNeededForAudience
+            subpackages: this.subpackagesNeededForAudience,
+            environments: this.environmentsNeededForAudience
         });
     }
 
@@ -495,13 +513,15 @@ export class IrGraph {
         return this.audiences.type === "none";
     }
 
-    private hasAudience(audiences: AudienceId[]): boolean {
+    private hasAudience(audiences: AudienceId | AudienceId[]): boolean {
         const configuredAudiences = this.audiences;
         switch (configuredAudiences.type) {
             case "none":
                 return true;
             case "filtered":
-                return audiences.some((audienceId) => configuredAudiences.audiences.has(audienceId));
+                return (typeof audiences === "string" ? [audiences] : audiences).some((audienceId) =>
+                    configuredAudiences.audiences.has(audienceId)
+                );
             default:
                 assertNever(configuredAudiences);
         }

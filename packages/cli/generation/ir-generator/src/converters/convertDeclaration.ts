@@ -34,7 +34,11 @@ export function getAudiences(schema: RawSchemas.TypeDeclarationSchema): string[]
     if (typeof schema === "string") {
         return [];
     }
-    return schema.audiences ?? [];
+    return schema.audiences != null
+        ? typeof schema.audiences === "string"
+            ? [schema.audiences]
+            : schema.audiences
+        : [];
 }
 
 function convertAvailabilityStatus(status: RawSchemas.AvailabilityStatusSchema): AvailabilityStatus {

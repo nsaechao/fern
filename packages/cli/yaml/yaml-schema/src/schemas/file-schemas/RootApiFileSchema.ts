@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { ApiAuthSchema } from "../ApiAuthSchema";
+import { AudiencesSchema } from "../AudiencesSchema";
 import { AuthSchemeDeclarationSchema } from "../AuthSchemeDeclarationSchema";
 import { EnvironmentSchema } from "../EnvironmentSchema";
 import { ErrorDiscriminationSchema } from "../ErrorDiscriminationSchema";
@@ -18,7 +19,7 @@ export const RootApiFileSchema = z.strictObject({
     "default-environment": z.optional(z.string().or(z.null())),
     environments: z.optional(z.record(z.string(), EnvironmentSchema)),
     "error-discrimination": z.optional(ErrorDiscriminationSchema),
-    audiences: z.optional(z.array(z.string())),
+    audiences: z.optional(AudiencesSchema),
     docs: z.optional(z.string()),
     errors: z.optional(z.array(z.string())),
     "base-path": z.optional(z.string()),

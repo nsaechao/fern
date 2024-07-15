@@ -53,7 +53,62 @@ exports[`generate IR 1`] = `
       "wireValue": "errorInstanceId",
     },
   },
-  "environments": null,
+  "environments": {
+    "defaultEnvironment": null,
+    "environments": {
+      "environments": [
+        {
+          "docs": null,
+          "id": "Dev",
+          "name": {
+            "camelCase": {
+              "safeName": "dev",
+              "unsafeName": "dev",
+            },
+            "originalName": "Dev",
+            "pascalCase": {
+              "safeName": "Dev",
+              "unsafeName": "Dev",
+            },
+            "screamingSnakeCase": {
+              "safeName": "DEV",
+              "unsafeName": "DEV",
+            },
+            "snakeCase": {
+              "safeName": "dev",
+              "unsafeName": "dev",
+            },
+          },
+          "url": "https://dev.com",
+        },
+        {
+          "docs": null,
+          "id": "Production",
+          "name": {
+            "camelCase": {
+              "safeName": "production",
+              "unsafeName": "production",
+            },
+            "originalName": "Production",
+            "pascalCase": {
+              "safeName": "Production",
+              "unsafeName": "Production",
+            },
+            "screamingSnakeCase": {
+              "safeName": "PRODUCTION",
+              "unsafeName": "PRODUCTION",
+            },
+            "snakeCase": {
+              "safeName": "production",
+              "unsafeName": "production",
+            },
+          },
+          "url": "https://prod.com",
+        },
+      ],
+      "type": "singleBaseUrl",
+    },
+  },
   "errorDiscriminationStrategy": {
     "type": "statusCode",
   },

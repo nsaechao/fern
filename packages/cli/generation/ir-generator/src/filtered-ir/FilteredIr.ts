@@ -1,6 +1,6 @@
 import { ErrorDeclaration, HttpEndpoint, HttpService, TypeDeclaration, Webhook } from "@fern-api/ir-sdk";
 import { IdGenerator } from "../IdGenerator";
-import { EndpointId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
+import { EndpointId, EnvironmentId, ErrorId, ServiceId, SubpackageId, TypeId, WebhookId } from "./ids";
 
 export interface FilteredIr {
     hasType(type: TypeDeclaration): boolean;
@@ -10,6 +10,7 @@ export interface FilteredIr {
     hasErrorId(type: string): boolean;
     hasService(service: HttpService): boolean;
     hasServiceId(type: string): boolean;
+    hasEnvironment(environmentId: EnvironmentId): boolean;
     hasEndpoint(endpoint: HttpEndpoint): boolean;
     hasWebhook(webhook: Webhook): boolean;
     hasWebhookPayloadProperty(webhookId: string, property: string): boolean;
@@ -27,6 +28,7 @@ export class FilteredIrImpl implements FilteredIr {
     private webhooks: Set<WebhookId> = new Set();
     private webhookPayloadProperties: Record<WebhookId, Set<string>>;
     private subpackages: Set<SubpackageId> = new Set();
+    private environments: Set<EnvironmentId> = new Set();
 
     public constructor({
         types,
@@ -37,7 +39,8 @@ export class FilteredIrImpl implements FilteredIr {
         subpackages,
         requestProperties,
         webhookPayloadProperties,
-        properties
+        properties,
+        environments
     }: {
         types: Set<TypeId>;
         properties: Record<TypeId, Set<string>>;
@@ -48,6 +51,7 @@ export class FilteredIrImpl implements FilteredIr {
         webhooks: Set<WebhookId>;
         webhookPayloadProperties: Record<WebhookId, Set<string>>;
         subpackages: Set<SubpackageId>;
+        environments: Set<EnvironmentId>;
     }) {
         this.types = types;
         this.properties = properties;
@@ -58,6 +62,7 @@ export class FilteredIrImpl implements FilteredIr {
         this.webhookPayloadProperties = webhookPayloadProperties;
         this.subpackages = subpackages;
         this.requestProperties = requestProperties;
+        this.environments = environments;
     }
 
     public hasTypeId(typeId: string): boolean {
@@ -79,6 +84,10 @@ export class FilteredIrImpl implements FilteredIr {
     public hasType(type: TypeDeclaration): boolean {
         const typeId = IdGenerator.generateTypeId(type.name);
         return this.types.has(typeId);
+    }
+
+    public hasEnvironment(environmentId: string): boolean {
+        return this.environments.has(environmentId);
     }
 
     public hasProperty(typeId: string, property: string): boolean {

@@ -1,4 +1,9 @@
 name: api
+environments: 
+  Dev: https://dev.com
+  Production: 
+    url: https://prod.com
+    audiences: external
 error-discrimination:
   strategy: status-code
 audiences: 

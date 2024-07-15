@@ -129,6 +129,8 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     public addAudience(name: string): void {
         if (this.rootApiFile.audiences == null) {
             this.rootApiFile.audiences = [];
+        } else if (typeof this.rootApiFile.audiences === "string") {
+            this.rootApiFile.audiences = [this.rootApiFile.audiences];
         }
         this.rootApiFile.audiences.push(name);
     }
