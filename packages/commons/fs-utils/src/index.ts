@@ -3,6 +3,7 @@ export { cwd } from "./cwd";
 export { dirname } from "./dirname";
 export { doesPathExist, doesPathExistSync } from "./doesPathExist";
 export { getDirectoryContents, type Directory, type File, type FileOrDirectory } from "./getDirectoryContents";
+export { getFilenameWithoutExtension } from "./getFilenameWithoutExtension";
 export { join } from "./join";
 export { listFiles } from "./listFiles";
 export { moveFile } from "./moveFile";

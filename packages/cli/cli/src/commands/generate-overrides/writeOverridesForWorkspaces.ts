@@ -1,4 +1,4 @@
-import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { dirname, getFilenameWithoutExtension, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
 import { Project } from "@fern-api/project-loader";
@@ -58,6 +58,7 @@ async function writeDefinitionForOpenAPIWorkspace({
     includeModels: boolean;
     context: TaskContext;
 }): Promise<void> {
+    const numSpecs = workspace.specs.length;
     for (const spec of workspace.specs) {
         const ir = await parse({
             specs: [spec],
@@ -110,9 +111,13 @@ async function writeDefinitionForOpenAPIWorkspace({
             }
         }
         const components: Record<string, Record<string, unknown>> = { schemas };
-
         await writeFile(
-            join(dirname(spec.absoluteFilepath), RelativeFilePath.of("openapi-overrides.yml")),
+            join(
+                dirname(spec.absoluteFilepath),
+                numSpecs === 1
+                    ? RelativeFilePath.of("openapi-overrides.yml")
+                    : RelativeFilePath.of(`${getFilenameWithoutExtension(spec.absoluteFilepath)}-overrides.yml`)
+            ),
             yaml.dump({ paths, components })
         );
     }
