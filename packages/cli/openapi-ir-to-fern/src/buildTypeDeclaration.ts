@@ -202,9 +202,11 @@ export function buildObjectTypeDeclaration({
     if (schema.additionalProperties) {
         objectTypeDeclaration["extra-properties"] = true;
     }
-
     if (schema.availability != null) {
         objectTypeDeclaration.availability = convertAvailability(schema.availability);
+    }
+    if (schema.source != null) {
+        objectTypeDeclaration.source = convertToSourceSchema(schema.source);
     }
 
     return {
@@ -479,7 +481,8 @@ export function buildOneOfTypeDeclaration({
                 discriminant: schema.discriminantProperty,
                 "base-properties": baseProperties,
                 docs: schema.description ?? undefined,
-                union
+                union,
+                source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
             }
         };
     }
@@ -499,7 +502,8 @@ export function buildOneOfTypeDeclaration({
         schema: {
             discriminated: false,
             docs: schema.description ?? undefined,
-            union
+            union,
+            source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
         }
     };
 }
