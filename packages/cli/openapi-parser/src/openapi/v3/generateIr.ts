@@ -320,7 +320,7 @@ export function generateIr({
 function maybeRemoveDiscriminantsFromSchemas(
     schemas: Record<string, SchemaWithExample>,
     context: AbstractOpenAPIV3ParserContext,
-    source: Source;
+    source: Source
 ): Record<string, SchemaWithExample> {
     const result: Record<string, SchemaWithExample> = {};
     for (const [schemaId, schema] of Object.entries(schemas)) {
@@ -350,7 +350,6 @@ function maybeRemoveDiscriminantsFromSchemas(
         };
         result[schemaId] = schemaWithoutDiscriminants;
 
-        // TODO: Add undiscriminated.
         const parentSchemaIds = getAllParentSchemaIds({ schema, schemas });
         for (const parentSchemaId of [...new Set(parentSchemaIds)]) {
             const parentSchema = result[parentSchemaId] ?? schemas[parentSchemaId];

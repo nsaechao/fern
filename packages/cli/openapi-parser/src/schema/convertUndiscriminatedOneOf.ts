@@ -3,7 +3,8 @@ import {
     LiteralSchemaValue,
     OneOfSchemaWithExample,
     SchemaWithExample,
-    SdkGroupName
+    SdkGroupName,
+    Source
 } from "@fern-api/openapi-ir-sdk";
 import { difference } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
@@ -24,7 +25,8 @@ export function convertUndiscriminatedOneOf({
     wrapAsNullable,
     context,
     subtypes,
-    groupName
+    groupName,
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -35,6 +37,7 @@ export function convertUndiscriminatedOneOf({
     context: SchemaParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
     groupName: SdkGroupName | undefined;
+    source: Source;
 }): SchemaWithExample {
     const subtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
 
@@ -51,7 +54,7 @@ export function convertUndiscriminatedOneOf({
                 });
             });
         }
-        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefixes[index] ?? `${index}`])];
+        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefixes[index] ?? `${index}`], source)];
     });
 
     const uniqueSubtypes: SchemaWithExample[] = [];
@@ -97,7 +100,8 @@ export function convertUndiscriminatedOneOf({
             enumValues,
             _default: undefined,
             groupName,
-            context
+            context,
+            source
         });
     }
 
@@ -124,7 +128,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     wrapAsNullable,
     context,
     groupName,
-    discriminator
+    discriminator,
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -134,12 +139,13 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
     discriminator: OpenAPIV3.DiscriminatorObject;
+    source: Source;
 }): SchemaWithExample {
     const convertedSubtypes = Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema], index) => {
         const subtypeReferenceSchema = {
             $ref: schema
         };
-        const subtypeReference = convertReferenceObject(subtypeReferenceSchema, false, context, [schema]);
+        const subtypeReference = convertReferenceObject(subtypeReferenceSchema, false, context, [schema], source);
         context.markSchemaWithDiscriminantValue(subtypeReferenceSchema, discriminator.propertyName, discriminantValue);
 
         // If the reference is an object (which I think it has to be?), add the discriminant value as a property
@@ -205,7 +211,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             enumValues,
             _default: undefined,
             groupName,
-            context
+            context,
+            source
         });
     }
 

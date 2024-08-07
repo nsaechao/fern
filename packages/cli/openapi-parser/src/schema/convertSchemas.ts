@@ -306,7 +306,8 @@ export function convertSchemaObject(
             wrapAsNullable,
             context,
             subtypes,
-            groupName
+            groupName,
+            source
         });
     }
 
@@ -505,7 +506,8 @@ export function convertSchemaObject(
                 wrapAsNullable,
                 context,
                 groupName,
-                discriminator: schema.discriminator
+                discriminator: schema.discriminator,
+                source
             });
         }
     }
@@ -527,7 +529,8 @@ export function convertSchemaObject(
                     wrapAsNullable,
                     context,
                     groupName,
-                    discriminator: schema.discriminator
+                    discriminator: schema.discriminator,
+                    source
                 });
             } else {
                 return convertDiscriminatedOneOf({
@@ -618,7 +621,8 @@ export function convertSchemaObject(
                 subtypes: schema.oneOf.filter((schema) => {
                     return isReferenceObject(schema) || (schema.type as string) !== "null";
                 }),
-                groupName
+                groupName,
+                source
             });
         }
     }
@@ -687,7 +691,8 @@ export function convertSchemaObject(
             subtypes: schema.anyOf.filter((schema) => {
                 return isReferenceObject(schema) || (schema.type as string) !== "null";
             }),
-            groupName
+            groupName,
+            source
         });
     }
 
