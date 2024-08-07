@@ -280,6 +280,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithSource
     properties:
       schemas: list<SchemaWithExample>
 

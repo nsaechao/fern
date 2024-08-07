@@ -350,6 +350,7 @@ function maybeRemoveDiscriminantsFromSchemas(
         };
         result[schemaId] = schemaWithoutDiscriminants;
 
+        // TODO: Add undiscriminated.
         const parentSchemaIds = getAllParentSchemaIds({ schema, schemas });
         for (const parentSchemaId of [...new Set(parentSchemaIds)]) {
             const parentSchema = result[parentSchemaId] ?? schemas[parentSchemaId];
