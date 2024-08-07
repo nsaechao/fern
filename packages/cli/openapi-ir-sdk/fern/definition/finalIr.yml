@@ -143,7 +143,6 @@ types:
       - commons.WithAvailability
       - commons.WithSource
     properties:
-      source:
       authed: boolean
       internal: optional<boolean>
       idempotent: optional<boolean>
@@ -445,7 +444,6 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
-      - commons.WithSource
     properties:
       schema: PrimitiveSchemaValue
 
@@ -522,7 +520,6 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
-      - commons.WithSource
     properties:
       value: LiteralSchemaValue
 
@@ -586,7 +583,6 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
-      - commons.WithSource
     properties:
       value: Schema
 
@@ -596,7 +592,6 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
-      - commons.WithSource
     properties:
       key: PrimitiveSchema
       value: Schema
@@ -607,7 +602,6 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
-      - commons.WithSource
     properties:
       value: Schema
 
@@ -617,7 +611,6 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
-      - commons.WithSource
     properties:
       value: Schema
 
@@ -636,7 +629,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithAvailability
-      - commons.WithSource
     properties:
       nameOverride:
         type: optional<string>

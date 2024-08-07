@@ -6,7 +6,6 @@ types:
   NamedFullExample:
     extends:
       - commons.WithDescription
-      - commons.WithSource
     properties:
       name: optional<string>
       value: unknown
@@ -166,7 +165,6 @@ types:
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
-      - commons.WithSource
     properties:
       value: SchemaWithExample
       example: optional<list<unknown>>
@@ -177,7 +175,6 @@ types:
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
-      - commons.WithSource
     properties:
       key: PrimitiveSchemaWithExample
       value: SchemaWithExample
@@ -189,7 +186,6 @@ types:
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
-      - commons.WithSource
     properties:
       value: SchemaWithExample
 
@@ -199,7 +195,6 @@ types:
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
-      - commons.WithSource
     properties:
       value: SchemaWithExample
 
@@ -221,7 +216,6 @@ types:
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
-      - commons.WithSource
     properties:
       example: unknown
 
