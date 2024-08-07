@@ -116,7 +116,8 @@ export function convertUndiscriminatedOneOf({
         description,
         availability,
         subtypes: uniqueSubtypes,
-        groupName
+        groupName,
+        source
     });
 }
 
@@ -227,7 +228,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         description,
         availability,
         subtypes: uniqueSubtypes,
-        groupName
+        groupName,
+        source
     });
 }
 
@@ -296,7 +298,8 @@ export function wrapUndiscriminantedOneOf({
     description,
     availability,
     subtypes,
-    groupName
+    groupName,
+    source
 }: {
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
@@ -305,6 +308,7 @@ export function wrapUndiscriminantedOneOf({
     availability: Availability | undefined;
     subtypes: SchemaWithExample[];
     groupName: SdkGroupName | undefined;
+    source: Source;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -317,7 +321,8 @@ export function wrapUndiscriminantedOneOf({
                     nameOverride,
                     generatedName,
                     schemas: subtypes,
-                    groupName
+                    groupName,
+                    source
                 })
             ),
             description,
@@ -332,7 +337,8 @@ export function wrapUndiscriminantedOneOf({
             nameOverride,
             generatedName,
             schemas: subtypes,
-            groupName
+            groupName,
+            source
         })
     );
 }

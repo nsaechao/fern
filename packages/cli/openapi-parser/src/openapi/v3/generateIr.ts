@@ -60,11 +60,11 @@ export function generateIr({
 
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
         Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
-            const convertedSecurityScheme = convertSecurityScheme(securityScheme);
+            const convertedSecurityScheme = convertSecurityScheme(securityScheme, source);
             if (convertedSecurityScheme == null) {
                 return [];
             }
-            return [key, convertSecurityScheme(securityScheme)];
+            return [key, convertSecurityScheme(securityScheme, source)];
         })
     );
     const authHeaders = new Set(
@@ -81,7 +81,8 @@ export function generateIr({
         document: openApi,
         taskContext,
         authHeaders,
-        options
+        options,
+        source
     });
     const variables = getVariableDefinitions(openApi);
     const globalHeaders = getGlobalHeaders(openApi);

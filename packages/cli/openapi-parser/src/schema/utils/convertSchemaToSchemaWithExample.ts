@@ -210,7 +210,8 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
                 schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaToSchemaWithExample(oneOfSchema)),
-                groupName: oneOfSchema.groupName
+                groupName: oneOfSchema.groupName,
+                source: oneOfSchema.source
             });
         default:
             assertNever(oneOfSchema);

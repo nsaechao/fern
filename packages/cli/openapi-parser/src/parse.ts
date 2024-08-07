@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
+import { OpenApiIntermediateRepresentation, Source } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -68,6 +68,10 @@ export async function parse({
 
     for (const spec of specs) {
         const contents = (await readFile(spec.absoluteFilepath)).toString();
+        // TODO: Track whether or not the spec was generated from Protobuf and apply it in the Source.
+        const source = Source.openapi({
+            file: spec.absoluteFilepath
+        });
         if (contents.includes("openapi") || contents.includes("swagger")) {
             const openApiDocument = await loadOpenAPI({
                 absolutePathToOpenAPI: spec.absoluteFilepath,
@@ -78,14 +82,16 @@ export async function parse({
                 const openapiIr = generateIrFromV3({
                     openApi: openApiDocument,
                     taskContext,
-                    options: getParseOptions({ specSettings: spec.settings, overrides: optionOverrides })
+                    options: getParseOptions({ specSettings: spec.settings, overrides: optionOverrides }),
+                    source
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
                 const openapiIr = await generateIrFromV2({
                     openApi: openApiDocument,
                     taskContext,
-                    options: getParseOptions({ specSettings: spec.settings })
+                    options: getParseOptions({ specSettings: spec.settings }),
+                    source
                 });
                 ir = merge(ir, openapiIr);
             }
@@ -99,7 +105,8 @@ export async function parse({
             const parsedAsyncAPI = parseAsyncAPI({
                 document: asyncAPI,
                 taskContext,
-                options: getParseOptions({ specSettings: spec.settings })
+                options: getParseOptions({ specSettings: spec.settings }),
+                source
             });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);
