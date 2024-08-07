@@ -4,4 +4,6 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface FileResponse extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithSource {}
+export interface WithSource {
+    source: FernOpenapiIr.Source | undefined;
+}
