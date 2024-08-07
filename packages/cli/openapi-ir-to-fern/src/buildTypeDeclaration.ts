@@ -28,7 +28,7 @@ import {
 } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
-import { convertToSourceSchema } from "./utils/convertSource";
+import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedTypeDeclaration {
