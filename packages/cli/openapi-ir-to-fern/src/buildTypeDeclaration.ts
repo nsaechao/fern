@@ -28,6 +28,7 @@ import {
 } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
+import { convertToSourceSchema } from "./utils/convertSource";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedTypeDeclaration {
@@ -374,7 +375,8 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
     const uniqueEnumName = new Set<string>();
     const uniqueEnumSchema: RawSchemas.EnumSchema = {
         ...enumSchema,
-        enum: []
+        enum: [],
+        source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
     };
     for (const enumValue of enumSchema.enum) {
         const name = typeof enumValue === "string" ? enumValue : enumValue.name ?? enumValue.value;
