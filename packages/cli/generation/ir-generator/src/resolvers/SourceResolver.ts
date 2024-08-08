@@ -1,7 +1,8 @@
-import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../FernFileContext";
+import { ProtobufParser } from "../parsers/ProtobufParser";
 import { ResolvedSource } from "./ResolvedSource";
 
 export interface SourceResolver {
@@ -13,7 +14,13 @@ export interface SourceResolver {
 }
 
 export class SourceResolverImpl implements SourceResolver {
-    constructor(private readonly workspace: FernWorkspace) {}
+    private readonly workspace: FernWorkspace;
+    private readonly sourceCache: Map<AbsoluteFilePath, ResolvedSource>;
+
+    constructor(workspace: FernWorkspace) {
+        this.workspace = workspace;
+        this.sourceCache = new Map();
+    }
 
     public async resolveSourceOrThrow({
         source,
@@ -51,19 +58,24 @@ export class SourceResolverImpl implements SourceResolver {
         file: FernFileContext;
     }): Promise<ResolvedSource | undefined> {
         const absoluteFilepath = join(this.workspace.absoluteFilepath, RelativeFilePath.of(source.proto));
+        if (this.sourceCache.has(absoluteFilepath)) {
+            return this.sourceCache.get(absoluteFilepath);
+        }
         if (!(await doesPathExist(absoluteFilepath))) {
             return undefined;
         }
-        return {
+        const parser = new ProtobufParser();
+        const protobufFileInfo = await parser.parse({ absoluteFilePath: absoluteFilepath });
+        const resolvedSource: ResolvedSource = {
             type: "protobuf",
             absoluteFilePath: absoluteFilepath,
             relativeFilePath: RelativeFilePath.of(source.proto),
-
-            // TODO: Parse the Protobuf file and include the context here.
-            csharpNamespace: "",
-            packageName: "",
-            serviceName: ""
+            csharpNamespace: protobufFileInfo.csharpNamespace,
+            packageName: protobufFileInfo.packageName,
+            serviceName: protobufFileInfo.serviceName
         };
+        this.sourceCache.set(absoluteFilepath, resolvedSource);
+        return resolvedSource;
     }
 
     private async resolveOpenAPISource({
@@ -74,13 +86,18 @@ export class SourceResolverImpl implements SourceResolver {
         file: FernFileContext;
     }): Promise<ResolvedSource | undefined> {
         const absoluteFilepath = join(this.workspace.absoluteFilepath, RelativeFilePath.of(source.openapi));
+        if (this.sourceCache.has(absoluteFilepath)) {
+            return this.sourceCache.get(absoluteFilepath);
+        }
         if (!(await doesPathExist(absoluteFilepath))) {
             return undefined;
         }
-        return {
+        const resolvedSource: ResolvedSource = {
             type: "openapi",
             absoluteFilePath: absoluteFilepath,
             relativeFilePath: RelativeFilePath.of(source.openapi)
         };
+        this.sourceCache.set(absoluteFilepath, resolvedSource);
+        return resolvedSource;
     }
 }
