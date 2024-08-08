@@ -1,5 +1,5 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { OpenApiIntermediateRepresentation, Source } from "@fern-api/openapi-ir-sdk";
+import { AbsoluteFilePath, relative } from "@fern-api/fs-utils";
+import { OpenApiIntermediateRepresentation, Source as OpenApiIrSource } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -15,6 +15,7 @@ import { DEFAULT_PARSE_OPENAPI_SETTINGS, ParseOpenAPIOptions } from "./options";
 export interface Spec {
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    source: Source;
     settings?: SpecImportSettings;
 }
 
@@ -22,6 +23,23 @@ export interface SpecImportSettings {
     audiences: string[];
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+}
+
+export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
+
+export interface AsyncAPISource {
+    type: "asyncapi";
+    file: AbsoluteFilePath;
+}
+
+export interface OpenAPISource {
+    type: "openapi";
+    file: AbsoluteFilePath;
+}
+
+export interface ProtobufSource {
+    type: "protobuf";
+    file: AbsoluteFilePath;
 }
 
 export interface RawOpenAPIFile {
@@ -35,10 +53,12 @@ export interface RawAsyncAPIFile {
 }
 
 export async function parse({
+    absoluteFilePathToWorkspace,
     specs,
     taskContext,
     optionOverrides
 }: {
+    absoluteFilePathToWorkspace: AbsoluteFilePath;
     specs: Spec[];
     taskContext: TaskContext;
     optionOverrides?: Partial<ParseOpenAPIOptions>;
@@ -68,10 +88,12 @@ export async function parse({
 
     for (const spec of specs) {
         const contents = (await readFile(spec.absoluteFilepath)).toString();
-        // TODO: Track whether or not the spec was generated from Protobuf and apply it in the Source.
-        const source = Source.openapi({
-            file: spec.absoluteFilepath
-        });
+        const relativePath = relative(absoluteFilePathToWorkspace, spec.absoluteFilepath);
+        const source =
+            spec.source.type === "protobuf"
+                ? OpenApiIrSource.protobuf({ file: relativePath })
+                : OpenApiIrSource.openapi({ file: relativePath });
+
         if (contents.includes("openapi") || contents.includes("swagger")) {
             const openApiDocument = await loadOpenAPI({
                 absolutePathToOpenAPI: spec.absoluteFilepath,

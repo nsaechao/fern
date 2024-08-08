@@ -59,8 +59,10 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
 
     public async getDefinition(
         {
+            absoluteFilePathToWorkspace,
             context
         }: {
+            absoluteFilePathToWorkspace: AbsoluteFilePath;
             context: TaskContext;
         },
         settings?: OSSWorkspace.Settings

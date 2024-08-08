@@ -33,11 +33,13 @@ export interface ProtobufSpec {
     generateLocally: boolean;
     settings?: SpecImportSettings;
 }
+
 export interface SpecImportSettings {
     audiences: string[];
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
 }
+
 export interface APIChangelog {
     files: ChangelogFile[];
 }
