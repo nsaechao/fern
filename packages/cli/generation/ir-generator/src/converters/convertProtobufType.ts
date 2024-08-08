@@ -75,8 +75,6 @@ function maybeConvertWellKnownProtobufType({ type }: { type: string }): Protobuf
             return ProtobufType.wellKnown(WellKnownProtobufType.sourceContext());
         case "google.protobuf.StringValue":
             return ProtobufType.wellKnown(WellKnownProtobufType.stringValue());
-        case "google.protobuf.StringValue":
-            return ProtobufType.wellKnown(WellKnownProtobufType.stringValue());
         case "google.protobuf.Struct":
             return ProtobufType.wellKnown(WellKnownProtobufType.struct());
         case "google.protobuf.Syntax":
