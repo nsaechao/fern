@@ -2,6 +2,7 @@ import { ProtobufType, WellKnownProtobufType } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { ResolvedSource } from "../resolvers/ResolvedSource";
 import { CASINGS_GENERATOR } from "../utils/getAllPropertiesForObject";
+import { convertProtobufFile } from "./convertProtobufFile";
 
 export function convertProtobufType({
     source,
@@ -19,18 +20,7 @@ export function convertProtobufType({
         }
     }
     return ProtobufType.userDefined({
-        file: {
-            filepath: source.relativeFilePath,
-            packageName: source.packageName,
-            options:
-                source.csharpNamespace != null
-                    ? {
-                          csharp: {
-                              namespace: source.csharpNamespace
-                          }
-                      }
-                    : undefined
-        },
+        file: convertProtobufFile({ source }),
         // Use the global casings generator so that the name is not
         // affected by the user's casing settings (e.g. smart-casing).
         name: CASINGS_GENERATOR.generateName(name)
