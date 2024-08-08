@@ -88,11 +88,11 @@ export async function parse({
 
     for (const spec of specs) {
         const contents = (await readFile(spec.absoluteFilepath)).toString();
-        const relativePath = relative(absoluteFilePathToWorkspace, spec.absoluteFilepath);
+        const sourceRelativePath = relative(absoluteFilePathToWorkspace, spec.source.file);
         const source =
             spec.source.type === "protobuf"
-                ? OpenApiIrSource.protobuf({ file: relativePath })
-                : OpenApiIrSource.openapi({ file: relativePath });
+                ? OpenApiIrSource.protobuf({ file: sourceRelativePath })
+                : OpenApiIrSource.openapi({ file: sourceRelativePath });
 
         if (contents.includes("openapi") || contents.includes("swagger")) {
             const openApiDocument = await loadOpenAPI({
