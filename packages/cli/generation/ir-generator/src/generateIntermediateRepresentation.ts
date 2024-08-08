@@ -260,6 +260,7 @@ export async function generateIntermediateRepresentation({
                     typeResolver,
                     propertyResolver,
                     exampleResolver,
+                    sourceResolver,
                     globalErrors,
                     variableResolver,
                     workspace
