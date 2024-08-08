@@ -50,7 +50,7 @@ export function testParseOpenAPI(
             }
 
             const openApiIr = await parse({
-                absoluteFilePathToWorkspace: AbsoluteFilePath.of(process.cwd()),
+                absoluteFilePathToWorkspace: FIXTURES_PATH,
                 specs,
                 taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });

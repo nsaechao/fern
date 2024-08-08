@@ -167,7 +167,7 @@ export async function loadAPIWorkspace({
                 absoluteFilepathToOverrides: undefined,
                 source: {
                     type: "asyncapi",
-                    file: absolutePathToOpenAPI
+                    file: absolutePathToAsyncAPI
                 }
             });
         }
