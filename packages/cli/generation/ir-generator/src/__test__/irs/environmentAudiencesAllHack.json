@@ -123,8 +123,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -378,8 +378,8 @@
                 "type_imdb:MovieId"
             ],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -537,8 +537,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -659,8 +659,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],

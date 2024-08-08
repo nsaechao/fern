@@ -354,8 +354,8 @@
                 "type_infra/telemetry:TelemetryData"
             ],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -595,8 +595,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],

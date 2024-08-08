@@ -246,8 +246,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -464,8 +464,8 @@
                 "type_user:UserId"
             ],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],

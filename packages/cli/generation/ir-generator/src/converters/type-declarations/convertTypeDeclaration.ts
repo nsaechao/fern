@@ -162,23 +162,23 @@ function convertTypeDeclarationEncoding({
 function convertEncoding(encodingSchema: RawSchemas.EncodingSchema): Encoding {
     return encodingSchema.proto != null
         ? {
-              proto: {},
-              json: undefined
+              json: undefined,
+              proto: {}
           }
         : {
-              proto: undefined,
-              json: {}
+              json: {},
+              proto: undefined
           };
 }
 
 function convertSourceToEncoding(source: Source | undefined): Encoding {
     return source != null && source.type === "proto"
         ? {
-              proto: {},
-              json: undefined
+              json: undefined,
+              proto: {}
           }
         : {
-              proto: undefined,
-              json: {}
+              json: {},
+              proto: undefined
           };
 }

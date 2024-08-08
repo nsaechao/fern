@@ -105,8 +105,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -221,8 +221,8 @@
                 "type_:StringResponse"
             ],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -322,8 +322,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -444,8 +444,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -674,8 +674,8 @@
                 "type_service:WithDocs"
             ],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -833,8 +833,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],
@@ -1201,8 +1201,8 @@
                 "type_service:Movie"
             ],
             "encoding": {
-                "proto": null,
-                "json": {}
+                "json": {},
+                "proto": null
             },
             "source": null,
             "userProvidedExamples": [],
