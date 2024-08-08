@@ -53,6 +53,13 @@ export async function convertTypeDeclaration({
         propertiesByAudience = getPropertiesByAudience(typeDeclaration.properties ?? {});
     }
 
+    const source = await convertTypeDeclarationSource({
+        file,
+        typeDeclaration,
+        typeName,
+        sourceResolver
+    });
+
     return {
         propertiesByAudience,
         typeDeclaration: {
@@ -60,13 +67,8 @@ export async function convertTypeDeclaration({
             name: declaredTypeName,
             shape: await convertType({ typeDeclaration, file, typeResolver }),
             referencedTypes: new Set(referencedTypes.map((referencedType) => referencedType.typeId)),
-            encoding: convertTypeDeclarationEncoding({ typeDeclaration }),
-            source: await convertTypeDeclarationSource({
-                file,
-                typeDeclaration,
-                typeName,
-                sourceResolver
-            }),
+            encoding: convertTypeDeclarationEncoding({ typeDeclaration, source }),
+            source,
             userProvidedExamples:
                 typeof typeDeclaration !== "string" && typeDeclaration.examples != null
                     ? typeDeclaration.examples.map(
@@ -145,22 +147,38 @@ async function convertTypeDeclarationSource({
 }
 
 function convertTypeDeclarationEncoding({
-    typeDeclaration
+    typeDeclaration,
+    source
 }: {
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
+    source: Source | undefined;
 }): Encoding {
-    if (
-        typeof typeDeclaration === "string" ||
-        typeDeclaration.encoding == null ||
-        typeDeclaration.encoding.proto == null
-    ) {
-        return {
-            json: {},
-            proto: undefined
-        };
+    if (typeof typeDeclaration !== "string" && typeDeclaration.encoding != null) {
+        return convertEncoding(typeDeclaration.encoding);
     }
-    return {
-        json: undefined,
-        proto: {}
-    };
+    return convertSourceToEncoding(source);
+}
+
+function convertEncoding(encodingSchema: RawSchemas.EncodingSchema): Encoding {
+    return encodingSchema.proto != null
+        ? {
+              proto: {},
+              json: undefined
+          }
+        : {
+              proto: undefined,
+              json: {}
+          };
+}
+
+function convertSourceToEncoding(source: Source | undefined): Encoding {
+    return source != null && source.type === "proto"
+        ? {
+              proto: {},
+              json: undefined
+          }
+        : {
+              proto: undefined,
+              json: {}
+          };
 }
