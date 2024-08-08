@@ -151,8 +151,8 @@
                 "type_:UsernamePage"
             ],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -284,8 +284,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -419,8 +419,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -547,8 +547,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -675,8 +675,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -862,8 +862,8 @@
                 "type_users:User"
             ],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -1083,8 +1083,8 @@
                 "type_users:User"
             ],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -1211,8 +1211,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -1537,8 +1537,8 @@
                 "type_users:User"
             ],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -1863,8 +1863,8 @@
                 "type_users:User"
             ],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -2161,8 +2161,8 @@
                 "type_users:NextPage"
             ],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -2320,8 +2320,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -2479,8 +2479,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],

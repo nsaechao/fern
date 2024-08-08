@@ -132,8 +132,8 @@
                 "type_:UserModel"
             ],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": {},
+                "json": null
             },
             "source": {
                 "type": "proto",
@@ -428,8 +428,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": {},
+                "json": null
             },
             "source": {
                 "type": "proto",

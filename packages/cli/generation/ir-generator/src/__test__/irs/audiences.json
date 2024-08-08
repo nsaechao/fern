@@ -123,8 +123,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -282,8 +282,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -404,8 +404,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],

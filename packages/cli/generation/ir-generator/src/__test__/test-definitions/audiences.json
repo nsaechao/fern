@@ -123,8 +123,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -389,8 +389,8 @@
                 "type_folder-c/common:Foo"
             ],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -654,8 +654,8 @@
                 "type_folder-c/common:Foo"
             ],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -811,8 +811,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -992,8 +992,8 @@
                 "type_commons:Imported"
             ],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -1106,8 +1106,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
@@ -1271,8 +1271,8 @@
             },
             "referencedTypes": [],
             "encoding": {
-                "json": {},
-                "proto": null
+                "proto": null,
+                "json": {}
             },
             "source": null,
             "userProvidedExamples": [],
