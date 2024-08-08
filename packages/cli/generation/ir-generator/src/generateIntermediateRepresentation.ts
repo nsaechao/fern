@@ -96,7 +96,7 @@ export async function generateIntermediateRepresentation({
     const errorResolver = new ErrorResolverImpl(workspace);
     const exampleResolver = new ExampleResolverImpl(typeResolver);
     const variableResolver = new VariableResolverImpl();
-    const sourceResolver = new SourceResolverImpl();
+    const sourceResolver = new SourceResolverImpl(workspace);
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         fdrApiDefinitionId,

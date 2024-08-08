@@ -4,17 +4,15 @@ export declare type ResolvedSource = ResolvedSource.OpenAPI | ResolvedSource.Pro
 
 export declare namespace ResolvedSource {
     interface OpenAPI {
-        _type: "openapi";
+        type: "openapi";
         absoluteFilePath: AbsoluteFilePath;
         relativeFilePath: RelativeFilePath;
     }
 
     interface Protobuf {
-        _type: "protobuf";
-        absoluteFielPath: AbsoluteFilePath;
+        type: "protobuf";
+        absoluteFilePath: AbsoluteFilePath;
         relativeFilePath: RelativeFilePath;
-
-        // TODO: Should these use the IR name representation?
         csharpNamespace: string | undefined;
         packageName: string | undefined;
         serviceName: string | undefined;
