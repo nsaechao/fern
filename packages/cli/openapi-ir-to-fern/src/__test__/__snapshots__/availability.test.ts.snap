@@ -237,12 +237,18 @@ exports[`availability availability docs 1`] = `
         "properties": {
           "not_deprecated_setting": "optional<boolean>",
         },
+        "source": {
+          "openapi": "availability/openapi.yml",
+        },
       },
       "WholeDeprecatedSettings": {
         "availability": "deprecated",
         "docs": undefined,
         "properties": {
           "fine_setting": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "availability/openapi.yml",
         },
       },
     },
@@ -494,12 +500,18 @@ exports[`availability availability simple 1`] = `
         "properties": {
           "not_deprecated_setting": "optional<boolean>",
         },
+        "source": {
+          "openapi": "availability/openapi.yml",
+        },
       },
       "WholeDeprecatedSettings": {
         "availability": "deprecated",
         "docs": undefined,
         "properties": {
           "fine_setting": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "availability/openapi.yml",
         },
       },
     },

@@ -58,11 +58,17 @@ exports[`non alphanumeric characters non-alphanumeric-characters docs 1`] = `
             "value": "",
           },
         ],
+        "source": {
+          "openapi": "non-alphanumeric-characters/openapi.yml",
+        },
       },
       "Settings": {
         "docs": undefined,
         "properties": {
           "separator": "optional<DocumentIdSeparators>",
+        },
+        "source": {
+          "openapi": "non-alphanumeric-characters/openapi.yml",
         },
       },
     },
@@ -135,11 +141,17 @@ exports[`non alphanumeric characters non-alphanumeric-characters simple 1`] = `
             "value": "",
           },
         ],
+        "source": {
+          "openapi": "non-alphanumeric-characters/openapi.yml",
+        },
       },
       "Settings": {
         "docs": undefined,
         "properties": {
           "separator": "optional<DocumentIdSeparators>",
+        },
+        "source": {
+          "openapi": "non-alphanumeric-characters/openapi.yml",
         },
       },
     },

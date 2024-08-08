@@ -14368,6 +14368,9 @@ You will be assigned as owner of the new team automatically.",
           "User",
           "Group",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AddFieldDto": {
         "docs": undefined,
@@ -14390,6 +14393,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The field properties.",
             "type": "FieldPropertiesDto",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "AlgoliaRuleActionDto": {
@@ -14434,6 +14440,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AllContentsByPostDto": {
         "docs": undefined,
@@ -14463,6 +14472,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The end of the schedule.",
             "type": "optional<datetime>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "AppDto": {
@@ -14531,6 +14543,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AppLanguageDto": {
         "docs": undefined,
@@ -14559,6 +14574,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AppLanguagesDto": {
         "docs": undefined,
@@ -14570,6 +14588,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The languages.",
             "type": "list<AppLanguageDto>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "AppSettingsDto": {
@@ -14599,6 +14620,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ArrayFieldPropertiesDto": {
         "docs": undefined,
@@ -14616,6 +14640,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetChangedRuleTriggerDto": {
         "docs": undefined,
@@ -14624,6 +14651,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Javascript condition when to trigger.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "AssetDto": {
@@ -14732,6 +14762,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetFolderDto": {
         "docs": undefined,
@@ -14756,6 +14789,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetFolderScope": {
         "docs": "",
@@ -14764,6 +14800,9 @@ You will be assigned as owner of the new team automatically.",
           "Path",
           "Items",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetFoldersDto": {
         "docs": undefined,
@@ -14784,6 +14823,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetMeta": {
         "docs": undefined,
@@ -14793,6 +14835,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetPreviewMode": {
         "docs": "",
@@ -14801,6 +14846,9 @@ You will be assigned as owner of the new team automatically.",
           "Image",
           "FileName",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetScriptsDto": {
         "docs": undefined,
@@ -14841,6 +14889,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetType": {
         "docs": "",
@@ -14850,6 +14901,9 @@ You will be assigned as owner of the new team automatically.",
           "Audio",
           "Video",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetsDto": {
         "docs": undefined,
@@ -14865,6 +14919,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The total number of assets.",
             "type": "long",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "AssetsFieldPropertiesDto": {
@@ -14957,6 +15014,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssignContributorDto": {
         "docs": undefined,
@@ -14979,6 +15039,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The role of the contributor.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "AzureQueueRuleActionDto": {
@@ -15008,6 +15071,9 @@ You will be assigned as owner of the new team automatically.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "BackupJobDto": {
@@ -15041,6 +15107,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<datetime>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BackupJobsDto": {
         "docs": undefined,
@@ -15053,6 +15122,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<BackupJobDto>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BooleanFieldEditor": {
         "docs": "",
@@ -15060,6 +15132,9 @@ You will be assigned as owner of the new team automatically.",
           "Checkbox",
           "Toggle",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BooleanFieldPropertiesDto": {
         "docs": undefined,
@@ -15080,6 +15155,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Indicates that the inline editor is enabled for this field.",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "BulkResultDto": {
@@ -15103,6 +15181,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BulkUpdateAssetType": {
         "docs": "",
@@ -15111,6 +15192,9 @@ You will be assigned as owner of the new team automatically.",
           "Move",
           "Delete",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BulkUpdateAssetsJobDto": {
         "docs": undefined,
@@ -15156,6 +15240,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<BulkUpdateAssetType>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BulkUpdateContentType": {
         "docs": "",
@@ -15168,6 +15255,9 @@ You will be assigned as owner of the new team automatically.",
           "Update",
           "Validate",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BulkUpdateContentsJobDto": {
         "docs": undefined,
@@ -15217,6 +15307,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<BulkUpdateContentType>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "CallsUsageDtoDto": {
         "docs": undefined,
@@ -15258,6 +15351,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "CallsUsagePerDateDto": {
         "docs": undefined,
@@ -15285,6 +15381,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ChangePlanDto": {
         "docs": undefined,
@@ -15299,6 +15398,9 @@ You will be assigned as owner of the new team automatically.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ClientDto": {
@@ -15336,6 +15438,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ClientsDto": {
         "docs": undefined,
@@ -15347,6 +15452,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The clients.",
             "type": "list<ClientDto>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "CommentDto": {
@@ -15379,6 +15487,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "CommentRuleActionDto": {
         "docs": undefined,
@@ -15398,6 +15509,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "CommentRuleTriggerDto": {
         "docs": undefined,
@@ -15406,6 +15520,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Javascript condition when to trigger.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "CommentsDto": {
@@ -15428,6 +15545,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ComponentFieldPropertiesDto": {
         "docs": undefined,
@@ -15436,6 +15556,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The ID of the embedded schemas.",
             "type": "optional<list<string>>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ComponentsFieldPropertiesDto": {
@@ -15458,6 +15581,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ConfigurePreviewUrlsDto": "map<string, string>",
       "ContentChangedRuleTriggerDto": {
@@ -15475,6 +15601,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The schema settings.",
             "type": "optional<list<SchemaCondition>>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ContentData": "map<string, ContentFieldData>",
@@ -15558,6 +15687,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ContentFieldData": "map<string, unknown>",
       "ContentsDto": {
@@ -15578,6 +15710,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The total number of content items.",
             "type": "long",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ContributorDto": {
@@ -15603,6 +15738,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ContributorsDto": {
         "docs": undefined,
@@ -15623,6 +15761,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ContributorsMetadata": {
         "docs": undefined,
@@ -15631,6 +15772,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Indicates whether the user has been invited.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "CreateContentRuleActionDto": {
@@ -15665,6 +15809,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "CreateRuleDto": {
         "docs": undefined,
@@ -15677,6 +15824,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The trigger properties.",
             "type": "RuleTriggerDto",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "CurrentStorageDto": {
@@ -15691,6 +15841,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "DateTimeCalculatedDefaultValue": {
         "docs": "",
@@ -15698,6 +15851,9 @@ You will be assigned as owner of the new team automatically.",
           "Now",
           "Today",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "DateTimeFieldEditor": {
         "docs": "",
@@ -15705,6 +15861,9 @@ You will be assigned as owner of the new team automatically.",
           "Date",
           "DateTime",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "DateTimeFieldPropertiesDto": {
         "docs": undefined,
@@ -15737,6 +15896,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The minimum allowed value for the field value.",
             "type": "optional<datetime>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "DiscourseRuleActionDto": {
@@ -15795,6 +15957,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "EditorDto": {
         "docs": undefined,
@@ -15807,6 +15972,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The url to the editor.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ElasticSearchRuleActionDto": {
@@ -15848,6 +16016,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The optional username.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "EmailRuleActionDto": {
@@ -15928,6 +16099,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ErrorDto": {
         "docs": undefined,
@@ -15962,6 +16136,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Link to the error details.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "EventConsumerDto": {
@@ -16001,6 +16178,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "EventConsumersDto": {
         "docs": undefined,
@@ -16012,6 +16192,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The event consumers.",
             "type": "list<EventConsumerDto>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ExposedValues": "map<string, string>",
@@ -16039,6 +16222,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "FeatureDto": {
         "docs": undefined,
@@ -16052,6 +16238,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "FeaturesDto": {
         "docs": undefined,
@@ -16064,6 +16253,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The recent version.",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "FieldDto": {
@@ -16116,6 +16308,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The field properties.",
             "type": "FieldPropertiesDto",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "FieldPropertiesDto": {
@@ -16173,6 +16368,9 @@ You will be assigned as owner of the new team automatically.",
         },
         "discriminant": "fieldType",
         "docs": undefined,
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
         "union": {
           "Array": "ArrayFieldPropertiesDto",
           "Assets": "AssetsFieldPropertiesDto",
@@ -16196,6 +16394,9 @@ You will be assigned as owner of the new team automatically.",
           "Hide",
           "Require",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "FieldRuleDto": {
         "docs": undefined,
@@ -16219,6 +16420,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "GeolocationFieldEditor": {
         "docs": "",
@@ -16231,6 +16435,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The editor that is used to manage this field.",
             "type": "GeolocationFieldEditor",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "HistoryEventDto": {
@@ -16261,6 +16468,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ImageFormat": {
         "docs": "",
@@ -16274,6 +16484,9 @@ You will be assigned as owner of the new team automatically.",
           "TIFF",
           "WEBP",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "JobStatus": {
         "docs": "",
@@ -16283,6 +16496,9 @@ You will be assigned as owner of the new team automatically.",
           "Completed",
           "Failed",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "JsonFieldPropertiesDto": {
         "docs": undefined,
@@ -16291,6 +16507,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The GraphQL schema.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "LanguageDto": {
@@ -16309,6 +16528,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "LocalizedValueOfNullableBoolean": "map<string, optional<boolean>>",
       "LocalizedValueOfNullableDouble": "map<string, optional<double>>",
@@ -16323,10 +16545,16 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ManualRuleTriggerDto": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "MediumRuleActionDto": {
         "docs": undefined,
@@ -16378,6 +16606,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "NestedFieldDto": {
         "docs": undefined,
@@ -16416,6 +16647,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "FieldPropertiesDto",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "NotificationRuleActionDto": {
         "docs": undefined,
@@ -16449,6 +16683,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "NumberFieldEditor": {
         "docs": "",
@@ -16458,6 +16695,9 @@ You will be assigned as owner of the new team automatically.",
           "Dropdown",
           "Stars",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "NumberFieldPropertiesDto": {
         "docs": undefined,
@@ -16494,6 +16734,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The minimum allowed value for the field value.",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "OpenSearchRuleActionDto": {
@@ -16536,6 +16779,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "PatternDto": {
         "docs": undefined,
@@ -16553,6 +16799,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "PlanChangedDto": {
         "docs": undefined,
@@ -16561,6 +16810,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Optional redirect uri.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "PlanDto": {
@@ -16611,6 +16863,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "PlansDto": {
         "docs": undefined,
@@ -16646,6 +16901,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<ReferralInfo>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "PlansLockedReason": {
         "docs": "",
@@ -16655,6 +16913,9 @@ You will be assigned as owner of the new team automatically.",
           "NoPermission",
           "ManagedByTeam",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "PrerenderRuleActionDto": {
         "docs": undefined,
@@ -16680,6 +16941,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "PropertyPath": "list<string>",
       "QueryDto": {
@@ -16699,6 +16963,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "q": "optional<unknown>",
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "QueryJsonDto": {
         "docs": undefined,
@@ -16711,6 +16978,9 @@ You will be assigned as owner of the new team automatically.",
           "take": "long",
           "top": "long",
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ReferencesFieldEditor": {
         "docs": "",
@@ -16721,6 +16991,9 @@ You will be assigned as owner of the new team automatically.",
           "Checkboxes",
           "Input",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ReferencesFieldPropertiesDto": {
         "docs": undefined,
@@ -16762,6 +17035,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ReferralInfo": {
         "docs": undefined,
@@ -16769,6 +17045,9 @@ You will be assigned as owner of the new team automatically.",
           "code": "string",
           "condition": "string",
           "earned": "string",
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ReorderFieldsDto": {
@@ -16778,6 +17057,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The field ids in the target order.",
             "type": "list<long>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ResizeMode": {
@@ -16791,6 +17073,9 @@ You will be assigned as owner of the new team automatically.",
           "Min",
           "Stretch",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "Resource": {
         "docs": undefined,
@@ -16799,6 +17084,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The links.",
             "type": "map<string, ResourceLink>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ResourceLink": {
@@ -16829,6 +17117,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ResourcesDto": {
         "docs": undefined,
@@ -16836,6 +17127,9 @@ You will be assigned as owner of the new team automatically.",
           "Resource",
         ],
         "properties": {},
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RestoreJobDto": {
         "docs": undefined,
@@ -16866,6 +17160,9 @@ You will be assigned as owner of the new team automatically.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "RoleDto": {
@@ -16899,6 +17196,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "map<string, unknown>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RolesDto": {
         "docs": undefined,
@@ -16911,11 +17211,17 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<RoleDto>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleActionDto": {
         "base-properties": {},
         "discriminant": "actionType",
         "docs": undefined,
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
         "union": {
           "Algolia": "AlgoliaRuleActionDto",
           "AzureQueue": "AzureQueueRuleActionDto",
@@ -16997,6 +17303,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleElementDto": {
         "docs": undefined,
@@ -17030,6 +17339,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleElementPropertyDto": {
         "docs": undefined,
@@ -17062,6 +17374,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The options, if the editor is a dropdown.",
             "type": "optional<list<string>>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "RuleEventDto": {
@@ -17107,6 +17422,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "RuleResult",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleEventsDto": {
         "docs": undefined,
@@ -17123,6 +17441,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleFieldEditor": {
         "docs": "",
@@ -17137,6 +17458,9 @@ You will be assigned as owner of the new team automatically.",
           "TextArea",
           "Url",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleJobResult": {
         "docs": "",
@@ -17147,6 +17471,9 @@ You will be assigned as owner of the new team automatically.",
           "Failed",
           "Cancelled",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleResult": {
         "docs": "",
@@ -17156,11 +17483,17 @@ You will be assigned as owner of the new team automatically.",
           "Failed",
           "Timeout",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleTriggerDto": {
         "base-properties": {},
         "discriminant": "triggerType",
         "docs": undefined,
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
         "union": {
           "AssetChanged": "AssetChangedRuleTriggerDto",
           "Comment": "CommentRuleTriggerDto",
@@ -17184,6 +17517,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The ID of the rule that is currently rerunning.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ScheduleJobDto": {
@@ -17210,6 +17546,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SchemaChangedRuleTriggerDto": {
         "docs": undefined,
@@ -17219,12 +17558,18 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SchemaCondition": {
         "docs": undefined,
         "properties": {
           "condition": "optional<string>",
           "schemaId": "string",
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "SchemaDto": {
@@ -17325,6 +17670,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SchemaPropertiesDto": {
         "docs": undefined,
@@ -17370,6 +17718,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SchemaScriptsDto": {
         "docs": undefined,
@@ -17399,6 +17750,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SchemaType": {
         "docs": "",
@@ -17407,6 +17761,9 @@ You will be assigned as owner of the new team automatically.",
           "Singleton",
           "Component",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SchemasDto": {
         "docs": undefined,
@@ -17418,6 +17775,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The schemas.",
             "type": "list<SchemaDto>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ScriptRuleActionDto": {
@@ -17433,6 +17793,9 @@ You will be assigned as owner of the new team automatically.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "SearchResultDto": {
@@ -17454,6 +17817,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "SearchResultType",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SearchResultType": {
         "docs": "",
@@ -17465,6 +17831,9 @@ You will be assigned as owner of the new team automatically.",
           "Rule",
           "Schema",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SignalRRuleActionDto": {
         "docs": undefined,
@@ -17507,6 +17876,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Define target users or groups by id or name. One item per line. Not needed for Broadcast action.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "SimulatedRuleEventDto": {
@@ -17561,6 +17933,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SimulatedRuleEventsDto": {
         "docs": undefined,
@@ -17576,6 +17951,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The total number of simulated rule events.",
             "type": "long",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "SkipReason": {
@@ -17593,6 +17971,9 @@ You will be assigned as owner of the new team automatically.",
           "WrongEvent",
           "WrongEventForTrigger",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SlackRuleActionDto": {
         "docs": undefined,
@@ -17618,12 +17999,18 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SortNode": {
         "docs": undefined,
         "properties": {
           "order": "SortOrder",
           "path": "PropertyPath",
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "SortOrder": {
@@ -17632,6 +18019,9 @@ You will be assigned as owner of the new team automatically.",
           "Ascending",
           "Descending",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "StatusInfoDto": {
         "docs": undefined,
@@ -17644,6 +18034,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The name of the status.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "StorageUsagePerDateDto": {
@@ -17668,6 +18061,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "StringContentType": {
         "docs": "",
@@ -17676,6 +18072,9 @@ You will be assigned as owner of the new team automatically.",
           "Html",
           "Markdown",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "StringFieldEditor": {
         "docs": "",
@@ -17691,6 +18090,9 @@ You will be assigned as owner of the new team automatically.",
           "StockPhoto",
           "TextArea",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "StringFieldPropertiesDto": {
         "docs": undefined,
@@ -17772,6 +18174,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TagsFieldEditor": {
         "docs": "",
@@ -17780,6 +18185,9 @@ You will be assigned as owner of the new team automatically.",
           "Checkboxes",
           "Dropdown",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TagsFieldPropertiesDto": {
         "docs": undefined,
@@ -17813,6 +18221,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TeamDto": {
         "docs": undefined,
@@ -17845,6 +18256,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TemplateDetailsDto": {
         "docs": undefined,
@@ -17856,6 +18270,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The details of the template.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "TemplateDto": {
@@ -17881,6 +18298,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TemplatesDto": {
         "docs": undefined,
@@ -17892,6 +18312,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The event consumers.",
             "type": "list<TemplateDto>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "TranslationDto": {
@@ -17906,6 +18329,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TranslationResultCode": {
         "docs": "",
@@ -17917,6 +18343,9 @@ You will be assigned as owner of the new team automatically.",
           "Unauthorized",
           "Failed",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TweetRuleActionDto": {
         "docs": undefined,
@@ -17951,6 +18380,9 @@ You will be assigned as owner of the new team automatically.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "TypesenseRuleActionDto": {
@@ -17995,6 +18427,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UiFieldEditor": {
         "docs": "",
@@ -18007,6 +18442,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The editor that is used to manage this field.",
             "type": "UiFieldEditor",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "UiSettingsDto": {
@@ -18021,6 +18459,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UpdateFieldDto": {
         "docs": undefined,
@@ -18030,11 +18471,17 @@ You will be assigned as owner of the new team automatically.",
             "type": "FieldPropertiesDto",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UpdateSettingDto": {
         "docs": undefined,
         "properties": {
           "value": "unknown",
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "UpsertCommentDto": {
@@ -18060,6 +18507,9 @@ You will be assigned as owner of the new team automatically.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "UpsertSchemaDto": {
@@ -18102,6 +18552,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<SchemaScriptsDto>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UpsertSchemaFieldDto": {
         "docs": undefined,
@@ -18141,6 +18594,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "FieldPropertiesDto",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UpsertSchemaNestedFieldDto": {
         "docs": undefined,
@@ -18172,6 +18628,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "FieldPropertiesDto",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UsageRuleTriggerDto": {
         "docs": undefined,
@@ -18191,6 +18650,9 @@ You will be assigned as owner of the new team automatically.",
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "UserDto": {
@@ -18220,6 +18682,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UserProperty": {
         "docs": undefined,
@@ -18243,6 +18708,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UsersDto": {
         "docs": undefined,
@@ -18259,6 +18727,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "WebhookMethod": {
         "docs": "",
@@ -18269,6 +18740,9 @@ You will be assigned as owner of the new team automatically.",
           "DELETE",
           "PATCH",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "WebhookRuleActionDto": {
         "docs": undefined,
@@ -18304,6 +18778,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "WorkflowDto": {
         "docs": undefined,
@@ -18331,6 +18808,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The workflow steps.",
             "type": "optional<map<string, WorkflowStepDto>>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "WorkflowStepDto": {
@@ -18361,6 +18841,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "WorkflowTransitionDto": {
         "docs": undefined,
@@ -18373,6 +18856,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The optional restricted role.",
             "type": "optional<list<string>>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "WorkflowsDto": {
@@ -18389,6 +18875,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The workflow.",
             "type": "list<WorkflowDto>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
     },
@@ -30502,6 +30991,9 @@ You will be assigned as owner of the new team automatically.",
           "User",
           "Group",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AddFieldDto": {
         "docs": undefined,
@@ -30524,6 +31016,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The field properties.",
             "type": "FieldPropertiesDto",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "AlgoliaRuleActionDto": {
@@ -30568,6 +31063,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AllContentsByPostDto": {
         "docs": undefined,
@@ -30597,6 +31095,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The end of the schedule.",
             "type": "optional<datetime>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "AppDto": {
@@ -30665,6 +31166,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AppLanguageDto": {
         "docs": undefined,
@@ -30693,6 +31197,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AppLanguagesDto": {
         "docs": undefined,
@@ -30704,6 +31211,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The languages.",
             "type": "list<AppLanguageDto>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "AppSettingsDto": {
@@ -30733,6 +31243,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ArrayFieldPropertiesDto": {
         "docs": undefined,
@@ -30750,6 +31263,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetChangedRuleTriggerDto": {
         "docs": undefined,
@@ -30758,6 +31274,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Javascript condition when to trigger.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "AssetDto": {
@@ -30866,6 +31385,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetFolderDto": {
         "docs": undefined,
@@ -30890,6 +31412,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetFolderScope": {
         "docs": "",
@@ -30898,6 +31423,9 @@ You will be assigned as owner of the new team automatically.",
           "Path",
           "Items",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetFoldersDto": {
         "docs": undefined,
@@ -30918,6 +31446,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetMeta": {
         "docs": undefined,
@@ -30927,6 +31458,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetPreviewMode": {
         "docs": "",
@@ -30935,6 +31469,9 @@ You will be assigned as owner of the new team automatically.",
           "Image",
           "FileName",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetScriptsDto": {
         "docs": undefined,
@@ -30975,6 +31512,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetType": {
         "docs": "",
@@ -30984,6 +31524,9 @@ You will be assigned as owner of the new team automatically.",
           "Audio",
           "Video",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssetsDto": {
         "docs": undefined,
@@ -30999,6 +31542,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The total number of assets.",
             "type": "long",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "AssetsFieldPropertiesDto": {
@@ -31091,6 +31637,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "AssignContributorDto": {
         "docs": undefined,
@@ -31113,6 +31662,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The role of the contributor.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "AzureQueueRuleActionDto": {
@@ -31142,6 +31694,9 @@ You will be assigned as owner of the new team automatically.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "BackupJobDto": {
@@ -31175,6 +31730,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<datetime>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BackupJobsDto": {
         "docs": undefined,
@@ -31187,6 +31745,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<BackupJobDto>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BooleanFieldEditor": {
         "docs": "",
@@ -31194,6 +31755,9 @@ You will be assigned as owner of the new team automatically.",
           "Checkbox",
           "Toggle",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BooleanFieldPropertiesDto": {
         "docs": undefined,
@@ -31214,6 +31778,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Indicates that the inline editor is enabled for this field.",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "BulkResultDto": {
@@ -31237,6 +31804,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BulkUpdateAssetType": {
         "docs": "",
@@ -31245,6 +31815,9 @@ You will be assigned as owner of the new team automatically.",
           "Move",
           "Delete",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BulkUpdateAssetsJobDto": {
         "docs": undefined,
@@ -31290,6 +31863,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<BulkUpdateAssetType>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BulkUpdateContentType": {
         "docs": "",
@@ -31302,6 +31878,9 @@ You will be assigned as owner of the new team automatically.",
           "Update",
           "Validate",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "BulkUpdateContentsJobDto": {
         "docs": undefined,
@@ -31351,6 +31930,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<BulkUpdateContentType>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "CallsUsageDtoDto": {
         "docs": undefined,
@@ -31392,6 +31974,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "CallsUsagePerDateDto": {
         "docs": undefined,
@@ -31419,6 +32004,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ChangePlanDto": {
         "docs": undefined,
@@ -31433,6 +32021,9 @@ You will be assigned as owner of the new team automatically.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ClientDto": {
@@ -31470,6 +32061,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ClientsDto": {
         "docs": undefined,
@@ -31481,6 +32075,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The clients.",
             "type": "list<ClientDto>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "CommentDto": {
@@ -31513,6 +32110,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "CommentRuleActionDto": {
         "docs": undefined,
@@ -31532,6 +32132,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "CommentRuleTriggerDto": {
         "docs": undefined,
@@ -31540,6 +32143,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Javascript condition when to trigger.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "CommentsDto": {
@@ -31562,6 +32168,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ComponentFieldPropertiesDto": {
         "docs": undefined,
@@ -31570,6 +32179,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The ID of the embedded schemas.",
             "type": "optional<list<string>>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ComponentsFieldPropertiesDto": {
@@ -31592,6 +32204,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ConfigurePreviewUrlsDto": "map<string, string>",
       "ContentChangedRuleTriggerDto": {
@@ -31609,6 +32224,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The schema settings.",
             "type": "optional<list<SchemaCondition>>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ContentData": "map<string, ContentFieldData>",
@@ -31692,6 +32310,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ContentFieldData": "map<string, unknown>",
       "ContentsDto": {
@@ -31712,6 +32333,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The total number of content items.",
             "type": "long",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ContributorDto": {
@@ -31737,6 +32361,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ContributorsDto": {
         "docs": undefined,
@@ -31757,6 +32384,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ContributorsMetadata": {
         "docs": undefined,
@@ -31765,6 +32395,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Indicates whether the user has been invited.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "CreateContentRuleActionDto": {
@@ -31799,6 +32432,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "CreateRuleDto": {
         "docs": undefined,
@@ -31811,6 +32447,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The trigger properties.",
             "type": "RuleTriggerDto",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "CurrentStorageDto": {
@@ -31825,6 +32464,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "DateTimeCalculatedDefaultValue": {
         "docs": "",
@@ -31832,6 +32474,9 @@ You will be assigned as owner of the new team automatically.",
           "Now",
           "Today",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "DateTimeFieldEditor": {
         "docs": "",
@@ -31839,6 +32484,9 @@ You will be assigned as owner of the new team automatically.",
           "Date",
           "DateTime",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "DateTimeFieldPropertiesDto": {
         "docs": undefined,
@@ -31871,6 +32519,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The minimum allowed value for the field value.",
             "type": "optional<datetime>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "DiscourseRuleActionDto": {
@@ -31929,6 +32580,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "EditorDto": {
         "docs": undefined,
@@ -31941,6 +32595,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The url to the editor.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ElasticSearchRuleActionDto": {
@@ -31982,6 +32639,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The optional username.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "EmailRuleActionDto": {
@@ -32062,6 +32722,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ErrorDto": {
         "docs": undefined,
@@ -32096,6 +32759,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Link to the error details.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "EventConsumerDto": {
@@ -32135,6 +32801,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "EventConsumersDto": {
         "docs": undefined,
@@ -32146,6 +32815,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The event consumers.",
             "type": "list<EventConsumerDto>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ExposedValues": "map<string, string>",
@@ -32173,6 +32845,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "FeatureDto": {
         "docs": undefined,
@@ -32186,6 +32861,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "FeaturesDto": {
         "docs": undefined,
@@ -32198,6 +32876,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The recent version.",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "FieldDto": {
@@ -32250,6 +32931,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The field properties.",
             "type": "FieldPropertiesDto",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "FieldPropertiesDto": {
@@ -32307,6 +32991,9 @@ You will be assigned as owner of the new team automatically.",
         },
         "discriminant": "fieldType",
         "docs": undefined,
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
         "union": {
           "Array": "ArrayFieldPropertiesDto",
           "Assets": "AssetsFieldPropertiesDto",
@@ -32330,6 +33017,9 @@ You will be assigned as owner of the new team automatically.",
           "Hide",
           "Require",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "FieldRuleDto": {
         "docs": undefined,
@@ -32353,6 +33043,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "GeolocationFieldEditor": {
         "docs": "",
@@ -32365,6 +33058,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The editor that is used to manage this field.",
             "type": "GeolocationFieldEditor",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "HistoryEventDto": {
@@ -32395,6 +33091,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ImageFormat": {
         "docs": "",
@@ -32408,6 +33107,9 @@ You will be assigned as owner of the new team automatically.",
           "TIFF",
           "WEBP",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "JobStatus": {
         "docs": "",
@@ -32417,6 +33119,9 @@ You will be assigned as owner of the new team automatically.",
           "Completed",
           "Failed",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "JsonFieldPropertiesDto": {
         "docs": undefined,
@@ -32425,6 +33130,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The GraphQL schema.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "LanguageDto": {
@@ -32443,6 +33151,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "LocalizedValueOfNullableBoolean": "map<string, optional<boolean>>",
       "LocalizedValueOfNullableDouble": "map<string, optional<double>>",
@@ -32457,10 +33168,16 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ManualRuleTriggerDto": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "MediumRuleActionDto": {
         "docs": undefined,
@@ -32512,6 +33229,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "NestedFieldDto": {
         "docs": undefined,
@@ -32550,6 +33270,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "FieldPropertiesDto",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "NotificationRuleActionDto": {
         "docs": undefined,
@@ -32583,6 +33306,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "NumberFieldEditor": {
         "docs": "",
@@ -32592,6 +33318,9 @@ You will be assigned as owner of the new team automatically.",
           "Dropdown",
           "Stars",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "NumberFieldPropertiesDto": {
         "docs": undefined,
@@ -32628,6 +33357,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The minimum allowed value for the field value.",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "OpenSearchRuleActionDto": {
@@ -32670,6 +33402,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "PatternDto": {
         "docs": undefined,
@@ -32687,6 +33422,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "PlanChangedDto": {
         "docs": undefined,
@@ -32695,6 +33433,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Optional redirect uri.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "PlanDto": {
@@ -32745,6 +33486,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "PlansDto": {
         "docs": undefined,
@@ -32780,6 +33524,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<ReferralInfo>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "PlansLockedReason": {
         "docs": "",
@@ -32789,6 +33536,9 @@ You will be assigned as owner of the new team automatically.",
           "NoPermission",
           "ManagedByTeam",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "PrerenderRuleActionDto": {
         "docs": undefined,
@@ -32814,6 +33564,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "PropertyPath": "list<string>",
       "QueryDto": {
@@ -32833,6 +33586,9 @@ You will be assigned as owner of the new team automatically.",
           },
           "q": "optional<unknown>",
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "QueryJsonDto": {
         "docs": undefined,
@@ -32845,6 +33601,9 @@ You will be assigned as owner of the new team automatically.",
           "take": "long",
           "top": "long",
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ReferencesFieldEditor": {
         "docs": "",
@@ -32855,6 +33614,9 @@ You will be assigned as owner of the new team automatically.",
           "Checkboxes",
           "Input",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ReferencesFieldPropertiesDto": {
         "docs": undefined,
@@ -32896,6 +33658,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ReferralInfo": {
         "docs": undefined,
@@ -32903,6 +33668,9 @@ You will be assigned as owner of the new team automatically.",
           "code": "string",
           "condition": "string",
           "earned": "string",
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ReorderFieldsDto": {
@@ -32912,6 +33680,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The field ids in the target order.",
             "type": "list<long>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ResizeMode": {
@@ -32925,6 +33696,9 @@ You will be assigned as owner of the new team automatically.",
           "Min",
           "Stretch",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "Resource": {
         "docs": undefined,
@@ -32933,6 +33707,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The links.",
             "type": "map<string, ResourceLink>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ResourceLink": {
@@ -32963,6 +33740,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "ResourcesDto": {
         "docs": undefined,
@@ -32970,6 +33750,9 @@ You will be assigned as owner of the new team automatically.",
           "Resource",
         ],
         "properties": {},
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RestoreJobDto": {
         "docs": undefined,
@@ -33000,6 +33783,9 @@ You will be assigned as owner of the new team automatically.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "RoleDto": {
@@ -33033,6 +33819,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "map<string, unknown>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RolesDto": {
         "docs": undefined,
@@ -33045,11 +33834,17 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<RoleDto>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleActionDto": {
         "base-properties": {},
         "discriminant": "actionType",
         "docs": undefined,
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
         "union": {
           "Algolia": "AlgoliaRuleActionDto",
           "AzureQueue": "AzureQueueRuleActionDto",
@@ -33131,6 +33926,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleElementDto": {
         "docs": undefined,
@@ -33164,6 +33962,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleElementPropertyDto": {
         "docs": undefined,
@@ -33196,6 +33997,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The options, if the editor is a dropdown.",
             "type": "optional<list<string>>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "RuleEventDto": {
@@ -33241,6 +34045,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "RuleResult",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleEventsDto": {
         "docs": undefined,
@@ -33257,6 +34064,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleFieldEditor": {
         "docs": "",
@@ -33271,6 +34081,9 @@ You will be assigned as owner of the new team automatically.",
           "TextArea",
           "Url",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleJobResult": {
         "docs": "",
@@ -33281,6 +34094,9 @@ You will be assigned as owner of the new team automatically.",
           "Failed",
           "Cancelled",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleResult": {
         "docs": "",
@@ -33290,11 +34106,17 @@ You will be assigned as owner of the new team automatically.",
           "Failed",
           "Timeout",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "RuleTriggerDto": {
         "base-properties": {},
         "discriminant": "triggerType",
         "docs": undefined,
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
         "union": {
           "AssetChanged": "AssetChangedRuleTriggerDto",
           "Comment": "CommentRuleTriggerDto",
@@ -33318,6 +34140,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The ID of the rule that is currently rerunning.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ScheduleJobDto": {
@@ -33344,6 +34169,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SchemaChangedRuleTriggerDto": {
         "docs": undefined,
@@ -33353,12 +34181,18 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SchemaCondition": {
         "docs": undefined,
         "properties": {
           "condition": "optional<string>",
           "schemaId": "string",
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "SchemaDto": {
@@ -33459,6 +34293,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SchemaPropertiesDto": {
         "docs": undefined,
@@ -33504,6 +34341,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SchemaScriptsDto": {
         "docs": undefined,
@@ -33533,6 +34373,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SchemaType": {
         "docs": "",
@@ -33541,6 +34384,9 @@ You will be assigned as owner of the new team automatically.",
           "Singleton",
           "Component",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SchemasDto": {
         "docs": undefined,
@@ -33552,6 +34398,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The schemas.",
             "type": "list<SchemaDto>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "ScriptRuleActionDto": {
@@ -33567,6 +34416,9 @@ You will be assigned as owner of the new team automatically.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "SearchResultDto": {
@@ -33588,6 +34440,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "SearchResultType",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SearchResultType": {
         "docs": "",
@@ -33599,6 +34454,9 @@ You will be assigned as owner of the new team automatically.",
           "Rule",
           "Schema",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SignalRRuleActionDto": {
         "docs": undefined,
@@ -33641,6 +34499,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "Define target users or groups by id or name. One item per line. Not needed for Broadcast action.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "SimulatedRuleEventDto": {
@@ -33695,6 +34556,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SimulatedRuleEventsDto": {
         "docs": undefined,
@@ -33710,6 +34574,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The total number of simulated rule events.",
             "type": "long",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "SkipReason": {
@@ -33727,6 +34594,9 @@ You will be assigned as owner of the new team automatically.",
           "WrongEvent",
           "WrongEventForTrigger",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SlackRuleActionDto": {
         "docs": undefined,
@@ -33752,12 +34622,18 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "SortNode": {
         "docs": undefined,
         "properties": {
           "order": "SortOrder",
           "path": "PropertyPath",
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "SortOrder": {
@@ -33766,6 +34642,9 @@ You will be assigned as owner of the new team automatically.",
           "Ascending",
           "Descending",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "StatusInfoDto": {
         "docs": undefined,
@@ -33778,6 +34657,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The name of the status.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "StorageUsagePerDateDto": {
@@ -33802,6 +34684,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "StringContentType": {
         "docs": "",
@@ -33810,6 +34695,9 @@ You will be assigned as owner of the new team automatically.",
           "Html",
           "Markdown",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "StringFieldEditor": {
         "docs": "",
@@ -33825,6 +34713,9 @@ You will be assigned as owner of the new team automatically.",
           "StockPhoto",
           "TextArea",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "StringFieldPropertiesDto": {
         "docs": undefined,
@@ -33906,6 +34797,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TagsFieldEditor": {
         "docs": "",
@@ -33914,6 +34808,9 @@ You will be assigned as owner of the new team automatically.",
           "Checkboxes",
           "Dropdown",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TagsFieldPropertiesDto": {
         "docs": undefined,
@@ -33947,6 +34844,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TeamDto": {
         "docs": undefined,
@@ -33979,6 +34879,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TemplateDetailsDto": {
         "docs": undefined,
@@ -33990,6 +34893,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The details of the template.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "TemplateDto": {
@@ -34015,6 +34921,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TemplatesDto": {
         "docs": undefined,
@@ -34026,6 +34935,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The event consumers.",
             "type": "list<TemplateDto>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "TranslationDto": {
@@ -34040,6 +34952,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TranslationResultCode": {
         "docs": "",
@@ -34051,6 +34966,9 @@ You will be assigned as owner of the new team automatically.",
           "Unauthorized",
           "Failed",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "TweetRuleActionDto": {
         "docs": undefined,
@@ -34085,6 +35003,9 @@ You will be assigned as owner of the new team automatically.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "TypesenseRuleActionDto": {
@@ -34129,6 +35050,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UiFieldEditor": {
         "docs": "",
@@ -34141,6 +35065,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The editor that is used to manage this field.",
             "type": "UiFieldEditor",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "UiSettingsDto": {
@@ -34155,6 +35082,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UpdateFieldDto": {
         "docs": undefined,
@@ -34164,11 +35094,17 @@ You will be assigned as owner of the new team automatically.",
             "type": "FieldPropertiesDto",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UpdateSettingDto": {
         "docs": undefined,
         "properties": {
           "value": "unknown",
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "UpsertCommentDto": {
@@ -34194,6 +35130,9 @@ You will be assigned as owner of the new team automatically.",
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "UpsertSchemaDto": {
@@ -34236,6 +35175,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<SchemaScriptsDto>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UpsertSchemaFieldDto": {
         "docs": undefined,
@@ -34275,6 +35217,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "FieldPropertiesDto",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UpsertSchemaNestedFieldDto": {
         "docs": undefined,
@@ -34306,6 +35251,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "FieldPropertiesDto",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UsageRuleTriggerDto": {
         "docs": undefined,
@@ -34325,6 +35273,9 @@ You will be assigned as owner of the new team automatically.",
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "UserDto": {
@@ -34354,6 +35305,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "list<string>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UserProperty": {
         "docs": undefined,
@@ -34377,6 +35331,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "UsersDto": {
         "docs": undefined,
@@ -34393,6 +35350,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "long",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "WebhookMethod": {
         "docs": "",
@@ -34403,6 +35363,9 @@ You will be assigned as owner of the new team automatically.",
           "DELETE",
           "PATCH",
         ],
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "WebhookRuleActionDto": {
         "docs": undefined,
@@ -34438,6 +35401,9 @@ You will be assigned as owner of the new team automatically.",
             },
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "WorkflowDto": {
         "docs": undefined,
@@ -34465,6 +35431,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The workflow steps.",
             "type": "optional<map<string, WorkflowStepDto>>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "WorkflowStepDto": {
@@ -34495,6 +35464,9 @@ You will be assigned as owner of the new team automatically.",
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "squidex/openapi.json",
+        },
       },
       "WorkflowTransitionDto": {
         "docs": undefined,
@@ -34507,6 +35479,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The optional restricted role.",
             "type": "optional<list<string>>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
       "WorkflowsDto": {
@@ -34523,6 +35498,9 @@ You will be assigned as owner of the new team automatically.",
             "docs": "The workflow.",
             "type": "list<WorkflowDto>",
           },
+        },
+        "source": {
+          "openapi": "squidex/openapi.json",
         },
       },
     },

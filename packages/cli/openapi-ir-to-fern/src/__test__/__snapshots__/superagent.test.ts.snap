@@ -1096,6 +1096,9 @@ exports[`open api parser superagent docs 1`] = `
         "properties": {
           "detail": "optional<list<ValidationError>>",
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
       "ValidationError": {
         "docs": undefined,
@@ -1104,10 +1107,14 @@ exports[`open api parser superagent docs 1`] = `
           "msg": "string",
           "type": "string",
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "integer",
@@ -2134,6 +2141,9 @@ exports[`open api parser superagent simple 1`] = `
         "properties": {
           "detail": "optional<list<ValidationError>>",
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
       "ValidationError": {
         "docs": undefined,
@@ -2142,10 +2152,14 @@ exports[`open api parser superagent simple 1`] = `
           "msg": "string",
           "type": "string",
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "integer",

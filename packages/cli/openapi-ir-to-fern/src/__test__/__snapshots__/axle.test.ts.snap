@@ -97,12 +97,18 @@ exports[`open api parser axle docs 1`] = `
             "policies": "list<string>",
             "refreshedAt": "string",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "GetAccountResponse": {
           "docs": undefined,
           "properties": {
             "data": "optional<Account>",
             "success": "optional<root.Success>",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
         "Policy": {
@@ -137,12 +143,18 @@ exports[`open api parser axle docs 1`] = `
             },
             "type": "PolicyType",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "PolicyType": {
           "enum": [
             "auto",
             "motorcycle",
           ],
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
       },
     },
@@ -279,12 +291,18 @@ exports[`open api parser axle docs 1`] = `
             "data": "optional<root.Carrier>",
             "success": "optional<root.Success>",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "GetCarriersResponse": {
           "docs": undefined,
           "properties": {
             "data": "optional<list<root.Carrier>>",
             "success": "optional<root.Success>",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
       },
@@ -372,6 +390,9 @@ exports[`open api parser axle docs 1`] = `
             "data": "StartIgnitionResponseData",
             "success": "root.Success",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "StartIgnitionResponseData": {
           "docs": undefined,
@@ -384,6 +405,9 @@ exports[`open api parser axle docs 1`] = `
               "docs": "The url you should direct the user to to link their account.",
               "type": "string",
             },
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
       },
@@ -526,6 +550,9 @@ exports[`open api parser axle docs 1`] = `
             "data": "optional<accounts.Policy>",
             "success": "optional<root.Success>",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
       },
     },
@@ -609,6 +636,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "data": "ExchangeTokenResponseData",
             "success": "root.Success",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "ExchangeTokenResponseData": {
           "docs": undefined,
@@ -626,6 +656,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "type": "list<unknown>",
             },
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
       },
     },
@@ -642,6 +675,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "postalCode": "optional<string>",
           "state": "optional<string>",
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Carrier": {
         "docs": undefined,
@@ -654,6 +690,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "name": "string",
           "phone": "string",
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Coverage": {
         "docs": undefined,
@@ -664,6 +703,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "limitPerAccident": "optional<integer>",
           "limitPerPerson": "optional<integer>",
           "property": "optional<string>",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "CoverageCode": {
@@ -677,6 +719,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "COLL",
           "COMP",
         ],
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Error": {
         "docs": undefined,
@@ -686,6 +731,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "type": "optional<string>",
           },
           "success": "optional<Success>",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "Insured": {
@@ -701,6 +749,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "property": "optional<string>",
           "type": "optional<string>",
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Property": {
         "docs": undefined,
@@ -708,6 +759,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "data": "Vehicle",
           "id": "string",
           "type": "literal<"vehicle">",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "Success": {
@@ -725,6 +779,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "type": "ThirdPartyType",
           },
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "ThirdPartyType": {
         "default": "interest",
@@ -733,6 +790,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "lessor",
           "interest",
         ],
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "User": {
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
@@ -758,6 +818,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Vehicle": {
         "docs": undefined,
@@ -767,6 +830,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "model": "string",
           "vin": "string",
           "year": "string",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
     },
@@ -876,12 +942,18 @@ exports[`open api parser axle simple 1`] = `
             "policies": "list<string>",
             "refreshedAt": "string",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "GetAccountResponse": {
           "docs": undefined,
           "properties": {
             "data": "optional<Account>",
             "success": "optional<root.Success>",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
         "Policy": {
@@ -916,12 +988,18 @@ exports[`open api parser axle simple 1`] = `
             },
             "type": "PolicyType",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "PolicyType": {
           "enum": [
             "auto",
             "motorcycle",
           ],
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
       },
     },
@@ -1022,12 +1100,18 @@ exports[`open api parser axle simple 1`] = `
             "data": "optional<root.Carrier>",
             "success": "optional<root.Success>",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "GetCarriersResponse": {
           "docs": undefined,
           "properties": {
             "data": "optional<list<root.Carrier>>",
             "success": "optional<root.Success>",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
       },
@@ -1101,6 +1185,9 @@ exports[`open api parser axle simple 1`] = `
             "data": "StartIgnitionResponseData",
             "success": "root.Success",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "StartIgnitionResponseData": {
           "docs": undefined,
@@ -1113,6 +1200,9 @@ exports[`open api parser axle simple 1`] = `
               "docs": "The url you should direct the user to to link their account.",
               "type": "string",
             },
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
       },
@@ -1240,6 +1330,9 @@ exports[`open api parser axle simple 1`] = `
             "data": "optional<accounts.Policy>",
             "success": "optional<root.Success>",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
       },
     },
@@ -1309,6 +1402,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "data": "ExchangeTokenResponseData",
             "success": "root.Success",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "ExchangeTokenResponseData": {
           "docs": undefined,
@@ -1326,6 +1422,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "type": "list<unknown>",
             },
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
       },
     },
@@ -1342,6 +1441,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "postalCode": "optional<string>",
           "state": "optional<string>",
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Carrier": {
         "docs": undefined,
@@ -1354,6 +1456,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "name": "string",
           "phone": "string",
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Coverage": {
         "docs": undefined,
@@ -1364,6 +1469,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "limitPerAccident": "optional<integer>",
           "limitPerPerson": "optional<integer>",
           "property": "optional<string>",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "CoverageCode": {
@@ -1377,6 +1485,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "COLL",
           "COMP",
         ],
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Error": {
         "docs": undefined,
@@ -1386,6 +1497,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "type": "optional<string>",
           },
           "success": "optional<Success>",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "Insured": {
@@ -1401,6 +1515,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "property": "optional<string>",
           "type": "optional<string>",
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Property": {
         "docs": undefined,
@@ -1408,6 +1525,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "data": "Vehicle",
           "id": "string",
           "type": "literal<"vehicle">",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "Success": {
@@ -1425,6 +1545,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "type": "ThirdPartyType",
           },
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "ThirdPartyType": {
         "default": "interest",
@@ -1433,6 +1556,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "lessor",
           "interest",
         ],
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "User": {
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
@@ -1458,6 +1584,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Vehicle": {
         "docs": undefined,
@@ -1467,6 +1596,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "model": "string",
           "vin": "string",
           "year": "string",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
     },

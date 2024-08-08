@@ -51,11 +51,17 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name docs 1`] = `
         "properties": {
           "text": "optional<string>",
         },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
+        },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
         },
       },
     },
@@ -137,11 +143,17 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name simple 1`] = `
         "properties": {
           "text": "optional<string>",
         },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
+        },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
         },
       },
     },

@@ -56,6 +56,9 @@ exports[`anyOf anyOf docs 1`] = `
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "anyOf/openapi.yml",
+        },
       },
     },
   },
@@ -124,6 +127,9 @@ exports[`anyOf anyOf simple 1`] = `
 ",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "anyOf/openapi.yml",
         },
       },
     },

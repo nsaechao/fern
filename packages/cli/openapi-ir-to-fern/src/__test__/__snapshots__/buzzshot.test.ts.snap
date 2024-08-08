@@ -689,6 +689,9 @@ exports[`open api parser buzzshot docs 1`] = `
             },
             "results": "optional<list<root.Room>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListGamesResponse": {
           "docs": undefined,
@@ -713,6 +716,9 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "results": "optional<list<root.Game>>",
+          },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
           },
         },
         "ListGroupsResponse": {
@@ -739,6 +745,9 @@ exports[`open api parser buzzshot docs 1`] = `
             },
             "results": "optional<list<root.Group>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListLocationsResponse": {
           "docs": undefined,
@@ -763,6 +772,9 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "results": "optional<list<root.Room>>",
+          },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
           },
         },
         "ListPhotosResponse": {
@@ -789,6 +801,9 @@ exports[`open api parser buzzshot docs 1`] = `
             },
             "results": "optional<list<root.Photo>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListPlayersResponse": {
           "docs": undefined,
@@ -813,6 +828,9 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "results": "optional<list<root.Player>>",
+          },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
           },
         },
       },
@@ -852,6 +870,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "time": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GameComplete": {
         "docs": undefined,
@@ -862,6 +883,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "hints": "optional<integer>",
           "score": "optional<integer>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GameExtraFieldsItem": {
         "docs": undefined,
@@ -870,6 +894,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "label": "optional<string>",
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "GamePhotosItem": {
@@ -887,6 +914,9 @@ exports[`open api parser buzzshot docs 1`] = `
             },
           },
           "ready": "optional<string>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Group": {
@@ -920,6 +950,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "time": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupGamesItem": {
         "docs": undefined,
@@ -951,6 +984,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "time": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupGamesItemComplete": {
         "docs": undefined,
@@ -961,6 +997,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "hints": "optional<integer>",
           "score": "optional<integer>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupGamesItemExtraFieldsItem": {
         "docs": undefined,
@@ -969,6 +1008,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "label": "optional<string>",
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "GroupPhotosItem": {
@@ -987,6 +1029,9 @@ exports[`open api parser buzzshot docs 1`] = `
             },
           },
           "ready": "optional<string>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "GroupPlayersItem": {
@@ -1026,6 +1071,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "signature": "optional<string>",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupPlayersItemExtraFieldsItem": {
         "docs": undefined,
@@ -1034,6 +1082,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "label": "optional<string>",
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Photo": {
@@ -1051,6 +1102,9 @@ exports[`open api parser buzzshot docs 1`] = `
             },
           },
           "processed": "list<PhotoProcessedItem>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "PhotoProcessedItem": {
@@ -1070,6 +1124,9 @@ exports[`open api parser buzzshot docs 1`] = `
             },
           },
           "ready": "optional<string>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Player": {
@@ -1109,6 +1166,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "phone": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "PlayerExtraFieldsItem": {
         "docs": undefined,
@@ -1117,6 +1177,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "label": "optional<string>",
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Room": {
@@ -1133,6 +1196,9 @@ exports[`open api parser buzzshot docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
     },
@@ -1845,6 +1911,9 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "results": "optional<list<root.Room>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListGamesResponse": {
           "docs": undefined,
@@ -1869,6 +1938,9 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "results": "optional<list<root.Game>>",
+          },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
           },
         },
         "ListGroupsResponse": {
@@ -1895,6 +1967,9 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "results": "optional<list<root.Group>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListLocationsResponse": {
           "docs": undefined,
@@ -1919,6 +1994,9 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "results": "optional<list<root.Room>>",
+          },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
           },
         },
         "ListPhotosResponse": {
@@ -1945,6 +2023,9 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "results": "optional<list<root.Photo>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListPlayersResponse": {
           "docs": undefined,
@@ -1969,6 +2050,9 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "results": "optional<list<root.Player>>",
+          },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
           },
         },
       },
@@ -2008,6 +2092,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "time": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GameComplete": {
         "docs": undefined,
@@ -2018,6 +2105,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "hints": "optional<integer>",
           "score": "optional<integer>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GameExtraFieldsItem": {
         "docs": undefined,
@@ -2026,6 +2116,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "label": "optional<string>",
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "GamePhotosItem": {
@@ -2043,6 +2136,9 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "ready": "optional<string>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Group": {
@@ -2076,6 +2172,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "time": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupGamesItem": {
         "docs": undefined,
@@ -2107,6 +2206,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "time": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupGamesItemComplete": {
         "docs": undefined,
@@ -2117,6 +2219,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "hints": "optional<integer>",
           "score": "optional<integer>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupGamesItemExtraFieldsItem": {
         "docs": undefined,
@@ -2125,6 +2230,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "label": "optional<string>",
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "GroupPhotosItem": {
@@ -2143,6 +2251,9 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "ready": "optional<string>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "GroupPlayersItem": {
@@ -2182,6 +2293,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "signature": "optional<string>",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupPlayersItemExtraFieldsItem": {
         "docs": undefined,
@@ -2190,6 +2304,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "label": "optional<string>",
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Photo": {
@@ -2207,6 +2324,9 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "processed": "list<PhotoProcessedItem>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "PhotoProcessedItem": {
@@ -2226,6 +2346,9 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "ready": "optional<string>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Player": {
@@ -2265,6 +2388,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "phone": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "PlayerExtraFieldsItem": {
         "docs": undefined,
@@ -2273,6 +2399,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "label": "optional<string>",
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Room": {
@@ -2289,6 +2418,9 @@ exports[`open api parser buzzshot simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
     },
