@@ -3,7 +3,7 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { ResolvedSource } from "../resolvers/ResolvedSource";
 import { CASINGS_GENERATOR } from "../utils/getAllPropertiesForObject";
 
-export function convertToProtobufType({
+export function convertProtobufType({
     source,
     name,
     encoding
@@ -13,7 +13,7 @@ export function convertToProtobufType({
     encoding: RawSchemas.EncodingSchema | undefined;
 }): ProtobufType {
     if (encoding != null && encoding.proto != null && encoding.proto.type != null) {
-        const wellKnownType = maybeConvertToWellKnownProtobufType({ type: encoding.proto.type });
+        const wellKnownType = maybeConvertWellKnownProtobufType({ type: encoding.proto.type });
         if (wellKnownType != null) {
             return wellKnownType;
         }
@@ -37,7 +37,7 @@ export function convertToProtobufType({
     });
 }
 
-function maybeConvertToWellKnownProtobufType({ type }: { type: string }): ProtobufType | undefined {
+function maybeConvertWellKnownProtobufType({ type }: { type: string }): ProtobufType | undefined {
     switch (type) {
         case "google.protobuf.Any":
             return ProtobufType.wellKnown(WellKnownProtobufType.any());

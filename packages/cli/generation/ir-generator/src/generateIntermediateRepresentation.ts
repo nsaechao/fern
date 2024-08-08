@@ -195,6 +195,7 @@ export async function generateIntermediateRepresentation({
                         file,
                         typeResolver,
                         exampleResolver,
+                        sourceResolver,
                         workspace
                     });
                     const convertedTypeDeclaration = convertedTypeDeclarationWithFilepaths.typeDeclaration;
