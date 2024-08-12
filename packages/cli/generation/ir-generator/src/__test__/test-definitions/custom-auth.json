@@ -1278,79 +1278,6 @@
     "readmeConfig": null,
     "sourceConfig": null,
     "subpackages": {
-        "subpackage_custom-auth": {
-            "name": {
-                "originalName": "custom-auth",
-                "camelCase": {
-                    "unsafeName": "customAuth",
-                    "safeName": "customAuth"
-                },
-                "snakeCase": {
-                    "unsafeName": "custom_auth",
-                    "safeName": "custom_auth"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "CUSTOM_AUTH",
-                    "safeName": "CUSTOM_AUTH"
-                },
-                "pascalCase": {
-                    "unsafeName": "CustomAuth",
-                    "safeName": "CustomAuth"
-                }
-            },
-            "fernFilepath": {
-                "allParts": [
-                    {
-                        "originalName": "custom-auth",
-                        "camelCase": {
-                            "unsafeName": "customAuth",
-                            "safeName": "customAuth"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "custom_auth",
-                            "safeName": "custom_auth"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "CUSTOM_AUTH",
-                            "safeName": "CUSTOM_AUTH"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "CustomAuth",
-                            "safeName": "CustomAuth"
-                        }
-                    }
-                ],
-                "packagePath": [],
-                "file": {
-                    "originalName": "custom-auth",
-                    "camelCase": {
-                        "unsafeName": "customAuth",
-                        "safeName": "customAuth"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "custom_auth",
-                        "safeName": "custom_auth"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "CUSTOM_AUTH",
-                        "safeName": "CUSTOM_AUTH"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "CustomAuth",
-                        "safeName": "CustomAuth"
-                    }
-                }
-            },
-            "service": "service_custom-auth",
-            "types": [],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        },
         "subpackage_errors": {
             "name": {
                 "originalName": "errors",
@@ -1428,6 +1355,79 @@
             "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
+        },
+        "subpackage_custom-auth": {
+            "name": {
+                "originalName": "custom-auth",
+                "camelCase": {
+                    "unsafeName": "customAuth",
+                    "safeName": "customAuth"
+                },
+                "snakeCase": {
+                    "unsafeName": "custom_auth",
+                    "safeName": "custom_auth"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "CUSTOM_AUTH",
+                    "safeName": "CUSTOM_AUTH"
+                },
+                "pascalCase": {
+                    "unsafeName": "CustomAuth",
+                    "safeName": "CustomAuth"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "custom-auth",
+                        "camelCase": {
+                            "unsafeName": "customAuth",
+                            "safeName": "customAuth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "custom_auth",
+                            "safeName": "custom_auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "CUSTOM_AUTH",
+                            "safeName": "CUSTOM_AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "CustomAuth",
+                            "safeName": "CustomAuth"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "custom-auth",
+                    "camelCase": {
+                        "unsafeName": "customAuth",
+                        "safeName": "customAuth"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "custom_auth",
+                        "safeName": "custom_auth"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CUSTOM_AUTH",
+                        "safeName": "CUSTOM_AUTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CustomAuth",
+                        "safeName": "CustomAuth"
+                    }
+                }
+            },
+            "service": "service_custom-auth",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
@@ -1441,8 +1441,8 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_custom-auth",
-            "subpackage_errors"
+            "subpackage_errors",
+            "subpackage_custom-auth"
         ],
         "webhooks": null,
         "navigationConfig": null,

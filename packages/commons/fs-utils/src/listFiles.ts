@@ -1,7 +1,5 @@
-import glob from "glob-promise";
+import { glob } from "glob";
 import { AbsoluteFilePath } from "./AbsoluteFilePath";
-import { join } from "./join";
-import { RelativeFilePath } from "./RelativeFilePath";
 
 export async function listFiles(root: AbsoluteFilePath, extensionGlob: string): Promise<AbsoluteFilePath[]> {
     return (

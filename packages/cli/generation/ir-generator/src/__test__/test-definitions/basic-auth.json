@@ -1283,79 +1283,6 @@
     "readmeConfig": null,
     "sourceConfig": null,
     "subpackages": {
-        "subpackage_basic-auth": {
-            "name": {
-                "originalName": "basic-auth",
-                "camelCase": {
-                    "unsafeName": "basicAuth",
-                    "safeName": "basicAuth"
-                },
-                "snakeCase": {
-                    "unsafeName": "basic_auth",
-                    "safeName": "basic_auth"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "BASIC_AUTH",
-                    "safeName": "BASIC_AUTH"
-                },
-                "pascalCase": {
-                    "unsafeName": "BasicAuth",
-                    "safeName": "BasicAuth"
-                }
-            },
-            "fernFilepath": {
-                "allParts": [
-                    {
-                        "originalName": "basic-auth",
-                        "camelCase": {
-                            "unsafeName": "basicAuth",
-                            "safeName": "basicAuth"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "basic_auth",
-                            "safeName": "basic_auth"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "BASIC_AUTH",
-                            "safeName": "BASIC_AUTH"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "BasicAuth",
-                            "safeName": "BasicAuth"
-                        }
-                    }
-                ],
-                "packagePath": [],
-                "file": {
-                    "originalName": "basic-auth",
-                    "camelCase": {
-                        "unsafeName": "basicAuth",
-                        "safeName": "basicAuth"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "basic_auth",
-                        "safeName": "basic_auth"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "BASIC_AUTH",
-                        "safeName": "BASIC_AUTH"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "BasicAuth",
-                        "safeName": "BasicAuth"
-                    }
-                }
-            },
-            "service": "service_basic-auth",
-            "types": [],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": true,
-            "docs": null
-        },
         "subpackage_errors": {
             "name": {
                 "originalName": "errors",
@@ -1433,6 +1360,79 @@
             "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
+        },
+        "subpackage_basic-auth": {
+            "name": {
+                "originalName": "basic-auth",
+                "camelCase": {
+                    "unsafeName": "basicAuth",
+                    "safeName": "basicAuth"
+                },
+                "snakeCase": {
+                    "unsafeName": "basic_auth",
+                    "safeName": "basic_auth"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "BASIC_AUTH",
+                    "safeName": "BASIC_AUTH"
+                },
+                "pascalCase": {
+                    "unsafeName": "BasicAuth",
+                    "safeName": "BasicAuth"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "basic-auth",
+                        "camelCase": {
+                            "unsafeName": "basicAuth",
+                            "safeName": "basicAuth"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "basic_auth",
+                            "safeName": "basic_auth"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "BASIC_AUTH",
+                            "safeName": "BASIC_AUTH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "BasicAuth",
+                            "safeName": "BasicAuth"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "basic-auth",
+                    "camelCase": {
+                        "unsafeName": "basicAuth",
+                        "safeName": "basicAuth"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "basic_auth",
+                        "safeName": "basic_auth"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "BASIC_AUTH",
+                        "safeName": "BASIC_AUTH"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "BasicAuth",
+                        "safeName": "BasicAuth"
+                    }
+                }
+            },
+            "service": "service_basic-auth",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
         }
     },
     "rootPackage": {
@@ -1446,8 +1446,8 @@
         "types": [],
         "errors": [],
         "subpackages": [
-            "subpackage_basic-auth",
-            "subpackage_errors"
+            "subpackage_errors",
+            "subpackage_basic-auth"
         ],
         "webhooks": null,
         "navigationConfig": null,

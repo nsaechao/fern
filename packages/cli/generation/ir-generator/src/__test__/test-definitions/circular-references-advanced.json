@@ -264,158 +264,6 @@
             "availability": null,
             "docs": null
         },
-        "type_a:A": {
-            "name": {
-                "name": {
-                    "originalName": "A",
-                    "camelCase": {
-                        "unsafeName": "a",
-                        "safeName": "a"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "a",
-                        "safeName": "a"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "A",
-                        "safeName": "A"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "A",
-                        "safeName": "A"
-                    }
-                },
-                "fernFilepath": {
-                    "allParts": [
-                        {
-                            "originalName": "a",
-                            "camelCase": {
-                                "unsafeName": "a",
-                                "safeName": "a"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "a",
-                                "safeName": "a"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "A",
-                                "safeName": "A"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "A",
-                                "safeName": "A"
-                            }
-                        }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                        "originalName": "a",
-                        "camelCase": {
-                            "unsafeName": "a",
-                            "safeName": "a"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "a",
-                            "safeName": "a"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "A",
-                            "safeName": "A"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "A",
-                            "safeName": "A"
-                        }
-                    }
-                },
-                "typeId": "type_a:A"
-            },
-            "shape": {
-                "_type": "object",
-                "extends": [
-                    {
-                        "name": {
-                            "originalName": "RootType",
-                            "camelCase": {
-                                "unsafeName": "rootType",
-                                "safeName": "rootType"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "root_type",
-                                "safeName": "root_type"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ROOT_TYPE",
-                                "safeName": "ROOT_TYPE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "RootType",
-                                "safeName": "RootType"
-                            }
-                        },
-                        "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": [],
-                            "file": null
-                        },
-                        "typeId": "type_:RootType"
-                    }
-                ],
-                "properties": [],
-                "extra-properties": false,
-                "extendedProperties": [
-                    {
-                        "name": {
-                            "name": {
-                                "originalName": "s",
-                                "camelCase": {
-                                    "unsafeName": "s",
-                                    "safeName": "s"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "s",
-                                    "safeName": "s"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "S",
-                                    "safeName": "S"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "S",
-                                    "safeName": "S"
-                                }
-                            },
-                            "wireValue": "s"
-                        },
-                        "valueType": {
-                            "_type": "primitive",
-                            "primitive": {
-                                "v1": "STRING",
-                                "v2": {
-                                    "type": "string",
-                                    "default": null,
-                                    "validation": null
-                                }
-                            }
-                        },
-                        "availability": null,
-                        "docs": null
-                    }
-                ]
-            },
-            "referencedTypes": [
-                "type_:RootType"
-            ],
-            "encoding": {
-                "json": {},
-                "proto": null
-            },
-            "source": null,
-            "userProvidedExamples": [],
-            "autogeneratedExamples": [],
-            "availability": null,
-            "docs": null
-        },
         "type_ast:ContainerValue": {
             "name": {
                 "name": {
@@ -1812,6 +1660,158 @@
             "autogeneratedExamples": [],
             "availability": null,
             "docs": "This type allows us to test a circular reference with a union type (see FieldValue)."
+        },
+        "type_a:A": {
+            "name": {
+                "name": {
+                    "originalName": "A",
+                    "camelCase": {
+                        "unsafeName": "a",
+                        "safeName": "a"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "a",
+                        "safeName": "a"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "A",
+                        "safeName": "A"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "A",
+                        "safeName": "A"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "a",
+                            "camelCase": {
+                                "unsafeName": "a",
+                                "safeName": "a"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "a",
+                                "safeName": "a"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "A",
+                                "safeName": "A"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "A",
+                                "safeName": "A"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "a",
+                        "camelCase": {
+                            "unsafeName": "a",
+                            "safeName": "a"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "a",
+                            "safeName": "a"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "A",
+                            "safeName": "A"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "A",
+                            "safeName": "A"
+                        }
+                    }
+                },
+                "typeId": "type_a:A"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [
+                    {
+                        "name": {
+                            "originalName": "RootType",
+                            "camelCase": {
+                                "unsafeName": "rootType",
+                                "safeName": "rootType"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "root_type",
+                                "safeName": "root_type"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ROOT_TYPE",
+                                "safeName": "ROOT_TYPE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "RootType",
+                                "safeName": "RootType"
+                            }
+                        },
+                        "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": [],
+                            "file": null
+                        },
+                        "typeId": "type_:RootType"
+                    }
+                ],
+                "properties": [],
+                "extra-properties": false,
+                "extendedProperties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "s",
+                                "camelCase": {
+                                    "unsafeName": "s",
+                                    "safeName": "s"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "s",
+                                    "safeName": "s"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "S",
+                                    "safeName": "S"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "S",
+                                    "safeName": "S"
+                                }
+                            },
+                            "wireValue": "s"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [
+                "type_:RootType"
+            ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
         }
     },
     "errors": {},
@@ -1852,13 +1852,13 @@
         "sharedTypes": [
             "type_:ImportingA",
             "type_:RootType",
-            "type_a:A",
             "type_ast:ContainerValue",
             "type_ast:PrimitiveValue",
             "type_ast:ObjectValue",
             "type_ast:FieldName",
             "type_ast:FieldValue",
-            "type_ast:ObjectFieldValue"
+            "type_ast:ObjectFieldValue",
+            "type_a:A"
         ]
     },
     "webhookGroups": {},
@@ -1866,81 +1866,6 @@
     "readmeConfig": null,
     "sourceConfig": null,
     "subpackages": {
-        "subpackage_a": {
-            "name": {
-                "originalName": "a",
-                "camelCase": {
-                    "unsafeName": "a",
-                    "safeName": "a"
-                },
-                "snakeCase": {
-                    "unsafeName": "a",
-                    "safeName": "a"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "A",
-                    "safeName": "A"
-                },
-                "pascalCase": {
-                    "unsafeName": "A",
-                    "safeName": "A"
-                }
-            },
-            "fernFilepath": {
-                "allParts": [
-                    {
-                        "originalName": "a",
-                        "camelCase": {
-                            "unsafeName": "a",
-                            "safeName": "a"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "a",
-                            "safeName": "a"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "A",
-                            "safeName": "A"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "A",
-                            "safeName": "A"
-                        }
-                    }
-                ],
-                "packagePath": [],
-                "file": {
-                    "originalName": "a",
-                    "camelCase": {
-                        "unsafeName": "a",
-                        "safeName": "a"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "a",
-                        "safeName": "a"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "A",
-                        "safeName": "A"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "A",
-                        "safeName": "A"
-                    }
-                }
-            },
-            "service": null,
-            "types": [
-                "type_a:A"
-            ],
-            "errors": [],
-            "subpackages": [],
-            "navigationConfig": null,
-            "webhooks": null,
-            "websocket": null,
-            "hasEndpointsInTree": false,
-            "docs": null
-        },
         "subpackage_ast": {
             "name": {
                 "originalName": "ast",
@@ -2020,6 +1945,81 @@
             "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
+        },
+        "subpackage_a": {
+            "name": {
+                "originalName": "a",
+                "camelCase": {
+                    "unsafeName": "a",
+                    "safeName": "a"
+                },
+                "snakeCase": {
+                    "unsafeName": "a",
+                    "safeName": "a"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "A",
+                    "safeName": "A"
+                },
+                "pascalCase": {
+                    "unsafeName": "A",
+                    "safeName": "A"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "a",
+                        "camelCase": {
+                            "unsafeName": "a",
+                            "safeName": "a"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "a",
+                            "safeName": "a"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "A",
+                            "safeName": "A"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "A",
+                            "safeName": "A"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "a",
+                    "camelCase": {
+                        "unsafeName": "a",
+                        "safeName": "a"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "a",
+                        "safeName": "a"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "A",
+                        "safeName": "A"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "A",
+                        "safeName": "A"
+                    }
+                }
+            },
+            "service": null,
+            "types": [
+                "type_a:A"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": false,
+            "docs": null
         }
     },
     "rootPackage": {
@@ -2036,8 +2036,8 @@
         ],
         "errors": [],
         "subpackages": [
-            "subpackage_a",
-            "subpackage_ast"
+            "subpackage_ast",
+            "subpackage_a"
         ],
         "webhooks": null,
         "navigationConfig": null,
