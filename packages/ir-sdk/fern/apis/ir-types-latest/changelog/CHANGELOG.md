@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v53.8.0] - 2024-08-12 (TODO: Make required in next major)
+
+- Improvement: Add `hasGrpcEndpoints` to the `SdkConfig` type. This should be required in the next major upgrade.
+- Improvement: Add `ProtoConfig` type to identify any well-known Protobuf types (e.g. `google.protobuf.Struct`)
+  and to consolidate all the types that require Protobuf encoding.
+
 ## [v53.7.0] - 2024-08-12
 
 - Improvement: The IR now contains a `shape` field on the `ExampleQueryParameter` type that denotes whether the parameter

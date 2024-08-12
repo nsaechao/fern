@@ -57,6 +57,7 @@ types:
       serviceTypeReferenceInfo: ServiceTypeReferenceInfo
       readmeConfig: optional<ReadmeConfig>
       sourceConfig: optional<SourceConfig>
+      protoConfig: optional<ProtoConfig>
   ReadmeConfig:
     docs: |
       The configuration used to generate a README.md file. If present, the generator
@@ -98,9 +99,22 @@ types:
           The URL containing the `.proto` root directory source. This can be used
           to pull down the original `.proto` source files during code generation.
         type: string
+  ProtoConfig:
+    docs: |
+      Specifies the set of types that either support Protobuf encoding and/or are defined
+      in .proto source files.
+    properties:
+      struct:
+        docs: The type that represents the google.protobuf.Struct (if any).
+        type: optional<commons.TypeId>
+      value:
+        docs: The type that represents the google.protobuf.Value (if any).
+        type: optional<commons.TypeId>
+      types: list<commons.TypeId>
   SdkConfig:
     properties:
       isAuthMandatory: boolean
+      hasGrpcEndpoints: optional<boolean>
       hasStreamingEndpoints: boolean
       hasPaginatedEndpoints: boolean
       hasFileDownloadEndpoints: boolean
