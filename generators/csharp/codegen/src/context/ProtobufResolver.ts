@@ -18,6 +18,33 @@ export class ProtobufResolver {
         this.csharpTypeMapper = csharpTypeMapper;
     }
 
+    /**
+     * Returns the class reference for the Protobuf type identified by the given
+     * type ID (e.g. `User.V1.Grpc.User`).
+     */
+    public getProtobufTypeOrThrow(typeId: TypeId): csharp.Type {
+        const protobufType = this.getProtobufTypeForTypeId(typeId);
+        if (protobufType == null) {
+            throw new Error(`The type identified by ${typeId} is not a Protobuf type`);
+        }
+        switch (protobufType.type) {
+            case "wellKnown": {
+                if (protobufType.value.type === "struct") {
+                    return this.getProtobufStructTypeOrThrow();
+                }
+                return csharp.Type.reference(this.getWellKnownProtobufTypeClassReferenceOrThrow(protobufType.value));
+            }
+            case "userDefined": {
+                return csharp.Type.reference(
+                    this.csharpTypeMapper.convertToClassReference({
+                        typeId,
+                        name: protobufType.name
+                    })
+                );
+            }
+        }
+    }
+
     public getNamespaceFromProtobufFileOrThrow(protobufFile: ProtobufFile): string {
         const namespace = protobufFile.options?.csharp?.namespace;
         if (namespace == null) {
@@ -93,6 +120,16 @@ export class ProtobufResolver {
             typeId,
             wellKnownProtobufType: WellKnownProtobufType.value()
         });
+    }
+
+    private getWellKnownProtobufTypeClassReferenceOrThrow(
+        wellKnownProtobufType: WellKnownProtobufType
+    ): csharp.ClassReference {
+        const classReference = this.getWellKnownProtobufTypeClassReference(wellKnownProtobufType);
+        if (classReference == null) {
+            throw new Error(`Well-known Protobuf type "${wellKnownProtobufType.type}" could not be found.`);
+        }
+        return classReference;
     }
 
     private getWellKnownProtobufTypeClassReference(

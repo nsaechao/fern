@@ -266,6 +266,107 @@ export abstract class AbstractCsharpGeneratorContext<
         return undefined;
     }
 
+    public isNamed(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isNamed(typeReference.container.optional);
+                }
+                return false;
+            case "named":
+                return true;
+            case "unknown":
+                return false;
+            case "primitive":
+                return true;
+        }
+    }
+
+    public isOptional(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "optional";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isOptional(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return false;
+        }
+    }
+
+    public isPrimitive(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isPrimitive(typeReference.container.optional);
+                }
+                return false;
+            case "named":
+                return false;
+            case "unknown":
+                return false;
+            case "primitive":
+                return true;
+        }
+    }
+
+    public isList(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isList(typeReference.container.optional);
+                }
+                return typeReference.container.type === "list";
+            case "named": {
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return false;
+        }
+    }
+
+    public isSet(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isSet(typeReference.container.optional);
+                }
+                return typeReference.container.type === "set";
+            case "named": {
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return false;
+        }
+    }
+
+    public isMap(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                if (typeReference.container.type === "optional") {
+                    return this.isMap(typeReference.container.optional);
+                }
+                return typeReference.container.type === "map";
+            case "named": {
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return false;
+        }
+    }
+
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getPublicCoreAsIsFiles(): string[];

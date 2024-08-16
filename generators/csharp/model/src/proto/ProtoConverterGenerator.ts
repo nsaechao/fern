@@ -3,8 +3,8 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
-const PROTO_CONVERTER_CLASS_NAME = "ProtoConverter";
-const WELL_KNOWN_PROTO_TYPES_NAMESPACE = "Google.Protobuf.WellKnownTypes";
+export const PROTO_CONVERTER_CLASS_NAME = "ProtoConverter";
+export const WELL_KNOWN_PROTO_TYPES_NAMESPACE = "Google.Protobuf.WellKnownTypes";
 
 export declare namespace ProtoConverterGenerator {
     interface Args {
