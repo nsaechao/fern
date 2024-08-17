@@ -103,6 +103,9 @@ export class CsharpProtobufTypeMapper {
                             on: csharp.codeblock(`result.${propertyName}`),
                             method: "AddRange",
                             arguments_: [
+                                // TODO: We might need to propagate details that this is within an AddRange statement.
+                                // This affects how named types are mapped, and even whether or not we need a default
+                                // value for primitives.
                                 this.toProtoValue({propertyName, typeReference: container.list}),
                             ],
                         })
