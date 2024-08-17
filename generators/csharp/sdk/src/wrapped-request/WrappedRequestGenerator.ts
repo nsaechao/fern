@@ -2,6 +2,7 @@ import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, getUndiscriminatedUnionSerializerAnnotation } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
+    ContainerType,
     ExampleEndpointCall,
     ExampleTypeReference,
     HttpEndpoint,
@@ -46,6 +47,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             record: true
         });
 
+        const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];
         for (const query of this.endpoint.queryParameters) {
             const propertyName = query.name.name.pascalCase.safeName;
             const type = query.allowMultiple
@@ -53,6 +55,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                       this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
                   )
                 : this.context.csharpTypeMapper.convert({ reference: query.valueType });
+
             class_.addField(
                 csharp.field({
                     name: propertyName,
@@ -64,6 +67,13 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     useRequired: true
                 })
             );
+
+            protobufProperties.push({
+                propertyName,
+                typeReference: query.allowMultiple
+                    ? TypeReference.container(ContainerType.list(query.valueType))
+                    : query.valueType
+            });
         }
 
         for (const header of this.endpoint.headers) {
@@ -82,7 +92,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
 
         const addJsonAnnotations = this.endpoint.queryParameters.length === 0 && this.endpoint.headers.length === 0;
 
-        const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
                 class_.addField(
