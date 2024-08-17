@@ -45,7 +45,6 @@ export class CsharpProtobufTypeMapper {
                     writer.writeNodeStatement(
                         csharp.instantiateClass({
                             classReference: protobufClassReference,
-                            includeNamespace: true,
                             arguments_: []
                         })
                     );
@@ -56,7 +55,6 @@ export class CsharpProtobufTypeMapper {
                 writer.writeNodeStatement(
                     csharp.instantiateClass({
                         classReference: protobufClassReference,
-                        includeNamespace: true,
                         arguments_: []
                     })
                 );
