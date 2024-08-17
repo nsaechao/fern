@@ -282,6 +282,13 @@ export abstract class AbstractCsharpGeneratorContext<
         }
     }
 
+    public getInnerType(typeReference: TypeReference): TypeReference {
+        if (typeReference.type === "container" && typeReference.container.type === "optional") {
+            return typeReference.container.optional;
+        }
+        return typeReference;
+    }
+
     public isOptional(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":

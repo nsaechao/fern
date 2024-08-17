@@ -91,7 +91,7 @@ export class ProtoConverterGenerator extends FileGenerator<CSharpFile, ModelCust
                         arguments_: []
                     })
                 );
-                writer.controlFlow("foreach", "var kvp in value");
+                writer.controlFlow("foreach", csharp.codeblock("var kvp in value"));
                 writer.write("result.Fields[kvp.Key] = ");
                 writer.writeNodeStatement(
                     csharp.invokeMethod({
@@ -127,7 +127,7 @@ export class ProtoConverterGenerator extends FileGenerator<CSharpFile, ModelCust
                         values: undefined
                     })
                 );
-                writer.controlFlow("foreach", "var kvp in value.Fields");
+                writer.controlFlow("foreach", csharp.codeblock("var kvp in value.Fields"));
                 writer.write("result[kvp.Key] = ");
                 writer.writeNodeStatement(
                     csharp.invokeMethod({
@@ -155,7 +155,7 @@ export class ProtoConverterGenerator extends FileGenerator<CSharpFile, ModelCust
             ],
             return_: csharp.Type.reference(this.externalProtoValueClassReference),
             body: csharp.codeblock((writer) => {
-                writer.controlFlow("if", "value == null");
+                writer.controlFlow("if", csharp.codeblock("value == null"));
                 writer.write("return ");
                 writer.writeNodeStatement(
                     csharp.invokeMethod({

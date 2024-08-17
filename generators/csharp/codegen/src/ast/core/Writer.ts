@@ -97,11 +97,11 @@ export class Writer {
      * Writes text but then suffixes with a `;`
      * @param node
      */
-    public controlFlow(prefix: string, statement: string): void {
+    public controlFlow(prefix: string, statement: AstNode): void {
         const codeBlock = csharp.codeblock(prefix);
         codeBlock.write(this);
         this.write(" (");
-        this.write(statement);
+        this.writeNode(statement);
         this.write(") {");
         this.writeNewLineIfLastLineNot();
         this.indent();
