@@ -26,7 +26,7 @@ public record UpdateRequest
     internal Proto.UpdateRequest ToProto()
     {
         var result = new Proto.UpdateRequest();
-        result.Id = result.Id = Id;
+        result.Id = Id;
         if (Values != null && Values.Any())
         {
             result.Values.AddRange(Values);

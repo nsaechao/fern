@@ -68,7 +68,6 @@ export class CsharpProtobufTypeMapper {
                         writer.endControlFlow();
                         return;
                     }
-                    writer.write(`result.${propertyName} = `);
                     writer.writeNodeStatement(value);
                 });
 

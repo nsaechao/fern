@@ -42,7 +42,7 @@ public record QueryRequest
         {
             result.Namespace = Namespace ?? "";
         }
-        result.TopK = result.TopK = TopK;
+        result.TopK = TopK;
         if (Filter != null)
         {
             result.Filter = ProtoConverter.ToProtoStruct(Filter);
