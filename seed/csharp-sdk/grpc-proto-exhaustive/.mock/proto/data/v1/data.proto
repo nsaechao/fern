@@ -112,7 +112,9 @@ message QueryRequest {
   google.protobuf.Struct filter = 3;
   bool include_values = 4;
   bool include_metadata = 5;
-  repeated QueryColumn queries = 6;
+  repeated QueryColumn queries = 6 [
+    deprecated = true
+  ];
   repeated float column = 7;
   string id = 8;
   IndexedData indexed_data = 9;
@@ -124,7 +126,7 @@ message QueryResult {
 }
 
 message QueryResponse {
-  repeated QueryResult results = 1;
+  repeated QueryResult results = 1 [deprecated=true];
   repeated ScoredColumn matches = 2;
   string namespace = 3;
   optional Usage usage = 4;
