@@ -3,6 +3,7 @@ import { csharp } from "../..";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { AstNode } from "./AstNode";
 
+type Alias = string;
 type Namespace = string;
 
 const TAB_SIZE = 4;
@@ -35,6 +36,8 @@ export class Writer {
     private references: Record<Namespace, ClassReference[]> = {};
     /* The namespace that is being written to */
     private namespace: string;
+    /* The set of namespace aliases */
+    private namespaceAliases: Record<Alias, Namespace> = {};
     /* All base namespaces in the project */
     private allNamespaceSegments: Set<string>;
     /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
@@ -153,6 +156,10 @@ export class Writer {
         }
     }
 
+    public addNamespaceAlias(alias: string, namespace: string): void {
+        this.namespaceAliases[alias] = namespace;
+    }
+
     public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
         return this.allTypeClassReferences;
     }
@@ -177,7 +184,6 @@ export class Writer {
         const imports = this.stringifyImports();
         if (imports.length > 0) {
             return `${imports}
-
 #nullable enable
 
 ${this.buffer}`;
@@ -206,12 +212,17 @@ ${this.buffer}`;
     }
 
     private stringifyImports(): string {
-        return (
+        let result =
             Object.keys(this.references)
                 // Filter out the current namespace.
                 .filter((referenceNamespace) => referenceNamespace !== this.namespace)
                 .map((ref) => `using ${ref};`)
-                .join("\n")
-        );
+                .join("\n") + "\n";
+
+        for (const [alias, namespace] of Object.entries(this.namespaceAliases)) {
+            result += `using ${alias} = ${namespace};\n`;
+        }
+
+        return result;
     }
 }
