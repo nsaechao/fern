@@ -31,7 +31,11 @@ export class CsharpProtobufTypeMapper {
         this.context = context;
     }
 
-    public toProto({ classReference, protobufType, properties }: CsharpProtobufTypeMapper.ToProtoArgs): csharp.Method {
+    public toProtoMethod({
+        classReference,
+        protobufType,
+        properties
+    }: CsharpProtobufTypeMapper.ToProtoArgs): csharp.Method {
         return csharp.method({
             name: "ToProto",
             access: "internal",

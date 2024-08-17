@@ -66,7 +66,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         if (this.shouldGenerateProtobufMappers(this.typeDeclaration)) {
             const protobufType = this.context.protobufResolver.getProtobufTypeOrThrow(this.typeDeclaration.name.typeId);
             class_.addMethod(
-                this.context.csharpProtobufTypeMapper.toProto({
+                this.context.csharpProtobufTypeMapper.toProtoMethod({
                     classReference: this.classReference,
                     protobufType,
                     properties: flattenedProperties.map((property) => {
