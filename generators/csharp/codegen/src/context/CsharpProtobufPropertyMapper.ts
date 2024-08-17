@@ -111,7 +111,20 @@ export class CsharpProtobufTypeMapper {
                         })
                     )
                 });
-                return csharp.codeblock(`result.${propertyName}.AddRange(${propertyName})`)
+            case "map":
+                return csharp.codeblock((writer) => {
+                    writer.controlFlow("foreach", csharp.codeblock(`var kvp in ${propertyName}`));
+                    writer.writeNode(
+                        csharp.invokeMethod({
+                            on: csharp.codeblock(`result.${propertyName}`),
+                            method: "Add",
+                            arguments_: [
+                                csharp.codeblock("kvp.Key"),
+                                this.toProtoValue({propertyName, typeReference: container.valueType}),
+                            ],
+                        })
+                    )
+                })
         }
     }
 
