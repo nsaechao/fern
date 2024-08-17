@@ -96,8 +96,15 @@ export class CsharpProtobufTypeMapper {
         if (this.context.protobufResolver.isProtobufStruct(named.typeId)) {
             return this.toProtoValueForProtobufStruct({propertyName});
         }
+        // TODO: Handle the case if we're within a list - need the select mapper.
         return csharp.codeblock((writer) => {
-
+            writer.writeNode(
+                csharp.invokeMethod({
+                    on: csharp.codeblock(propertyName),
+                    method: "ToProto",
+                    arguments_: [],
+                })
+            )
         })
     }
     
