@@ -22,9 +22,9 @@ public record UserModel
     [JsonPropertyName("metadata")]
     public Dictionary<string, MetadataValue?>? Metadata { get; set; }
 
-    internal User.V1.UserModel ToProto(UserModel value)
+    internal User.V1.UserModel ToProto()
     {
-        var result = new UserModel();
+        var result = new User.V1.UserModel();
         if (Username != null)
         {
             result.Username = Username ?? "";

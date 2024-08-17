@@ -64,12 +64,12 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         });
 
         if (this.shouldGenerateProtobufMappers(this.typeDeclaration)) {
+            const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(
+                this.typeDeclaration.name.typeId
+            );
             class_.addMethod(
                 this.context.csharpProtobufTypeMapper.toProtoMethod({
-                    classReference: this.classReference,
-                    protobufClassReference: this.context.protobufResolver.getProtobufClassReferenceOrThrow(
-                        this.typeDeclaration.name.typeId
-                    ),
+                    protobufClassReference,
                     properties: flattenedProperties.map((property) => {
                         return {
                             propertyName: this.getPropertyName({
@@ -110,26 +110,6 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         });
         return csharp.codeblock((writer) => writer.writeNode(instantiateClass));
     }
-
-    // private getFromProtoMethod({
-    //     protobufType,
-    //     properties
-    // }: {
-    //     protobufType: ProtobufType;
-    //     properties: ObjectProperty[];
-    // }): csharp.Method {
-    //     return csharp.method({
-    //         name: "FromProto",
-    //         access: "internal",
-    //         type: MethodType.STATIC,
-    //         return_: csharp.Type.reference(this.classReference),
-    //         isAsync: false,
-    //         parameters: [],
-    //         body: csharp.codeblock((writer) => {
-    //             /* TODO */
-    //         })
-    //     });
-    // }
 
     /**
      * Class Names and Property Names cannot overlap in C# otherwise there are compilation errors.

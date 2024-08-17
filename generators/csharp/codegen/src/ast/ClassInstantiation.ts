@@ -1,4 +1,4 @@
-import { Arguments, NamedArgument, UnnamedArgument, isNamedArgument } from "./Argument";
+import { Arguments, isNamedArgument, NamedArgument, UnnamedArgument } from "./Argument";
 import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -8,24 +8,32 @@ export declare namespace ClassInstantiation {
         classReference: ClassReference;
         // A map of the field for the class and the value to be assigned to it.
         arguments_: Arguments;
+        // Includes the class reference's namespace, even if it's not always needed.
+        includeNamespace?: boolean;
     }
 }
 
 export class ClassInstantiation extends AstNode {
     public readonly classReference: ClassReference;
     public readonly arguments_: NamedArgument[] | UnnamedArgument[];
+    public readonly includeNamespace: boolean;
 
-    constructor({ classReference, arguments_ }: ClassInstantiation.Args) {
+    constructor({ classReference, arguments_, includeNamespace }: ClassInstantiation.Args) {
         super();
         this.classReference = classReference;
         this.arguments_ = arguments_;
+        this.includeNamespace = includeNamespace ?? false;
     }
 
     public write(writer: Writer): void {
         const hasNamedArguments =
             this.arguments_.length > 0 && this.arguments_[0] != null && isNamedArgument(this.arguments_[0]);
 
-        writer.write(`new ${this.classReference.name}`);
+        const name = this.includeNamespace
+            ? `${this.classReference.namespace}.${this.classReference.name}`
+            : this.classReference.name;
+
+        writer.write(`new ${name}`);
 
         if (hasNamedArguments) {
             writer.write("{ ");

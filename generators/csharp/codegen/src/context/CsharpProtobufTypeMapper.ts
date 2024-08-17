@@ -15,7 +15,6 @@ const WrapperType = {
 
 export declare namespace CsharpProtobufTypeMapper {
     interface ToProtoArgs {
-        classReference: csharp.ClassReference;
         protobufClassReference: csharp.ClassReference;
         properties: CsharpProtobufTypeMapper.Property[];
     }
@@ -33,28 +32,20 @@ export class CsharpProtobufTypeMapper {
         this.context = context;
     }
 
-    public toProtoMethod({
-        classReference,
-        protobufClassReference,
-        properties
-    }: CsharpProtobufTypeMapper.ToProtoArgs): csharp.Method {
+    public toProtoMethod({ protobufClassReference, properties }: CsharpProtobufTypeMapper.ToProtoArgs): csharp.Method {
         return csharp.method({
             name: "ToProto",
             access: "internal",
             isAsync: false,
             return_: csharp.Type.reference(protobufClassReference),
-            parameters: [
-                csharp.parameter({
-                    name: "value",
-                    type: csharp.Type.reference(classReference)
-                })
-            ],
+            parameters: [],
             body: csharp.codeblock((writer) => {
                 if (properties.length === 0) {
                     writer.write("return ");
                     writer.writeNodeStatement(
                         csharp.instantiateClass({
                             classReference: protobufClassReference,
+                            includeNamespace: true,
                             arguments_: []
                         })
                     );
@@ -65,6 +56,7 @@ export class CsharpProtobufTypeMapper {
                 writer.writeNodeStatement(
                     csharp.instantiateClass({
                         classReference: protobufClassReference,
+                        includeNamespace: true,
                         arguments_: []
                     })
                 );
