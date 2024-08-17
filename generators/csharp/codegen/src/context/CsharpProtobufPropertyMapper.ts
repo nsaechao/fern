@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ContainerType, ProtobufType, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ContainerType, Literal, MapType, NamedType, ProtobufType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { csharp } from "../";
 import { CodeBlock } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
@@ -78,11 +78,11 @@ export class CsharpProtobufTypeMapper {
         switch (typeReference.type) {
             case "container":
                 return this.toProtoValueForContainer({
-                    container: reference.container,
-                    unboxOptionals: unboxOptionals ?? false
+                    propertyName,
+                    container: typeReference.container,
                 });
             case "named":
-                return this.toProtoNamed({ named: reference });
+                return this.toProtoValueForNamed({ named: reference });
             case "primitive":
                 return this.(reference);
             case "unknown":
@@ -92,41 +92,88 @@ export class CsharpProtobufTypeMapper {
         }
     }
 
+    private toProtoValueForNamed({propertyName, named}: {propertyName: string; named: NamedType}): CodeBlock {
+        if (this.context.protobufResolver.isProtobufStruct(named.typeId)) {
+            return this.toProtoValueForProtobufStruct({propertyName});
+        }
+        return csharp.codeblock((writer) => {
+
+        })
+    }
+    
+    private toProtoValueForProtobufStruct({propertyName}: {propertyName: string}): CodeBlock {
+        return csharp.codeblock((writer) => {
+            writer.writeNode(
+                csharp.invokeMethod({
+                    on: this.context.getProtoConverterClassReference(),
+                    method: "ToProtoStruct",
+                    arguments_: [
+                        csharp.codeblock(propertyName),
+                    ]
+                })
+            )
+        })
+    }
+
     private toProtoValueForContainer({propertyName, container}: {propertyName: string; container: ContainerType}): CodeBlock {
         switch (container.type) {
             case "optional":
                 return this.toProtoValue({propertyName, typeReference: container.optional});
             case "list":
-                return csharp.codeblock((writer) => {
-                    writer.writeNode(
-                        csharp.invokeMethod({
-                            on: csharp.codeblock(`result.${propertyName}`),
-                            method: "AddRange",
-                            arguments_: [
-                                // TODO: We might need to propagate details that this is within an AddRange statement.
-                                // This affects how named types are mapped, and even whether or not we need a default
-                                // value for primitives.
-                                this.toProtoValue({propertyName, typeReference: container.list}),
-                            ],
-                        })
-                    )
-                });
+                return this.toProtoValueForList({propertyName, listType: container.list});
+            case "set":
+                return this.toProtoValueForList({propertyName, listType: container.set});
             case "map":
-                return csharp.codeblock((writer) => {
-                    writer.controlFlow("foreach", csharp.codeblock(`var kvp in ${propertyName}`));
-                    writer.writeNode(
-                        csharp.invokeMethod({
-                            on: csharp.codeblock(`result.${propertyName}`),
-                            method: "Add",
-                            arguments_: [
-                                csharp.codeblock("kvp.Key"),
-                                this.toProtoValue({propertyName, typeReference: container.valueType}),
-                            ],
-                        })
-                    )
-                })
+                return this.toProtoValueForMap({propertyName, map: container});
+            case "literal":
+                return this.toProtoValueForLiteral({literal: container.literal});
         }
     }
+
+    private toProtoValueForList({propertyName, listType}: {propertyName: string; listType: TypeReference}): CodeBlock {
+        return csharp.codeblock((writer) => {
+            writer.writeNode(
+                csharp.invokeMethod({
+                    on: csharp.codeblock(`result.${propertyName}`),
+                    method: "AddRange",
+                    arguments_: [
+                        // TODO: We might need to propagate details that this is within an AddRange statement.
+                        // This affects how named types are mapped, and even whether or not we need a default
+                        // value for primitives.
+                        this.toProtoValue({propertyName, typeReference: listType}),
+                    ],
+                })
+            )
+        });
+    }
+
+    private toProtoValueForMap({propertyName, map}: {propertyName: string; map: MapType}): CodeBlock {
+        return csharp.codeblock((writer) => {
+            writer.controlFlow("foreach", csharp.codeblock(`var kvp in ${propertyName}`));
+            writer.writeNode(
+                csharp.invokeMethod({
+                    on: csharp.codeblock(`result.${propertyName}`),
+                    method: "Add",
+                    arguments_: [
+                        csharp.codeblock("kvp.Key"),
+                        this.toProtoValue({propertyName, typeReference: map.valueType}),
+                    ],
+                })
+            )
+        })
+    }
+
+    private toProtoValueForLiteral({literal}: {literal: Literal}): CodeBlock {
+        return csharp.codeblock((writer) => {
+            switch (literal.type) {
+                case "string":
+                    return writer.write(`"${literal.string}"`);
+                case "boolean":
+                    return writer.write(literal.boolean.toString());
+            }
+        });
+    }
+
 
     // private toProtoPropertyMapperForRequired({
     //     propertyName,

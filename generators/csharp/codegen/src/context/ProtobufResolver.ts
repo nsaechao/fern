@@ -1,20 +1,21 @@
 import {
-    IntermediateRepresentation,
     ProtobufFile,
     ProtobufType,
     TypeId,
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
 import { csharp } from "..";
+import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";
+import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
 
 export class ProtobufResolver {
-    private ir: IntermediateRepresentation;
+    private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private csharpTypeMapper: CsharpTypeMapper;
 
-    public constructor(ir: IntermediateRepresentation, csharpTypeMapper: CsharpTypeMapper) {
-        this.ir = ir;
+    public constructor(context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>, csharpTypeMapper: CsharpTypeMapper) {
+        this.context = context;
         this.csharpTypeMapper = csharpTypeMapper;
     }
 
@@ -43,6 +44,13 @@ export class ProtobufResolver {
                 );
             }
         }
+    }
+
+    public getProtoConverterClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "ProtoConverter"
+            namespace: 
+        })
     }
 
     public getNamespaceFromProtobufFileOrThrow(protobufFile: ProtobufFile): string {
@@ -145,7 +153,7 @@ export class ProtobufResolver {
     private resolveWellKnownProtobufType(
         wellKnownProtobufType: WellKnownProtobufType
     ): ResolvedWellKnownProtobufType | undefined {
-        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
+        for (const [typeId, typeDeclaration] of Object.entries(this.context.ir.types)) {
             if (this.isWellKnownProtobufType({ typeId, wellKnownProtobufType })) {
                 return {
                     typeDeclaration,
@@ -171,7 +179,7 @@ export class ProtobufResolver {
     }
 
     private getProtobufTypeForTypeId(typeId: TypeId): ProtobufType | undefined {
-        const typeDeclaration = this.ir.types[typeId];
+        const typeDeclaration = this.context.ir.types[typeId];
         if (typeDeclaration?.source == null) {
             return undefined;
         }

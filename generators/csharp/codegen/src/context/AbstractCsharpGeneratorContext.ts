@@ -49,7 +49,7 @@ export abstract class AbstractCsharpGeneratorContext<
             upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
         this.project = new CsharpProject(this, this.namespace);
         this.csharpTypeMapper = new CsharpTypeMapper(this);
-        this.protobufResolver = new ProtobufResolver(this.ir, this.csharpTypeMapper);
+        this.protobufResolver = new ProtobufResolver(this, this.csharpTypeMapper);
         config.output.mode._visit<void>({
             github: (github) => {
                 if (github.publishInfo?.type === "nuget") {
@@ -192,6 +192,13 @@ export abstract class AbstractCsharpGeneratorContext<
             namespace: "OneOf",
             name: "OneOf",
             generics
+        });
+    }
+
+    public getProtoConverterClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "ProtoConverter",
+            namespace: this.getCoreNamespace()
         });
     }
 
