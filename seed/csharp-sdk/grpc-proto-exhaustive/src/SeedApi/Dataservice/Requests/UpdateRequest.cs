@@ -6,41 +6,38 @@ using Proto = Data.V1.Grpc;
 
 namespace SeedApi;
 
-public record QueryColumn
+public record UpdateRequest
 {
-    [JsonPropertyName("values")]
-    public IEnumerable<float> Values { get; set; } = new List<float>();
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
 
-    [JsonPropertyName("topK")]
-    public uint? TopK { get; set; }
+    [JsonPropertyName("values")]
+    public IEnumerable<float>? Values { get; set; }
+
+    [JsonPropertyName("setMetadata")]
+    public Dictionary<string, MetadataValue?>? SetMetadata { get; set; }
 
     [JsonPropertyName("namespace")]
     public string? Namespace { get; set; }
 
-    [JsonPropertyName("filter")]
-    public Dictionary<string, MetadataValue?>? Filter { get; set; }
-
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
 
-    internal Proto.QueryColumn ToProto()
+    internal Proto.UpdateRequest ToProto()
     {
-        var result = new Proto.QueryColumn();
-        if (Values.Any())
+        var result = new Proto.UpdateRequest();
+        result.Id = result.Id = Id;
+        if (Values != null && Values.Any())
         {
             result.Values.AddRange(Values);
         }
-        if (TopK != null)
+        if (SetMetadata != null)
         {
-            result.TopK = TopK ?? 0U;
+            result.SetMetadata = ProtoConverter.ToProtoStruct(SetMetadata);
         }
         if (Namespace != null)
         {
             result.Namespace = Namespace ?? "";
-        }
-        if (Filter != null)
-        {
-            result.Filter = ProtoConverter.ToProtoStruct(Filter);
         }
         if (IndexedData != null)
         {

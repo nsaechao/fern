@@ -1,10 +1,3 @@
-
-paths:
-  /data/fetch:
-      x-fern-request-name: FetchRequest
-  /data/list:
-    get:
-      x-fern-request-name: ListRequest
 components:
   schemas:
     Metadata:
@@ -37,7 +30,7 @@ components:
       properties:
         filter:
           $ref: '#/components/schemas/Metadata'
-    QueryColumn:
+    QueryVector:
       properties:
         filter:
           $ref: '#/components/schemas/Metadata'
