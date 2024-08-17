@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ProtobufType, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ContainerType, ProtobufType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { csharp } from "../";
 import { CodeBlock } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
@@ -75,9 +75,9 @@ export class CsharpProtobufTypeMapper {
     }
 
     private toProtoValue({propertyName, typeReference}: {propertyName: string; typeReference: TypeReference}): CodeBlock {
-        switch (this.typeReference.type) {
+        switch (typeReference.type) {
             case "container":
-                return this.toProtoContainer({
+                return this.toProtoValueForContainer({
                     container: reference.container,
                     unboxOptionals: unboxOptionals ?? false
                 });
@@ -91,6 +91,77 @@ export class CsharpProtobufTypeMapper {
                 assertNever(reference);
         }
     }
+
+    private toProtoValueForContainer({propertyName, container}: {propertyName: string; container: ContainerType}): CodeBlock {
+        switch (container.type) {
+            case "optional":
+                return this.toProtoValue({propertyName, typeReference: container.optional});
+            case "list":
+                return csharp.codeblock((writer) => {
+                    writer.writeNode(
+                        csharp.invokeMethod({
+                            on: csharp.codeblock(`result.${propertyName}`),
+                            method: "AddRange",
+                            arguments_: [
+                                this.toProtoValue({propertyName, typeReference: container.list}),
+                            ],
+                        })
+                    )
+                });
+                return csharp.codeblock(`result.${propertyName}.AddRange(${propertyName})`)
+        }
+    }
+
+    // private toProtoPropertyMapperForRequired({
+    //     propertyName,
+    //     mapperType
+    // }: {
+    //     propertyName: string;
+    //     mapperType: MapperType;
+    // }): csharp.CodeBlock {
+    //     switch (mapperType) {
+    //         case "primitive":
+    //             return csharp.codeblock((writer) => writer.writeLine(`${propertyName} = ${propertyName};`));
+    //         case "named":
+    //             return csharp.codeblock("TODO");
+    //         case "list":
+    //             return csharp.codeblock((writer) => {
+    //                 writer.write("if (");
+    //                 writer.writeNode(this.invokeAny(csharp.codeblock(propertyName)));
+    //                 writer.write(") {");
+    //                 writer.indent();
+    //                 writer.writeLine(`result.${propertyName}.AddRange(${propertyName})`);
+    //                 writer.dedent();
+    //             });
+    //         case "map":
+    //             return csharp.codeblock("TODO");
+    //         case "unknown":
+    //             return csharp.codeblock("TODO");
+    //     }
+    // }
+
+    // private toProtoPropertyMapperForOptional({
+    //     propertyName,
+    //     mapperType
+    // }: {
+    //     propertyName: string;
+    //     mapperType: MapperType;
+    // }): csharp.CodeBlock {
+    //     switch (mapperType) {
+    //         case "primitive":
+    //             return csharp.codeblock("TODO");
+    //         case "named":
+    //             return csharp.codeblock((writer) =>
+    //                 writer.writeLine(`result.${propertyName} = ${propertyName}.ToProto()`)
+    //             );
+    //         case "list":
+    //             return csharp.codeblock("TODO");
+    //         case "map":
+    //             return csharp.codeblock("TODO");
+    //         case "unknown":
+    //             return csharp.codeblock("TODO");
+    //     }
+    // }
 
     private invokeAny(on: csharp.AstNode): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
