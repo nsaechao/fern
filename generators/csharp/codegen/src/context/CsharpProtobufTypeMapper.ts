@@ -5,6 +5,14 @@ import { CodeBlock } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext";
 
+type WrapperType = "optional" | "list" | "map";
+
+const WrapperType = {
+    Optional: "optional",
+    List: "list",
+    Map: "map"
+} as const;
+
 export declare namespace CsharpProtobufTypeMapper {
     interface ToProtoArgs {
         classReference: csharp.ClassReference;
@@ -15,12 +23,6 @@ export declare namespace CsharpProtobufTypeMapper {
     interface Property {
         propertyName: string;
         typeReference: TypeReference;
-    }
-
-    enum WrapperType {
-        OPTIONAL,
-        LIST,
-        MAP
     }
 }
 
@@ -162,7 +164,7 @@ export class CsharpProtobufTypeMapper {
     }: {
         propertyName: string;
         typeReference: TypeReference;
-        wrapperType?: CsharpProtobufTypeMapper.WrapperType;
+        wrapperType?: WrapperType;
     }): CodeBlock {
         switch (typeReference.type) {
             case "container":
@@ -186,12 +188,12 @@ export class CsharpProtobufTypeMapper {
     }: {
         propertyName: string;
         named: NamedType;
-        wrapperType?: CsharpProtobufTypeMapper.WrapperType;
+        wrapperType?: WrapperType;
     }): CodeBlock {
         if (this.context.protobufResolver.isProtobufStruct(named.typeId)) {
             return this.toProtoValueForProtobufStruct({ propertyName });
         }
-        if (wrapperType == CsharpProtobufTypeMapper.WrapperType.LIST) {
+        if (wrapperType === WrapperType.List) {
             return csharp.codeblock(`${propertyName}.Select(elem => elem.ToProto())`);
         }
         return csharp.codeblock((writer) => {
@@ -229,7 +231,7 @@ export class CsharpProtobufTypeMapper {
                 return this.toProtoValue({
                     propertyName,
                     typeReference: container.optional,
-                    wrapperType: CsharpProtobufTypeMapper.WrapperType.OPTIONAL
+                    wrapperType: WrapperType.Optional
                 });
             case "list":
                 return this.toProtoValueForList({ propertyName, listType: container.list });
@@ -258,7 +260,7 @@ export class CsharpProtobufTypeMapper {
                         this.toProtoValue({
                             propertyName,
                             typeReference: listType,
-                            wrapperType: CsharpProtobufTypeMapper.WrapperType.LIST
+                            wrapperType: WrapperType.List
                         })
                     ]
                 })
@@ -275,7 +277,11 @@ export class CsharpProtobufTypeMapper {
                     method: "Add",
                     arguments_: [
                         csharp.codeblock("kvp.Key"),
-                        this.toProtoValue({ propertyName, typeReference: map.valueType })
+                        this.toProtoValue({
+                            propertyName,
+                            typeReference: map.valueType,
+                            wrapperType: WrapperType.Map
+                        })
                     ]
                 })
             );
@@ -300,9 +306,9 @@ export class CsharpProtobufTypeMapper {
     }: {
         propertyName: string;
         primitive: PrimitiveType;
-        wrapperType?: CsharpProtobufTypeMapper.WrapperType;
+        wrapperType?: WrapperType;
     }): CodeBlock {
-        if (wrapperType == CsharpProtobufTypeMapper.WrapperType.OPTIONAL) {
+        if (wrapperType === WrapperType.Optional) {
             return csharp.codeblock((writer) => {
                 writer.write(propertyName);
                 writer.write(" ?? ");
