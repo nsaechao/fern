@@ -23,8 +23,8 @@ export class CsharpProtobufTypeMapper {
 
     public toProto({propertyName, typeReference}: {propertyName: string; typeReference: TypeReference}): CodeBlock {
         return csharp.codeblock((writer) => {
-            const value = this.toProtoValue({propertyName, typeReference});
             const condition = this.toProtoCondition({propertyName, typeReference});
+            const value = this.toProtoValue({propertyName, typeReference});
             if (condition != null) {
                 writer.controlFlow("if", condition)
                 writer.writeNode(value);
@@ -49,20 +49,7 @@ export class CsharpProtobufTypeMapper {
     private getToProtoConditions({propertyName, typeReference}: {propertyName: string; typeReference: TypeReference}): CodeBlock[] {
         switch (typeReference.type) {
             case "container":
-                const property = csharp.codeblock(propertyName);
-                switch (typeReference.container.type) {
-                    case "optional":
-                        return [
-                            this.isNotNull(property),
-                            ...this.getToProtoConditions({propertyName, typeReference: typeReference.container.optional})
-                    ]
-                    case "list":
-                    case "map":
-                    case "set":
-                        return [this.invokeAny(property)]
-                    case "literal":
-                        return [];
-                }
+                return this.getToProtoConditionsForContainer({propertyName, container: typeReference.container});
             case "named":
                 return [];
             case "primitive":
@@ -74,6 +61,23 @@ export class CsharpProtobufTypeMapper {
         }
     }
 
+    private getToProtoConditionsForContainer({propertyName, container}: {propertyName: string; container: ContainerType}): CodeBlock[] {
+        const property = csharp.codeblock(propertyName);
+        switch (container.type) {
+            case "optional":
+                return [
+                    this.isNotNull(property),
+                    ...this.getToProtoConditions({propertyName, typeReference: container.optional})
+            ]
+            case "list":
+            case "map":
+            case "set":
+                return [this.invokeAny(property)]
+            case "literal":
+                return [];
+        }
+    }
+
     private toProtoValue({propertyName, typeReference}: {propertyName: string; typeReference: TypeReference}): CodeBlock {
         switch (typeReference.type) {
             case "container":
@@ -82,13 +86,11 @@ export class CsharpProtobufTypeMapper {
                     container: typeReference.container,
                 });
             case "named":
-                return this.toProtoValueForNamed({ named: reference });
+                return this.toProtoValueForNamed({ propertyName, named: typeReference });
             case "primitive":
                 return this.(reference);
             case "unknown":
-                return csharp.Type.object();
-            default:
-                assertNever(reference);
+                return csharp.codeblock(propertyName);
         }
     }
 
@@ -181,58 +183,6 @@ export class CsharpProtobufTypeMapper {
         });
     }
 
-
-    // private toProtoPropertyMapperForRequired({
-    //     propertyName,
-    //     mapperType
-    // }: {
-    //     propertyName: string;
-    //     mapperType: MapperType;
-    // }): csharp.CodeBlock {
-    //     switch (mapperType) {
-    //         case "primitive":
-    //             return csharp.codeblock((writer) => writer.writeLine(`${propertyName} = ${propertyName};`));
-    //         case "named":
-    //             return csharp.codeblock("TODO");
-    //         case "list":
-    //             return csharp.codeblock((writer) => {
-    //                 writer.write("if (");
-    //                 writer.writeNode(this.invokeAny(csharp.codeblock(propertyName)));
-    //                 writer.write(") {");
-    //                 writer.indent();
-    //                 writer.writeLine(`result.${propertyName}.AddRange(${propertyName})`);
-    //                 writer.dedent();
-    //             });
-    //         case "map":
-    //             return csharp.codeblock("TODO");
-    //         case "unknown":
-    //             return csharp.codeblock("TODO");
-    //     }
-    // }
-
-    // private toProtoPropertyMapperForOptional({
-    //     propertyName,
-    //     mapperType
-    // }: {
-    //     propertyName: string;
-    //     mapperType: MapperType;
-    // }): csharp.CodeBlock {
-    //     switch (mapperType) {
-    //         case "primitive":
-    //             return csharp.codeblock("TODO");
-    //         case "named":
-    //             return csharp.codeblock((writer) =>
-    //                 writer.writeLine(`result.${propertyName} = ${propertyName}.ToProto()`)
-    //             );
-    //         case "list":
-    //             return csharp.codeblock("TODO");
-    //         case "map":
-    //             return csharp.codeblock("TODO");
-    //         case "unknown":
-    //             return csharp.codeblock("TODO");
-    //     }
-    // }
-
     private invokeAny(on: csharp.AstNode): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
             writer.writeNode(
@@ -252,38 +202,6 @@ export class CsharpProtobufTypeMapper {
         })
     }
 
-    // private convertContainer({
-    //     container,
-    //     unboxOptionals
-    // }: {
-    //     container: ContainerType;
-    //     unboxOptionals: boolean;
-    // }): Type {
-    //     switch (container.type) {
-    //         case "list":
-    //             return Type.list(this.convert({ reference: container.list, unboxOptionals: true }));
-    //         case "map": {
-    //             const key = this.convert({ reference: container.keyType });
-    //             const value = this.convert({ reference: container.valueType });
-    //             if (value.internalType.type === "object") {
-    //                 // object map values should be nullable.
-    //                 return Type.map(key, csharp.Type.optional(value));
-    //             }
-    //             return Type.map(key, value);
-    //         }
-    //         case "set":
-    //             return Type.set(this.convert({ reference: container.set, unboxOptionals: true }));
-    //         case "optional":
-    //             return unboxOptionals
-    //                 ? this.convert({ reference: container.optional, unboxOptionals })
-    //                 : Type.optional(this.convert({ reference: container.optional }));
-    //         case "literal":
-    //             return this.convertLiteral({ literal: container.literal });
-    //         default:
-    //             assertNever(container);
-    //     }
-    // }
-
     // private convertPrimitive({ primitive }: { primitive: PrimitiveType }): Type {
     //     return PrimitiveTypeV1._visit<csharp.Type>(primitive.v1, {
     //         integer: () => csharp.Type.integer(),
@@ -302,47 +220,5 @@ export class CsharpProtobufTypeMapper {
     //         bigInteger: () => csharp.Type.string(),
     //         _other: () => csharp.Type.object()
     //     });
-    // }
-
-    // private convertLiteral({ literal }: { literal: Literal }): Type {
-    //     switch (literal.type) {
-    //         case "boolean":
-    //             return csharp.Type.boolean();
-    //         case "string":
-    //             return csharp.Type.string();
-    //     }
-    // }
-
-    // private convertNamed({ named }: { named: DeclaredTypeName }): Type {
-    //     const objectClassReference = this.convertToClassReference(named);
-    //     const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
-
-    //     if (this.context.protobufResolver.isProtobufStruct(typeDeclaration.name.typeId)) {
-    //         return this.context.protobufResolver.getProtobufStructTypeOrThrow();
-    //     }
-
-    //     if (this.context.protobufResolver.isProtobufValue(typeDeclaration.name.typeId)) {
-    //         return this.context.protobufResolver.getProtobufValueTypeOrThrow();
-    //     }
-
-    //     switch (typeDeclaration.shape.type) {
-    //         case "alias":
-    //             return this.convert({ reference: typeDeclaration.shape.aliasOf });
-    //         case "enum":
-    //             return csharp.Type.reference(objectClassReference);
-    //         case "object":
-    //             return csharp.Type.reference(objectClassReference);
-    //         case "union":
-    //             return csharp.Type.object();
-    //         case "undiscriminatedUnion": {
-    //             return csharp.Type.oneOf(
-    //                 typeDeclaration.shape.members.map((member) => {
-    //                     return this.convert({ reference: member.type });
-    //                 })
-    //             );
-    //         }
-    //         default:
-    //             assertNever(typeDeclaration.shape);
-    //     }
     // }
 }
