@@ -74,6 +74,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             const protobufType = this.context.protobufResolver.getProtobufTypeOrThrow(this.typeDeclaration.name.typeId);
             class_.addMethod(
                 this.getToProtoMethod({
+                    protobufType,
                     properties: flattenedProperties
                 })
             );
@@ -112,7 +113,13 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         return csharp.codeblock((writer) => writer.writeNode(instantiateClass));
     }
 
-    private getToProtoMethod({ properties }: { properties: ObjectProperty[] }): csharp.Method {
+    private getToProtoMethod({
+        protobufType,
+        properties
+    }: {
+        protobufType: csharp.Type;
+        properties: ObjectProperty[];
+    }): csharp.Method {
         return csharp.method({
             name: "ToProto",
             access: "internal",
@@ -123,7 +130,18 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     name: "value",
                     type: csharp.Type.reference(this.classReference)
                 })
-            ]
+            ],
+            body: csharp.codeblock((writer) => {
+                writer.write("var result = new");
+                writer.writeNode(protobufType);
+                writer.write("();");
+
+                properties.forEach((property) => {
+                    writer.writeNode(this.toProtoPropertyMapper({ property }));
+                });
+
+                writer.writeLine("return result;");
+            })
         });
     }
 
@@ -133,6 +151,11 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
     // TODO: Handle optional list -> optional list case.
     // TODO: Handle struct -> optional struct case.
     // TODO: Handle optional struct -> optional struct case.
+    //
+    // 
+    // - Need to split this out in a recursive value resolver.
+    // - Setting the key is always the same, only excluding
+    //   required properties.
     private toProtoPropertyMapper({ property }: { property: ObjectProperty }): csharp.CodeBlock {
         const propertyName = this.getPropertyName({
             className: this.classReference.name,
@@ -203,14 +226,29 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         }
     }
 
-    private getFromProtoMethod({ properties }: { properties: ObjectProperty[] }): csharp.Method {
+    private getFromProtoMethod({ protobufType, properties }: { protobufType: ProtobufType; properties: ObjectProperty[] }): csharp.Method {
+        const mappedProperties:  = properties.map((property) => {
+
+        });
         return csharp.method({
             name: "FromProto",
             access: "internal",
             type: MethodType.STATIC,
             return_: csharp.Type.reference(this.classReference),
             isAsync: false,
-            parameters: []
+            parameters: [],
+            body: csharp.codeblock((writer) => {
+                writer.write("var result = ");
+                writer.writeNodeStatement(
+                    writer.instatnthis.classReference);
+                writer.write("();");
+
+                properties.forEach((property) => {
+                    writer.writeNode(this.fromProtoPropertyMapper({ property }));
+                });
+
+                writer.writeLine("return result;");
+            })
         });
     }
 
