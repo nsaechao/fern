@@ -55,6 +55,19 @@ export class CsharpTypeMapper {
         });
     }
 
+    public convertToProtobufClassReference(declaredTypeName: { typeId: TypeId; name: Name }): ClassReference {
+        const protobufType = this.context.protobufResolver.getProtobufTypeForTypeIdOrThrow(declaredTypeName.typeId);
+        switch (protobufType.type) {
+            case "wellKnown":
+                return this.convertToClassReference(declaredTypeName);
+            case "userDefined":
+                return new csharp.ClassReference({
+                    name: this.context.getPascalCaseSafeName(declaredTypeName.name),
+                    namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file)
+                });
+        }
+    }
+
     private convertContainer({
         container,
         unboxOptionals

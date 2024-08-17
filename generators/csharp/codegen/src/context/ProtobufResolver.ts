@@ -61,6 +61,14 @@ export class ProtobufResolver {
         }
     }
 
+    public getProtobufTypeForTypeIdOrThrow(typeId: TypeId): ProtobufType {
+        const protobufType = this.getProtobufTypeForTypeId(typeId);
+        if (protobufType == null) {
+            throw new Error(`The type identified by ${typeId} is not a Protobuf type`);
+        }
+        return protobufType;
+    }
+
     public getNamespaceFromProtobufFileOrThrow(protobufFile: ProtobufFile): string {
         const namespace = protobufFile.options?.csharp?.namespace;
         if (namespace == null) {
