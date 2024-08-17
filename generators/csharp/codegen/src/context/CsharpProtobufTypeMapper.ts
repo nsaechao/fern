@@ -1,13 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import {
-    ContainerType,
-    Literal,
-    MapType,
-    NamedType,
-    PrimitiveType,
-    ProtobufType,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { ContainerType, Literal, MapType, NamedType, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { csharp } from "../";
 import { CodeBlock } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
@@ -16,37 +8,74 @@ import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext
 export declare namespace CsharpProtobufTypeMapper {
     interface Args {
         context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
-        protobufType: ProtobufType;
     }
-}
 
-enum WrapperType {
-    OPTIONAL,
-    LIST,
-    MAP
+    interface Property {
+        propertyName: string;
+        typeReference: TypeReference;
+    }
+
+    enum WrapperType {
+        OPTIONAL,
+        LIST,
+        MAP
+    }
 }
 
 export class CsharpProtobufTypeMapper {
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
-    private protobufType: ProtobufType;
 
-    constructor({ context, protobufType }: CsharpProtobufTypeMapper.Args) {
+    constructor({ context }: CsharpProtobufTypeMapper.Args) {
         this.context = context;
-        this.protobufType = protobufType;
     }
 
-    // TODO: Should this method handle the whole body, or just each property individually?
-    public toProto({ propertyName, typeReference }: { propertyName: string; typeReference: TypeReference }): CodeBlock {
-        return csharp.codeblock((writer) => {
-            const condition = this.toProtoCondition({ propertyName, typeReference });
-            const value = this.toProtoValue({ propertyName, typeReference });
-            if (condition != null) {
-                writer.controlFlow("if", condition);
-                writer.writeNode(value);
-                writer.endControlFlow();
-                return;
-            }
-            writer.writeNode(value);
+    public toProto({
+        classReference,
+        protobufType,
+        properties
+    }: {
+        classReference: csharp.ClassReference;
+        protobufType: csharp.Type;
+        properties: CsharpProtobufTypeMapper.Property[];
+    }): csharp.Method {
+        return csharp.method({
+            name: "ToProto",
+            access: "internal",
+            isAsync: false,
+            return_: protobufType,
+            parameters: [
+                csharp.parameter({
+                    name: "value",
+                    type: csharp.Type.reference(classReference)
+                })
+            ],
+            body: csharp.codeblock((writer) => {
+                if (properties.length === 0) {
+                    writer.write("return new");
+                    writer.writeNode(protobufType);
+                    writer.write("();");
+                    return;
+                }
+
+                writer.write("var result = new");
+                writer.writeNode(protobufType);
+                writer.write("();");
+
+                properties.forEach(({ propertyName, typeReference }: CsharpProtobufTypeMapper.Property) => {
+                    const condition = this.toProtoCondition({ propertyName, typeReference });
+                    const value = this.toProtoValueWithAssignment({ propertyName, typeReference });
+                    if (condition != null) {
+                        writer.controlFlow("if", condition);
+                        writer.writeNodeStatement(value);
+                        writer.endControlFlow();
+                        return;
+                    }
+                    writer.write(`result.${propertyName} = `);
+                    writer.writeNodeStatement(value);
+                });
+
+                writer.writeLine("return result;");
+            })
         });
     }
 
@@ -110,6 +139,24 @@ export class CsharpProtobufTypeMapper {
         }
     }
 
+    private toProtoValueWithAssignment({
+        propertyName,
+        typeReference
+    }: {
+        propertyName: string;
+        typeReference: TypeReference;
+    }): CodeBlock {
+        const value = this.toProtoValue({ propertyName, typeReference });
+        return csharp.codeblock((writer) => {
+            if (this.propertyNeedsAssignment({ typeReference })) {
+                writer.write(`result.${propertyName} = `);
+                writer.writeNodeStatement(value);
+                return;
+            }
+            writer.writeNodeStatement(value);
+        });
+    }
+
     private toProtoValue({
         propertyName,
         typeReference,
@@ -117,7 +164,7 @@ export class CsharpProtobufTypeMapper {
     }: {
         propertyName: string;
         typeReference: TypeReference;
-        wrapperType?: WrapperType;
+        wrapperType?: CsharpProtobufTypeMapper.WrapperType;
     }): CodeBlock {
         switch (typeReference.type) {
             case "container":
@@ -141,12 +188,12 @@ export class CsharpProtobufTypeMapper {
     }: {
         propertyName: string;
         named: NamedType;
-        wrapperType?: WrapperType;
+        wrapperType?: CsharpProtobufTypeMapper.WrapperType;
     }): CodeBlock {
         if (this.context.protobufResolver.isProtobufStruct(named.typeId)) {
             return this.toProtoValueForProtobufStruct({ propertyName });
         }
-        if (wrapperType == WrapperType.LIST) {
+        if (wrapperType == CsharpProtobufTypeMapper.WrapperType.LIST) {
             return csharp.codeblock(`${propertyName}.Select(elem => elem.ToProto())`);
         }
         return csharp.codeblock((writer) => {
@@ -184,7 +231,7 @@ export class CsharpProtobufTypeMapper {
                 return this.toProtoValue({
                     propertyName,
                     typeReference: container.optional,
-                    wrapperType: WrapperType.OPTIONAL
+                    wrapperType: CsharpProtobufTypeMapper.WrapperType.OPTIONAL
                 });
             case "list":
                 return this.toProtoValueForList({ propertyName, listType: container.list });
@@ -210,7 +257,11 @@ export class CsharpProtobufTypeMapper {
                     on: csharp.codeblock(`result.${propertyName}`),
                     method: "AddRange",
                     arguments_: [
-                        this.toProtoValue({ propertyName, typeReference: listType, wrapperType: WrapperType.LIST })
+                        this.toProtoValue({
+                            propertyName,
+                            typeReference: listType,
+                            wrapperType: CsharpProtobufTypeMapper.WrapperType.LIST
+                        })
                     ]
                 })
             );
@@ -251,9 +302,9 @@ export class CsharpProtobufTypeMapper {
     }: {
         propertyName: string;
         primitive: PrimitiveType;
-        wrapperType?: WrapperType;
+        wrapperType?: CsharpProtobufTypeMapper.WrapperType;
     }): CodeBlock {
-        if (wrapperType == WrapperType.OPTIONAL) {
+        if (wrapperType == CsharpProtobufTypeMapper.WrapperType.OPTIONAL) {
             return csharp.codeblock((writer) => {
                 writer.write(propertyName);
                 writer.write(" ?? ");
@@ -261,6 +312,20 @@ export class CsharpProtobufTypeMapper {
             });
         }
         return csharp.codeblock(propertyName);
+    }
+
+    private propertyNeedsAssignment({ typeReference }: { typeReference: TypeReference }): boolean {
+        if (typeReference.type === "container") {
+            switch (typeReference.container.type) {
+                case "optional":
+                    return this.propertyNeedsAssignment({ typeReference: typeReference.container.optional });
+                case "list":
+                case "set":
+                case "map":
+                    return false;
+            }
+        }
+        return true;
     }
 
     private invokeAny(on: csharp.AstNode): csharp.CodeBlock {

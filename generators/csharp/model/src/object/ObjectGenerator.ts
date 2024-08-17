@@ -72,6 +72,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
 
         if (this.shouldGenerateProtobufMappers(this.typeDeclaration)) {
             const protobufType = this.context.protobufResolver.getProtobufTypeOrThrow(this.typeDeclaration.name.typeId);
+            // const protobufMapper = new CsharpProtobufTypeMapper();
             class_.addMethod(
                 this.getToProtoMethod({
                     protobufType,
@@ -124,24 +125,14 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             name: "ToProto",
             access: "internal",
             isAsync: false,
-            return_: this.context.protobufResolver.getProtobufTypeOrThrow(this.typeDeclaration.name.typeId),
+            return_: protobufType,
             parameters: [
                 csharp.parameter({
                     name: "value",
                     type: csharp.Type.reference(this.classReference)
                 })
             ],
-            body: csharp.codeblock((writer) => {
-                writer.write("var result = new");
-                writer.writeNode(protobufType);
-                writer.write("();");
-
-                properties.forEach((property) => {
-                    writer.writeNode(this.toProtoPropertyMapper({ property }));
-                });
-
-                writer.writeLine("return result;");
-            })
+            body: 
         });
     }
 
