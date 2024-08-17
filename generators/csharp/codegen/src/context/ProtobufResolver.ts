@@ -21,10 +21,7 @@ export class ProtobufResolver {
      * Returns the Protobuf type identified by the given type ID (e.g. `User.V1.Grpc.User`).
      */
     public getProtobufTypeOrThrow(typeId: TypeId): csharp.Type {
-        const protobufType = this.getProtobufTypeForTypeId(typeId);
-        if (protobufType == null) {
-            throw new Error(`The type identified by ${typeId} is not a Protobuf type`);
-        }
+        const protobufType = this.getProtobufTypeForTypeIdOrThrow(typeId);
         switch (protobufType.type) {
             case "wellKnown": {
                 if (protobufType.value.type === "struct") {
@@ -34,9 +31,9 @@ export class ProtobufResolver {
             }
             case "userDefined": {
                 return csharp.Type.reference(
-                    this.csharpTypeMapper.convertToClassReference({
-                        typeId,
-                        name: protobufType.name
+                    new csharp.ClassReference({
+                        name: this.context.getPascalCaseSafeName(protobufType.name),
+                        namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file)
                     })
                 );
             }
@@ -44,29 +41,18 @@ export class ProtobufResolver {
     }
 
     public getProtobufClassReferenceOrThrow(typeId: TypeId): csharp.ClassReference {
-        const protobufType = this.getProtobufTypeForTypeId(typeId);
-        if (protobufType == null) {
-            throw new Error(`The type identified by ${typeId} is not a Protobuf type`);
-        }
+        const protobufType = this.getProtobufTypeForTypeIdOrThrow(typeId);
         switch (protobufType.type) {
             case "wellKnown": {
                 return this.getWellKnownProtobufTypeClassReferenceOrThrow(protobufType.value);
             }
             case "userDefined": {
-                return this.csharpTypeMapper.convertToClassReference({
-                    typeId,
-                    name: protobufType.name
+                return new csharp.ClassReference({
+                    name: this.context.getPascalCaseSafeName(protobufType.name),
+                    namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file)
                 });
             }
         }
-    }
-
-    public getProtobufTypeForTypeIdOrThrow(typeId: TypeId): ProtobufType {
-        const protobufType = this.getProtobufTypeForTypeId(typeId);
-        if (protobufType == null) {
-            throw new Error(`The type identified by ${typeId} is not a Protobuf type`);
-        }
-        return protobufType;
     }
 
     public getNamespaceFromProtobufFileOrThrow(protobufFile: ProtobufFile): string {
@@ -192,6 +178,14 @@ export class ProtobufResolver {
             return false;
         }
         return protobufType.type === "wellKnown" && protobufType.value.type === wellKnownProtobufType.type;
+    }
+
+    private getProtobufTypeForTypeIdOrThrow(typeId: TypeId): ProtobufType {
+        const protobufType = this.getProtobufTypeForTypeId(typeId);
+        if (protobufType == null) {
+            throw new Error(`The type identified by ${typeId} is not a Protobuf type`);
+        }
+        return protobufType;
     }
 
     private getProtobufTypeForTypeId(typeId: TypeId): ProtobufType | undefined {
