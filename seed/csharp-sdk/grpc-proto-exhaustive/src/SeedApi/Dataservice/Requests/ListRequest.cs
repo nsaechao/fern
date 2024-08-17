@@ -4,7 +4,7 @@ using Proto = Data.V1.Grpc;
 
 namespace SeedApi;
 
-public record DataServiceListRequest
+public record ListRequest
 {
     public string? Prefix { get; set; }
 
@@ -14,9 +14,9 @@ public record DataServiceListRequest
 
     public string? Namespace { get; set; }
 
-    internal Proto.DataServiceListRequest ToProto()
+    internal Proto.ListRequest ToProto()
     {
-        var result = new Proto.DataServiceListRequest();
+        var result = new Proto.ListRequest();
         if (Prefix != null)
         {
             result.Prefix = Prefix ?? "";

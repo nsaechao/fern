@@ -161,10 +161,7 @@ public partial class DataserviceClient
         );
     }
 
-    public async Task<ListResponse> ListAsync(
-        DataServiceListRequest request,
-        RequestOptions? options = null
-    )
+    public async Task<ListResponse> ListAsync(ListRequest request, RequestOptions? options = null)
     {
         var _query = new Dictionary<string, object>();
         if (request.Prefix != null)
