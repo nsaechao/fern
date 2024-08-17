@@ -1,9 +1,4 @@
-import {
-    ProtobufFile,
-    ProtobufType,
-    TypeId,
-    WellKnownProtobufType
-} from "@fern-fern/ir-sdk/api";
+import { ProtobufFile, ProtobufType, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
 import { csharp } from "..";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";
@@ -14,7 +9,10 @@ export class ProtobufResolver {
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private csharpTypeMapper: CsharpTypeMapper;
 
-    public constructor(context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>, csharpTypeMapper: CsharpTypeMapper) {
+    public constructor(
+        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
+        csharpTypeMapper: CsharpTypeMapper
+    ) {
         this.context = context;
         this.csharpTypeMapper = csharpTypeMapper;
     }
@@ -44,13 +42,6 @@ export class ProtobufResolver {
                 );
             }
         }
-    }
-
-    public getProtoConverterClassReference(): csharp.ClassReference {
-        return csharp.classReference({
-            name: "ProtoConverter"
-            namespace: 
-        })
     }
 
     public getNamespaceFromProtobufFileOrThrow(protobufFile: ProtobufFile): string {

@@ -4,6 +4,8 @@ import {
     FernFilepath,
     IntermediateRepresentation,
     Name,
+    PrimitiveType,
+    PrimitiveTypeV1,
     TypeDeclaration,
     TypeId,
     TypeReference,
@@ -273,29 +275,6 @@ export abstract class AbstractCsharpGeneratorContext<
         return undefined;
     }
 
-    public isNamed(typeReference: TypeReference): boolean {
-        switch (typeReference.type) {
-            case "container":
-                if (typeReference.container.type === "optional") {
-                    return this.isNamed(typeReference.container.optional);
-                }
-                return false;
-            case "named":
-                return true;
-            case "unknown":
-                return false;
-            case "primitive":
-                return true;
-        }
-    }
-
-    public getInnerType(typeReference: TypeReference): TypeReference {
-        if (typeReference.type === "container" && typeReference.container.type === "optional") {
-            return typeReference.container.optional;
-        }
-        return typeReference;
-    }
-
     public isOptional(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
@@ -314,71 +293,23 @@ export abstract class AbstractCsharpGeneratorContext<
         }
     }
 
-    public isPrimitive(typeReference: TypeReference): boolean {
-        switch (typeReference.type) {
-            case "container":
-                if (typeReference.container.type === "optional") {
-                    return this.isPrimitive(typeReference.container.optional);
-                }
-                return false;
-            case "named":
-                return false;
-            case "unknown":
-                return false;
-            case "primitive":
-                return true;
-        }
-    }
-
-    public isList(typeReference: TypeReference): boolean {
-        switch (typeReference.type) {
-            case "container":
-                if (typeReference.container.type === "optional") {
-                    return this.isList(typeReference.container.optional);
-                }
-                return typeReference.container.type === "list";
-            case "named": {
-                return false;
-            }
-            case "unknown":
-                return false;
-            case "primitive":
-                return false;
-        }
-    }
-
-    public isSet(typeReference: TypeReference): boolean {
-        switch (typeReference.type) {
-            case "container":
-                if (typeReference.container.type === "optional") {
-                    return this.isSet(typeReference.container.optional);
-                }
-                return typeReference.container.type === "set";
-            case "named": {
-                return false;
-            }
-            case "unknown":
-                return false;
-            case "primitive":
-                return false;
-        }
-    }
-
-    public isMap(typeReference: TypeReference): boolean {
-        switch (typeReference.type) {
-            case "container":
-                if (typeReference.container.type === "optional") {
-                    return this.isMap(typeReference.container.optional);
-                }
-                return typeReference.container.type === "map";
-            case "named": {
-                return false;
-            }
-            case "unknown":
-                return false;
-            case "primitive":
-                return false;
-        }
+    public getDefaultValueForPrimitive({ primitive }: { primitive: PrimitiveType }): csharp.CodeBlock {
+        return PrimitiveTypeV1._visit<csharp.CodeBlock>(primitive.v1, {
+            integer: () => csharp.codeblock("0"),
+            long: () => csharp.codeblock("0L"),
+            uint: () => csharp.codeblock("0U"),
+            uint64: () => csharp.codeblock("0UL"),
+            float: () => csharp.codeblock("0.0f"),
+            double: () => csharp.codeblock("0.0d"),
+            boolean: () => csharp.codeblock("false"),
+            string: () => csharp.codeblock(`""`),
+            date: () => csharp.codeblock("DateOnly.MinValue"),
+            dateTime: () => csharp.codeblock("DateTime.MinValue"),
+            uuid: () => csharp.codeblock(`""`),
+            base64: () => csharp.codeblock(`""`),
+            bigInteger: () => csharp.codeblock(`""`),
+            _other: () => csharp.codeblock("null")
+        });
     }
 
     public abstract getCoreAsIsFiles(): string[];
