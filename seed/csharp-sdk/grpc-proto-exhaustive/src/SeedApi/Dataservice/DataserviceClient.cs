@@ -121,7 +121,7 @@ public partial class DataserviceClient
     }
 
     public async Task<FetchResponse> FetchAsync(
-        DataServiceFetchRequest request,
+        FetchRequest request,
         RequestOptions? options = null
     )
     {

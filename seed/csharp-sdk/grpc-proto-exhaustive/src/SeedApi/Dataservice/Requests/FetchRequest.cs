@@ -4,15 +4,15 @@ using Proto = Data.V1.Grpc;
 
 namespace SeedApi;
 
-public record DataServiceFetchRequest
+public record FetchRequest
 {
     public IEnumerable<string> Ids { get; set; } = new List<string>();
 
     public string? Namespace { get; set; }
 
-    internal Proto.DataServiceFetchRequest ToProto()
+    internal Proto.FetchRequest ToProto()
     {
-        var result = new Proto.DataServiceFetchRequest();
+        var result = new Proto.FetchRequest();
         if (Ids.Any())
         {
             result.Ids.AddRange(Ids ?? "");

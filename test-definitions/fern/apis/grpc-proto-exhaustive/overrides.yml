@@ -1,6 +1,7 @@
 
 paths:
   /data/fetch:
+    get:
       x-fern-request-name: FetchRequest
   /data/list:
     get:
