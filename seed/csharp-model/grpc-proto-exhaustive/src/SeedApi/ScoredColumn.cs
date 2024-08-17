@@ -26,7 +26,7 @@ public record ScoredColumn
     internal Proto.ScoredColumn ToProto()
     {
         var result = new Proto.ScoredColumn();
-        result.Id = result.Id = Id;
+        result.Id = Id;
         if (Score != null)
         {
             result.Score = Score ?? 0.0f;

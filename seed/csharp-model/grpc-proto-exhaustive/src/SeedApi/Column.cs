@@ -23,7 +23,7 @@ public record Column
     internal Proto.Column ToProto()
     {
         var result = new Proto.Column();
-        result.Id = result.Id = Id;
+        result.Id = Id;
         if (Values.Any())
         {
             result.Values.AddRange(Values);
