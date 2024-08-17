@@ -1,13 +1,6 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { MethodType } from "@fern-api/csharp-codegen/src/ast";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    ExampleObjectType,
-    NameAndWireValue,
-    ObjectProperty,
-    ObjectTypeDeclaration,
-    TypeDeclaration
-} from "@fern-fern/ir-sdk/api";
+import { ExampleObjectType, NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ExampleGenerator } from "../snippets/ExampleGenerator";
@@ -72,16 +65,19 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
 
         if (this.shouldGenerateProtobufMappers(this.typeDeclaration)) {
             const protobufType = this.context.protobufResolver.getProtobufTypeOrThrow(this.typeDeclaration.name.typeId);
-            // const protobufMapper = new CsharpProtobufTypeMapper();
             class_.addMethod(
-                this.getToProtoMethod({
+                this.context.csharpProtobufTypeMapper.toProto({
+                    classReference: this.classReference,
                     protobufType,
-                    properties: flattenedProperties
-                })
-            );
-            class_.addMethod(
-                this.getFromProtoMethod({
-                    properties: flattenedProperties
+                    properties: flattenedProperties.map((property) => {
+                        return {
+                            propertyName: this.getPropertyName({
+                                className: this.classReference.name,
+                                objectProperty: property.name
+                            }),
+                            typeReference: property.valueType
+                        };
+                    })
                 })
             );
         }
@@ -114,47 +110,25 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         return csharp.codeblock((writer) => writer.writeNode(instantiateClass));
     }
 
-    private getToProtoMethod({
-        protobufType,
-        properties
-    }: {
-        protobufType: csharp.Type;
-        properties: ObjectProperty[];
-    }): csharp.Method {
-        return csharp.method({
-            name: "ToProto",
-            access: "internal",
-            isAsync: false,
-            return_: protobufType,
-            parameters: [
-                csharp.parameter({
-                    name: "value",
-                    type: csharp.Type.reference(this.classReference)
-                })
-            ],
-            body: 
-        });
-    }
-
-    private getFromProtoMethod({
-        protobufType,
-        properties
-    }: {
-        protobufType: ProtobufType;
-        properties: ObjectProperty[];
-    }): csharp.Method {
-        return csharp.method({
-            name: "FromProto",
-            access: "internal",
-            type: MethodType.STATIC,
-            return_: csharp.Type.reference(this.classReference),
-            isAsync: false,
-            parameters: [],
-            body: csharp.codeblock((writer) => {
-                /* TODO */
-            })
-        });
-    }
+    // private getFromProtoMethod({
+    //     protobufType,
+    //     properties
+    // }: {
+    //     protobufType: ProtobufType;
+    //     properties: ObjectProperty[];
+    // }): csharp.Method {
+    //     return csharp.method({
+    //         name: "FromProto",
+    //         access: "internal",
+    //         type: MethodType.STATIC,
+    //         return_: csharp.Type.reference(this.classReference),
+    //         isAsync: false,
+    //         parameters: [],
+    //         body: csharp.codeblock((writer) => {
+    //             /* TODO */
+    //         })
+    //     });
+    // }
 
     /**
      * Class Names and Property Names cannot overlap in C# otherwise there are compilation errors.

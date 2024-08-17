@@ -25,6 +25,7 @@ import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomC
 import { CsharpProject } from "../project";
 import { Namespace } from "../project/CSharpFile";
 import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
+import { CsharpProtobufTypeMapper } from "./CsharpProtobufTypeMapper";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
 import { ProtobufResolver } from "./ProtobufResolver";
 
@@ -34,6 +35,7 @@ export abstract class AbstractCsharpGeneratorContext<
     private namespace: string;
     public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
+    public readonly csharpProtobufTypeMapper: CsharpProtobufTypeMapper;
     public readonly protobufResolver: ProtobufResolver;
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
     private allNamespaceSegments?: Set<string>;
@@ -51,6 +53,7 @@ export abstract class AbstractCsharpGeneratorContext<
             upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
         this.project = new CsharpProject(this, this.namespace);
         this.csharpTypeMapper = new CsharpTypeMapper(this);
+        this.csharpProtobufTypeMapper = new CsharpProtobufTypeMapper(this);
         this.protobufResolver = new ProtobufResolver(this, this.csharpTypeMapper);
         config.output.mode._visit<void>({
             github: (github) => {

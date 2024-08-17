@@ -6,8 +6,10 @@ import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomC
 import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext";
 
 export declare namespace CsharpProtobufTypeMapper {
-    interface Args {
-        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    interface ToProtoArgs {
+        classReference: csharp.ClassReference;
+        protobufType: csharp.Type;
+        properties: CsharpProtobufTypeMapper.Property[];
     }
 
     interface Property {
@@ -25,19 +27,11 @@ export declare namespace CsharpProtobufTypeMapper {
 export class CsharpProtobufTypeMapper {
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
 
-    constructor({ context }: CsharpProtobufTypeMapper.Args) {
+    constructor(context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>) {
         this.context = context;
     }
 
-    public toProto({
-        classReference,
-        protobufType,
-        properties
-    }: {
-        classReference: csharp.ClassReference;
-        protobufType: csharp.Type;
-        properties: CsharpProtobufTypeMapper.Property[];
-    }): csharp.Method {
+    public toProto({ classReference, protobufType, properties }: CsharpProtobufTypeMapper.ToProtoArgs): csharp.Method {
         return csharp.method({
             name: "ToProto",
             access: "internal",
