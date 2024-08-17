@@ -15,7 +15,7 @@ public record FetchRequest
         var result = new Proto.FetchRequest();
         if (Ids.Any())
         {
-            result.Ids.AddRange(Ids ?? "");
+            result.Ids.AddRange(Ids);
         }
         if (Namespace != null)
         {

@@ -168,7 +168,8 @@ export class CsharpProtobufTypeMapper {
             case "container":
                 return this.toProtoValueForContainer({
                     propertyName,
-                    container: typeReference.container
+                    container: typeReference.container,
+                    wrapperType
                 });
             case "named":
                 return this.toProtoValueForNamed({ propertyName, named: typeReference, wrapperType });
@@ -219,17 +220,19 @@ export class CsharpProtobufTypeMapper {
 
     private toProtoValueForContainer({
         propertyName,
-        container
+        container,
+        wrapperType
     }: {
         propertyName: string;
         container: ContainerType;
+        wrapperType?: WrapperType;
     }): CodeBlock {
         switch (container.type) {
             case "optional":
                 return this.toProtoValue({
                     propertyName,
                     typeReference: container.optional,
-                    wrapperType: WrapperType.Optional
+                    wrapperType: wrapperType ?? WrapperType.Optional
                 });
             case "list":
                 return this.toProtoValueForList({ propertyName, listType: container.list });
