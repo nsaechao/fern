@@ -18,8 +18,7 @@ export class ProtobufResolver {
     }
 
     /**
-     * Returns the class reference for the Protobuf type identified by the given
-     * type ID (e.g. `User.V1.Grpc.User`).
+     * Returns the Protobuf type identified by the given type ID (e.g. `User.V1.Grpc.User`).
      */
     public getProtobufTypeOrThrow(typeId: TypeId): csharp.Type {
         const protobufType = this.getProtobufTypeForTypeId(typeId);
@@ -40,6 +39,24 @@ export class ProtobufResolver {
                         name: protobufType.name
                     })
                 );
+            }
+        }
+    }
+
+    public getProtobufClassReferenceOrThrow(typeId: TypeId): csharp.ClassReference {
+        const protobufType = this.getProtobufTypeForTypeId(typeId);
+        if (protobufType == null) {
+            throw new Error(`The type identified by ${typeId} is not a Protobuf type`);
+        }
+        switch (protobufType.type) {
+            case "wellKnown": {
+                return this.getWellKnownProtobufTypeClassReferenceOrThrow(protobufType.value);
+            }
+            case "userDefined": {
+                return this.csharpTypeMapper.convertToClassReference({
+                    typeId,
+                    name: protobufType.name
+                });
             }
         }
     }

@@ -16,7 +16,7 @@ const WrapperType = {
 export declare namespace CsharpProtobufTypeMapper {
     interface ToProtoArgs {
         classReference: csharp.ClassReference;
-        protobufType: csharp.Type;
+        protobufClassReference: csharp.ClassReference;
         properties: CsharpProtobufTypeMapper.Property[];
     }
 
@@ -35,14 +35,14 @@ export class CsharpProtobufTypeMapper {
 
     public toProtoMethod({
         classReference,
-        protobufType,
+        protobufClassReference,
         properties
     }: CsharpProtobufTypeMapper.ToProtoArgs): csharp.Method {
         return csharp.method({
             name: "ToProto",
             access: "internal",
             isAsync: false,
-            return_: protobufType,
+            return_: csharp.Type.reference(protobufClassReference),
             parameters: [
                 csharp.parameter({
                     name: "value",
@@ -51,21 +51,29 @@ export class CsharpProtobufTypeMapper {
             ],
             body: csharp.codeblock((writer) => {
                 if (properties.length === 0) {
-                    writer.write("return new");
-                    writer.writeNode(protobufType);
-                    writer.write("();");
+                    writer.write("return ");
+                    writer.writeNodeStatement(
+                        csharp.instantiateClass({
+                            classReference: protobufClassReference,
+                            arguments_: []
+                        })
+                    );
                     return;
                 }
 
-                writer.write("var result = new");
-                writer.writeNode(protobufType);
-                writer.write("();");
+                writer.write("var result = ");
+                writer.writeNodeStatement(
+                    csharp.instantiateClass({
+                        classReference: protobufClassReference,
+                        arguments_: []
+                    })
+                );
 
                 properties.forEach(({ propertyName, typeReference }: CsharpProtobufTypeMapper.Property) => {
                     const condition = this.toProtoCondition({ propertyName, typeReference });
                     const value = this.toProtoValueWithAssignment({ propertyName, typeReference });
                     if (condition != null) {
-                        writer.controlFlow("if", condition);
+                        writer.writeNode(condition);
                         writer.writeNodeStatement(value);
                         writer.endControlFlow();
                         return;
