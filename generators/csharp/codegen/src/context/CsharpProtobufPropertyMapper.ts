@@ -35,6 +35,7 @@ export class CsharpProtobufTypeMapper {
         this.protobufType = protobufType;
     }
 
+    // TODO: Should this method handle the whole body, or just each property individually?
     public toProto({ propertyName, typeReference }: { propertyName: string; typeReference: TypeReference }): CodeBlock {
         return csharp.codeblock((writer) => {
             const condition = this.toProtoCondition({ propertyName, typeReference });

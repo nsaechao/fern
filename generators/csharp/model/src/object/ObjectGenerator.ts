@@ -145,91 +145,13 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         });
     }
 
-    // TODO: Handle required -> optional case.
-    // TODO: Handle optional -> optional case.
-    // TODO: Handle required list -> optional list case.
-    // TODO: Handle optional list -> optional list case.
-    // TODO: Handle struct -> optional struct case.
-    // TODO: Handle optional struct -> optional struct case.
-    //
-    // 
-    // - Need to split this out in a recursive value resolver.
-    // - Setting the key is always the same, only excluding
-    //   required properties.
-    private toProtoPropertyMapper({ property }: { property: ObjectProperty }): csharp.CodeBlock {
-        const propertyName = this.getPropertyName({
-            className: this.classReference.name,
-            objectProperty: property.name
-        });
-        const mapperType = this.getMapperType(property);
-        const isOptional = this.context.isOptional(property.valueType);
-        if (isOptional) {
-            return this.toProtoPropertyMapperForOptional({
-                propertyName,
-                mapperType
-            });
-        }
-        return this.toProtoPropertyMapperForRequired({
-            propertyName,
-            mapperType
-        });
-    }
-
-    private toProtoPropertyMapperForRequired({
-        propertyName,
-        mapperType
+    private getFromProtoMethod({
+        protobufType,
+        properties
     }: {
-        propertyName: string;
-        mapperType: MapperType;
-    }): csharp.CodeBlock {
-        switch (mapperType) {
-            case "primitive":
-                return csharp.codeblock((writer) => writer.writeLine(`${propertyName} = ${propertyName};`));
-            case "named":
-                return csharp.codeblock("TODO");
-            case "list":
-                return csharp.codeblock((writer) => {
-                    writer.write("if (");
-                    writer.writeNode(this.invokeAny(csharp.codeblock(propertyName)));
-                    writer.write(") {");
-                    writer.indent();
-                    writer.writeLine(`result.${propertyName}.AddRange(${propertyName})`);
-                    writer.dedent();
-                });
-            case "map":
-                return csharp.codeblock("TODO");
-            case "unknown":
-                return csharp.codeblock("TODO");
-        }
-    }
-
-    private toProtoPropertyMapperForOptional({
-        propertyName,
-        mapperType
-    }: {
-        propertyName: string;
-        mapperType: MapperType;
-    }): csharp.CodeBlock {
-        switch (mapperType) {
-            case "primitive":
-                return csharp.codeblock("TODO");
-            case "named":
-                return csharp.codeblock((writer) =>
-                    writer.writeLine(`result.${propertyName} = ${propertyName}.ToProto()`)
-                );
-            case "list":
-                return csharp.codeblock("TODO");
-            case "map":
-                return csharp.codeblock("TODO");
-            case "unknown":
-                return csharp.codeblock("TODO");
-        }
-    }
-
-    private getFromProtoMethod({ protobufType, properties }: { protobufType: ProtobufType; properties: ObjectProperty[] }): csharp.Method {
-        const mappedProperties:  = properties.map((property) => {
-
-        });
+        protobufType: ProtobufType;
+        properties: ObjectProperty[];
+    }): csharp.Method {
         return csharp.method({
             name: "FromProto",
             access: "internal",
@@ -238,25 +160,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             isAsync: false,
             parameters: [],
             body: csharp.codeblock((writer) => {
-                writer.write("var result = ");
-                writer.writeNodeStatement(
-                    writer.instatnthis.classReference);
-                writer.write("();");
-
-                properties.forEach((property) => {
-                    writer.writeNode(this.fromProtoPropertyMapper({ property }));
-                });
-
-                writer.writeLine("return result;");
+                /* TODO */
             })
-        });
-    }
-
-    private invokeAny(on: csharp.AstNode): csharp.MethodInvocation {
-        return csharp.invokeMethod({
-            on,
-            method: "Any",
-            arguments_: []
         });
     }
 
@@ -275,22 +180,6 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             return `${propertyName}_`;
         }
         return propertyName;
-    }
-
-    private getMapperType(property: ObjectProperty): MapperType {
-        if (this.context.isPrimitive(property.valueType)) {
-            return "primitive";
-        }
-        if (this.context.isNamed(property.valueType)) {
-            return "named";
-        }
-        if (this.context.isList(property.valueType)) {
-            return "list";
-        }
-        if (this.context.isMap(property.valueType)) {
-            return "map";
-        }
-        return "unknown";
     }
 
     private shouldGenerateProtobufMappers(typeDeclaration: TypeDeclaration): boolean {
