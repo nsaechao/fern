@@ -16,21 +16,14 @@ export declare namespace ProtoConverterGenerator {
 }
 
 export class ProtoConverterGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
-    private wellKnownProtoValueClassReference: csharp.ClassReference;
     private wellKnownProtoValueType: csharp.Type;
     private wellKnownProtoStructType: csharp.Type;
     private externalProtoStructClassReference: csharp.ClassReference;
     private externalProtoValueClassReference: csharp.ClassReference;
     private externalProtoListValueClassReference: csharp.ClassReference;
 
-    constructor({
-        context,
-        wellKnownProtoValueClassReference,
-        wellKnownProtoValueType,
-        wellKnownProtoStructType
-    }: ProtoConverterGenerator.Args) {
+    constructor({ context, wellKnownProtoValueType, wellKnownProtoStructType }: ProtoConverterGenerator.Args) {
         super(context);
-        this.wellKnownProtoValueClassReference = wellKnownProtoValueClassReference;
         this.wellKnownProtoValueType = wellKnownProtoValueType;
         this.wellKnownProtoStructType = wellKnownProtoStructType;
         this.externalProtoStructClassReference = csharp.classReference({

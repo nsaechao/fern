@@ -78,7 +78,7 @@ export class CsharpProtobufTypeMapper {
         }
     }
 
-    private toProtoValue({propertyName, typeReference}: {propertyName: string; typeReference: TypeReference}): CodeBlock {
+    private toProtoValue({propertyName, typeReference, inList}: {propertyName: string; typeReference: TypeReference; inList?: boolean}): CodeBlock {
         switch (typeReference.type) {
             case "container":
                 return this.toProtoValueForContainer({
@@ -86,7 +86,7 @@ export class CsharpProtobufTypeMapper {
                     container: typeReference.container,
                 });
             case "named":
-                return this.toProtoValueForNamed({ propertyName, named: typeReference });
+                return this.toProtoValueForNamed({ propertyName, named: typeReference, inList });
             case "primitive":
                 return this.(reference);
             case "unknown":
@@ -94,11 +94,13 @@ export class CsharpProtobufTypeMapper {
         }
     }
 
-    private toProtoValueForNamed({propertyName, named}: {propertyName: string; named: NamedType}): CodeBlock {
+    private toProtoValueForNamed({propertyName, named, inList}: {propertyName: string; named: NamedType, inList?: boolean}): CodeBlock {
         if (this.context.protobufResolver.isProtobufStruct(named.typeId)) {
             return this.toProtoValueForProtobufStruct({propertyName});
         }
-        // TODO: Handle the case if we're within a list - need the select mapper.
+        if (inList) {
+            return csharp.codeblock(`${propertyName}.Select(elem => elem.ToProto())`)
+        }
         return csharp.codeblock((writer) => {
             writer.writeNode(
                 csharp.invokeMethod({
