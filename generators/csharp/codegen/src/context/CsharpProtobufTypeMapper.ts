@@ -89,6 +89,7 @@ export class CsharpProtobufTypeMapper {
             return undefined;
         }
         return csharp.codeblock((writer) => {
+            // The control flow is closed by the caller.
             writer.controlFlow("if", csharp.and({ conditions }));
         });
     }
@@ -269,20 +270,21 @@ export class CsharpProtobufTypeMapper {
     private toProtoValueForMap({ propertyName, map }: { propertyName: string; map: MapType }): CodeBlock {
         return csharp.codeblock((writer) => {
             writer.controlFlow("foreach", csharp.codeblock(`var kvp in ${propertyName}`));
-            writer.writeNode(
+            writer.writeNodeStatement(
                 csharp.invokeMethod({
                     on: csharp.codeblock(`result.${propertyName}`),
                     method: "Add",
                     arguments_: [
                         csharp.codeblock("kvp.Key"),
                         this.toProtoValue({
-                            propertyName,
+                            propertyName: "kvp.Value",
                             typeReference: map.valueType,
                             wrapperType: WrapperType.Map
                         })
                     ]
                 })
             );
+            writer.endControlFlow();
         });
     }
 
