@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using Proto = User.V1;
 
 #nullable enable
 
@@ -9,9 +10,9 @@ public record CreateResponse
     [JsonPropertyName("user")]
     public UserModel? User { get; set; }
 
-    internal User.V1.CreateResponse ToProto()
+    internal Proto.CreateResponse ToProto()
     {
-        var result = new User.V1.CreateResponse();
+        var result = new Proto.CreateResponse();
         if (User != null)
         {
             result.User = User.ToProto();
