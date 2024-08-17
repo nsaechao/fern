@@ -9,13 +9,12 @@ public record CreateResponse
     [JsonPropertyName("user")]
     public UserModel? User { get; set; }
 
-    internal CreateResponse ToProto(CreateResponse value)
+    internal User.V1.CreateResponse ToProto(CreateResponse value)
     {
         var result = new CreateResponse();
         if (User != null)
         {
             result.User = User.ToProto();
-            ;
         }
         return result;
     }

@@ -158,10 +158,10 @@ export class CsharpProtobufTypeMapper {
         return csharp.codeblock((writer) => {
             if (this.propertyNeedsAssignment({ typeReference })) {
                 writer.write(`result.${propertyName} = `);
-                writer.writeNodeStatement(value);
+                writer.writeNode(value);
                 return;
             }
-            writer.writeNodeStatement(value);
+            writer.writeNode(value);
         });
     }
 
