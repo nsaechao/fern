@@ -1,4 +1,11 @@
-import { ProtobufFile, ProtobufType, TypeId, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
+import {
+    ProtobufFile,
+    ProtobufService,
+    ProtobufType,
+    ServiceId,
+    TypeId,
+    WellKnownProtobufType
+} from "@fern-fern/ir-sdk/api";
 import { csharp } from "..";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";
@@ -52,6 +59,19 @@ export class ProtobufResolver {
                     namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file)
                 });
             }
+        }
+    }
+
+    public getProtobufServiceForServiceId(serviceId: ServiceId): ProtobufService | undefined {
+        const transport = this.context.ir.services[serviceId]?.transport;
+        if (transport == null) {
+            return undefined;
+        }
+        switch (transport.type) {
+            case "grpc":
+                return transport.service;
+            case "http":
+                return undefined;
         }
     }
 
