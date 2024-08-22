@@ -54,7 +54,7 @@ navigation:
         slug: openapi
         contents:
           - page: Overview
-            path: ./pages/api-definition/openapi/openapi-overview.mdx
+            path: ./pages/api-definition/openapi/overview.mdx
           - section: Extensions
             slug: extensions
             contents: 
@@ -67,11 +67,9 @@ navigation:
               - page: Other
                 path: ./pages/api-definition/openapi/extensions/others.mdx
                 slug: others              
-          - page: OpenAPI Examples
-            path: ./pages/api-definition/openapi/examples.mdx
           - page: OpenAPI Overrides
             path: ./pages/api-definition/openapi/overrides.mdx
-            slug: examples
+            slug: overrides
           - section: Server Frameworks
             slug: frameworks
             contents:

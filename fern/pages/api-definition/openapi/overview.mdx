@@ -1,0 +1,41 @@
+---
+title: OpenAPI
+description: Bring your OpenAPI spec(s) and let Fern do the rest.
+---
+
+Fern supports reading [OpenAPI specs](https://www.openapis.org/) (up to and including version 3.1) to define APIs. If you
+don't already have an OpenAPI, there are several ways of dynamically generating your OpenAPI spec.
+
+## Generate a spec
+
+<Info>
+  The Fern team is currently working on a tool to help generate high-quality OpenAPI specs. If interested, please [reach
+  out](mailto:support@buildwithfern.com).
+</Info>
+
+There are a wide variety of tools that you can use to generate an OpenAPI spec, however the quality of the spec produced varies.
+Below we list a couple of tools that may be helpful
+
+<AccordionGroup>
+  <Accordion title="FastAPI (Python)">
+    [FastAPI](https://fastapi.tiangolo.com/) is a server framework that automatically generates an OpenAPI spec for you.
+    Once your server is running, you should be head to a `/openapi.json` to view and download your spec.
+  </Accordion>
+  <Accordion title="Zod to OpenAPI (TypeScript)">
+    If you're already using [Zod](https://github.com/colinhacks/zod), the [Zod to
+    OpenAPI](https://github.com/asteasolutions/zod-to-openapi) library can convert your Zod schema to a spec.
+  </Accordion>
+  <Accordion title="Swaggo (Go)">
+    [Swaggo](https://github.com/swaggo/swag) handles converting Go annotations into Swagger 2.0 specs.
+
+    <Note>Fern supports reading Swagger 2.0 specs so you don't have to worry about upgrading to 3.x</Note>
+
+  </Accordion>
+  <Accordion title="Handwriting">
+    For the best results, we recommend handwriting your OpenAPI spec. This will give you the ability to customize
+    and finetune the OpenAPI spec wherever you want.
+
+    <Info> If you find OpenAPI cumbersome to write, check out the [Fern Definition](learn/api-definition/fern/overview) instead. </Info>
+
+  </Accordion>
+</AccordionGroup>
