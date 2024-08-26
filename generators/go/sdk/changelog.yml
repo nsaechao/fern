@@ -1,0 +1,12 @@
+releases:
+  - version: 0.9.0
+    created_at: 2023-10-31
+    changelog_entry:
+      type: feat
+      added:
+        - Support streaming endpoints.
+        - Support non-primitive file upload properties.
+      changed:
+        - Refactor `core.DoRequest` with `core.Caller` abstraction.
+        - Update pinned dependencies in generated `go.mod`.
+
