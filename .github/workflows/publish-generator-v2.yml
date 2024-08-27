@@ -101,6 +101,7 @@ jobs:
 
       - name: Run publish
         env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         # This is wack and redundant, but the path filter Github Action above does not let you easily see
@@ -139,6 +140,7 @@ jobs:
 
       - name: Run publish
         env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         # This is wack and redundant, but the path filter Github Action above does not let you easily see
