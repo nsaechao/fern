@@ -1,1 +1,16 @@
-name: mixed-file-directory
+name: api
+error-discrimination:
+  strategy: status-code
+display-name: Square
+default-environment: Sandbox
+environments:
+  Sandbox: https://connect.squareupsandbox.com
+headers:
+  Square-Version:
+    name: version
+    # env: VERSION
+    type: literal<"2024-06-04">
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+auth: BearerAuthScheme

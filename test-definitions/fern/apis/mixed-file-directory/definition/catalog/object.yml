@@ -1,0 +1,606 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    upsert:
+      path: /v2/catalog/object
+      method: POST
+      auth: true
+      docs: Creates or updates the target [CatalogObject](entity:CatalogObject).
+      display-name: UpsertCatalogObject
+      request:
+        name: UpsertCatalogObjectRequest
+        body:
+          properties:
+            idempotency_key:
+              type: string
+              docs: >-
+                A value you specify that uniquely identifies this
+
+                request among all your requests. A common way to create
+
+                a valid idempotency key is to use a Universally unique
+
+                identifier (UUID).
+
+
+                If you're unsure whether a particular request was successful,
+
+                you can reattempt it with the same idempotency key without
+
+                worrying about creating duplicate objects.
+
+
+                See
+                [Idempotency](https://developer.squareup.com/docs/basics/api101/idempotency)
+                for more information.
+              validation:
+                minLength: 1
+            object:
+              type: root.CatalogObject
+              docs: >-
+                A CatalogObject to be created or updated.
+
+
+                - For updates, the object must be active (the `is_deleted` field
+                is not `true`).
+
+                - For creates, the object ID must start with `#`. The provided
+                ID is replaced with a server-generated ID.
+      response:
+        docs: Success
+        type: root.UpsertCatalogObjectResponse
+      examples:
+        - request:
+            idempotency_key: af3d1afc-7212-4300-b463-0bfc5314a5ae
+            object:
+              type: ITEM
+              id: '#Cocoa'
+              item_data:
+                name: Cocoa
+                abbreviation: Ch
+                description_html: <p><strong>Hot</strong> Chocolate</p>
+          response:
+            body:
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+              catalog_object:
+                type: ITEM
+                id: R2TA2FOBUGCJZNIWJSOSNAI4
+                updated_at: '2021-06-14T15:51:39.021Z'
+                version: 1623685899021
+                is_deleted: false
+                custom_attribute_values:
+                  key: {}
+                catalog_v1_ids:
+                  - {}
+                present_at_all_locations: true
+                present_at_location_ids:
+                  - present_at_location_ids
+                absent_at_location_ids:
+                  - absent_at_location_ids
+                image_id: image_id
+                item_data:
+                  name: Cocoa
+                  description: Hot Chocolate
+                  abbreviation: Ch
+                  label_color: label_color
+                  available_online: true
+                  available_for_pickup: true
+                  available_electronically: true
+                  category_id: category_id
+                  tax_ids:
+                    - tax_ids
+                  modifier_list_info:
+                    - modifier_list_id: modifier_list_id
+                  image_url: image_url
+                  product_type: REGULAR
+                  skip_modifier_screen: true
+                  item_options:
+                    - {}
+                  image_ids:
+                    - image_ids
+                  sort_name: sort_name
+                  description_html: <p><strong>Hot</strong> Chocolate</p>
+                  description_plaintext: Hot Chocolate
+                category_data:
+                  name: name
+                  image_ids:
+                    - image_ids
+                item_variation_data:
+                  item_id: item_id
+                  name: name
+                  sku: sku
+                  upc: upc
+                  ordinal: 1
+                  pricing_type: FIXED_PRICING
+                  location_overrides:
+                    - {}
+                  track_inventory: true
+                  inventory_alert_type: INVENTORY_ALERT_TYPE_DO_NOT_USE
+                  inventory_alert_threshold: 1000000
+                  user_data: user_data
+                  service_duration: 1000000
+                  available_for_booking: true
+                  item_option_values:
+                    - {}
+                  measurement_unit_id: measurement_unit_id
+                  sellable: true
+                  stockable: true
+                  image_ids:
+                    - image_ids
+                  team_member_ids:
+                    - team_member_ids
+                  stockable_conversion:
+                    stockable_item_variation_id: stockable_item_variation_id
+                    stockable_quantity: stockable_quantity
+                    nonstockable_quantity: nonstockable_quantity
+                tax_data:
+                  name: name
+                  calculation_phase: TAX_SUBTOTAL_PHASE
+                  inclusion_type: ADDITIVE
+                  percentage: percentage
+                  applies_to_custom_amounts: true
+                  enabled: true
+                discount_data:
+                  name: name
+                  discount_type: FIXED_PERCENTAGE
+                  percentage: percentage
+                  pin_required: true
+                  label_color: label_color
+                  modify_tax_basis: MODIFY_TAX_BASIS
+                modifier_list_data:
+                  name: name
+                  ordinal: 1
+                  selection_type: SINGLE
+                  image_ids:
+                    - image_ids
+                modifier_data:
+                  name: name
+                  ordinal: 1
+                  modifier_list_id: modifier_list_id
+                  image_ids:
+                    - image_ids
+                time_period_data:
+                  event: event
+                product_set_data:
+                  name: name
+                  product_ids_any:
+                    - product_ids_any
+                  product_ids_all:
+                    - product_ids_all
+                  quantity_exact: 1000000
+                  quantity_min: 1000000
+                  quantity_max: 1000000
+                  all_products: true
+                pricing_rule_data:
+                  name: name
+                  time_period_ids:
+                    - time_period_ids
+                  discount_id: discount_id
+                  match_products_id: match_products_id
+                  apply_products_id: apply_products_id
+                  exclude_products_id: exclude_products_id
+                  valid_from_date: valid_from_date
+                  valid_from_local_time: valid_from_local_time
+                  valid_until_date: valid_until_date
+                  valid_until_local_time: valid_until_local_time
+                  exclude_strategy: EXCLUDE_STRATEGY_DO_NOT_USE
+                  customer_group_ids_any:
+                    - customer_group_ids_any
+                image_data:
+                  name: name
+                  url: url
+                  caption: caption
+                  photo_studio_order_id: photo_studio_order_id
+                measurement_unit_data:
+                  precision: 1
+                subscription_plan_data:
+                  name: name
+                  phases:
+                    - cadence: SUBSCRIPTION_CADENCE_DO_NOT_USE
+                item_option_data:
+                  name: name
+                  display_name: display_name
+                  description: description
+                  show_colors: true
+                item_option_value_data:
+                  item_option_id: item_option_id
+                  name: name
+                  description: description
+                  color: color
+                  ordinal: 1
+                custom_attribute_definition_data:
+                  type: ATTRIBUTE_TYPE_DO_NOT_USE
+                  name: name
+                  description: description
+                  allowed_object_types:
+                    - CATALOG_OBJECT_TYPE_DO_NOT_USE
+                  seller_visibility: SELLER_VISIBILITY_DO_NOT_USE
+                  app_visibility: APP_VISIBILITY_DO_NOT_USE
+                  custom_attribute_usage_count: 1
+                  key: key
+                quick_amounts_settings_data:
+                  option: QUICK_AMOUNTS_SETTINGS_OPTION_DO_NOT_USE
+                  eligible_for_auto_amounts: true
+                  amounts:
+                    - type: QUICK_AMOUNT_TYPE_DO_NOT_USE
+                      amount: {}
+              id_mappings:
+                - client_object_id: '#Cocoa'
+                  object_id: R2TA2FOBUGCJZNIWJSOSNAI4
+                - client_object_id: '#Small'
+                  object_id: QRT53UP4LITLWGOGBZCUWP63
+                - client_object_id: '#Large'
+                  object_id: NS77DKEIQ3AEQTCP727DSA7U
+    get:
+      path: /v2/catalog/object/{object_id}
+      method: GET
+      auth: true
+      docs: >-
+        Returns a single [CatalogItem](entity:CatalogItem) as a
+
+        [CatalogObject](entity:CatalogObject) based on the provided ID. The
+        returned
+
+        object includes all of the relevant [CatalogItem](entity:CatalogItem)
+
+        information including:
+        [CatalogItemVariation](entity:CatalogItemVariation)
+
+        children, references to its
+
+        [CatalogModifierList](entity:CatalogModifierList) objects, and the ids
+        of
+
+        any [CatalogTax](entity:CatalogTax) objects that apply to it.
+      path-parameters:
+        object_id:
+          type: string
+          docs: The object ID of any type of catalog objects to be retrieved.
+      display-name: RetrieveCatalogObject
+      request:
+        name: ObjectGetRequest
+        query-parameters:
+          include_related_objects:
+            type: optional<boolean>
+            docs: >-
+              If `true`, the response will include additional objects that are
+              related to the
+
+              requested objects. Related objects are defined as any objects
+              referenced by ID by the results in the `objects` field
+
+              of the response. These objects are put in the `related_objects`
+              field. Setting this to `true` is
+
+              helpful when the objects are needed for immediate display to a
+              user.
+
+              This process only goes one level deep. Objects referenced by the
+              related objects will not be included. For example,
+
+
+              if the `objects` field of the response contains a CatalogItem, its
+              associated
+
+              CatalogCategory objects, CatalogTax objects, CatalogImage objects
+              and
+
+              CatalogModifierLists will be returned in the `related_objects`
+              field of the
+
+              response. If the `objects` field of the response contains a
+              CatalogItemVariation,
+
+              its parent CatalogItem will be returned in the `related_objects`
+              field of
+
+              the response.
+
+
+              Default value: `false`
+          catalog_version:
+            type: optional<long>
+            docs: >-
+              Requests objects as of a specific version of the catalog. This
+              allows you to retrieve historical
+
+              versions of objects. The value to retrieve a specific version of
+              an object can be found
+
+              in the version field of [CatalogObject](entity:CatalogObject)s. If
+              not included, results will
+
+              be from the current version of the catalog.
+      response:
+        docs: Success
+        type: root.GetCatalogObjectResponse
+      examples:
+        - path-parameters:
+            object_id: object_id
+          response:
+            body:
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+              object:
+                type: ITEM
+                id: W62UWFY35CWMYGVWK6TWJDNI
+                updated_at: '2016-11-16T22:25:24.878Z'
+                version: 1479335124878
+                is_deleted: false
+                custom_attribute_values:
+                  key: {}
+                catalog_v1_ids:
+                  - {}
+                present_at_all_locations: true
+                present_at_location_ids:
+                  - present_at_location_ids
+                absent_at_location_ids:
+                  - absent_at_location_ids
+                image_id: image_id
+                item_data:
+                  name: Tea
+                  description: Hot Leaf Juice
+                  abbreviation: abbreviation
+                  label_color: label_color
+                  available_online: true
+                  available_for_pickup: true
+                  available_electronically: true
+                  category_id: BJNQCF2FJ6S6UIDT65ABHLRX
+                  tax_ids:
+                    - HURXQOOAIC4IZSI2BEXQRYFY
+                  modifier_list_info:
+                    - modifier_list_id: modifier_list_id
+                  image_url: image_url
+                  product_type: REGULAR
+                  skip_modifier_screen: true
+                  item_options:
+                    - {}
+                  image_ids:
+                    - image_ids
+                  sort_name: sort_name
+                  description_html: description_html
+                  description_plaintext: description_plaintext
+                category_data:
+                  name: name
+                  image_ids:
+                    - image_ids
+                item_variation_data:
+                  item_id: item_id
+                  name: name
+                  sku: sku
+                  upc: upc
+                  ordinal: 1
+                  pricing_type: FIXED_PRICING
+                  location_overrides:
+                    - {}
+                  track_inventory: true
+                  inventory_alert_type: INVENTORY_ALERT_TYPE_DO_NOT_USE
+                  inventory_alert_threshold: 1000000
+                  user_data: user_data
+                  service_duration: 1000000
+                  available_for_booking: true
+                  item_option_values:
+                    - {}
+                  measurement_unit_id: measurement_unit_id
+                  sellable: true
+                  stockable: true
+                  image_ids:
+                    - image_ids
+                  team_member_ids:
+                    - team_member_ids
+                  stockable_conversion:
+                    stockable_item_variation_id: stockable_item_variation_id
+                    stockable_quantity: stockable_quantity
+                    nonstockable_quantity: nonstockable_quantity
+                tax_data:
+                  name: name
+                  calculation_phase: TAX_SUBTOTAL_PHASE
+                  inclusion_type: ADDITIVE
+                  percentage: percentage
+                  applies_to_custom_amounts: true
+                  enabled: true
+                discount_data:
+                  name: name
+                  discount_type: FIXED_PERCENTAGE
+                  percentage: percentage
+                  pin_required: true
+                  label_color: label_color
+                  modify_tax_basis: MODIFY_TAX_BASIS
+                modifier_list_data:
+                  name: name
+                  ordinal: 1
+                  selection_type: SINGLE
+                  image_ids:
+                    - image_ids
+                modifier_data:
+                  name: name
+                  ordinal: 1
+                  modifier_list_id: modifier_list_id
+                  image_ids:
+                    - image_ids
+                time_period_data:
+                  event: event
+                product_set_data:
+                  name: name
+                  product_ids_any:
+                    - product_ids_any
+                  product_ids_all:
+                    - product_ids_all
+                  quantity_exact: 1000000
+                  quantity_min: 1000000
+                  quantity_max: 1000000
+                  all_products: true
+                pricing_rule_data:
+                  name: name
+                  time_period_ids:
+                    - time_period_ids
+                  discount_id: discount_id
+                  match_products_id: match_products_id
+                  apply_products_id: apply_products_id
+                  exclude_products_id: exclude_products_id
+                  valid_from_date: valid_from_date
+                  valid_from_local_time: valid_from_local_time
+                  valid_until_date: valid_until_date
+                  valid_until_local_time: valid_until_local_time
+                  exclude_strategy: EXCLUDE_STRATEGY_DO_NOT_USE
+                  customer_group_ids_any:
+                    - customer_group_ids_any
+                image_data:
+                  name: name
+                  url: url
+                  caption: caption
+                  photo_studio_order_id: photo_studio_order_id
+                measurement_unit_data:
+                  precision: 1
+                subscription_plan_data:
+                  name: name
+                  phases:
+                    - cadence: SUBSCRIPTION_CADENCE_DO_NOT_USE
+                item_option_data:
+                  name: name
+                  display_name: display_name
+                  description: description
+                  show_colors: true
+                item_option_value_data:
+                  item_option_id: item_option_id
+                  name: name
+                  description: description
+                  color: color
+                  ordinal: 1
+                custom_attribute_definition_data:
+                  type: ATTRIBUTE_TYPE_DO_NOT_USE
+                  name: name
+                  description: description
+                  allowed_object_types:
+                    - CATALOG_OBJECT_TYPE_DO_NOT_USE
+                  seller_visibility: SELLER_VISIBILITY_DO_NOT_USE
+                  app_visibility: APP_VISIBILITY_DO_NOT_USE
+                  custom_attribute_usage_count: 1
+                  key: key
+                quick_amounts_settings_data:
+                  option: QUICK_AMOUNTS_SETTINGS_OPTION_DO_NOT_USE
+                  eligible_for_auto_amounts: true
+                  amounts:
+                    - type: QUICK_AMOUNT_TYPE_DO_NOT_USE
+                      amount: {}
+              related_objects:
+                - type: CATEGORY
+                  id: BJNQCF2FJ6S6UIDT65ABHLRX
+                  updated_at: '2016-11-16T22:25:24.878Z'
+                  version: 1479335124878
+                  is_deleted: false
+                  custom_attribute_values:
+                    key: {}
+                  catalog_v1_ids:
+                    - {}
+                  present_at_all_locations: true
+                  present_at_location_ids:
+                    - present_at_location_ids
+                  absent_at_location_ids:
+                    - absent_at_location_ids
+                  image_id: image_id
+                  category_data:
+                    name: Beverages
+                  subscription_plan_data:
+                    name: name
+                    phases:
+                      - cadence: SUBSCRIPTION_CADENCE_DO_NOT_USE
+                  custom_attribute_definition_data:
+                    type: ATTRIBUTE_TYPE_DO_NOT_USE
+                    name: name
+                    allowed_object_types:
+                      - CATALOG_OBJECT_TYPE_DO_NOT_USE
+                  quick_amounts_settings_data:
+                    option: QUICK_AMOUNTS_SETTINGS_OPTION_DO_NOT_USE
+                - type: TAX
+                  id: HURXQOOAIC4IZSI2BEXQRYFY
+                  updated_at: '2016-11-16T22:25:24.878Z'
+                  version: 1479335124878
+                  is_deleted: false
+                  custom_attribute_values:
+                    key: {}
+                  catalog_v1_ids:
+                    - {}
+                  present_at_all_locations: true
+                  present_at_location_ids:
+                    - present_at_location_ids
+                  absent_at_location_ids:
+                    - absent_at_location_ids
+                  image_id: image_id
+                  tax_data:
+                    name: Sales Tax
+                    calculation_phase: TAX_SUBTOTAL_PHASE
+                    inclusion_type: ADDITIVE
+                    percentage: '5.0'
+                    enabled: true
+                  subscription_plan_data:
+                    name: name
+                    phases:
+                      - cadence: SUBSCRIPTION_CADENCE_DO_NOT_USE
+                  custom_attribute_definition_data:
+                    type: ATTRIBUTE_TYPE_DO_NOT_USE
+                    name: name
+                    allowed_object_types:
+                      - CATALOG_OBJECT_TYPE_DO_NOT_USE
+                  quick_amounts_settings_data:
+                    option: QUICK_AMOUNTS_SETTINGS_OPTION_DO_NOT_USE
+    delete:
+      path: /v2/catalog/object/{object_id}
+      method: DELETE
+      auth: true
+      docs: >-
+        Deletes a single [CatalogObject](entity:CatalogObject) based on the
+
+        provided ID and returns the set of successfully deleted IDs in the
+        response.
+
+        Deletion is a cascading event such that all children of the targeted
+        object
+
+        are also deleted. For example, deleting a
+        [CatalogItem](entity:CatalogItem)
+
+        will also delete all of its
+
+        [CatalogItemVariation](entity:CatalogItemVariation) children.
+      path-parameters:
+        object_id:
+          type: string
+          docs: >-
+            The ID of the catalog object to be deleted. When an object is
+            deleted, other
+
+            objects in the graph that depend on that object will be deleted as
+            well (for example, deleting a
+
+            catalog item will delete its catalog item variations).
+      display-name: DeleteCatalogObject
+      response:
+        docs: Success
+        type: root.DeleteCatalogObjectResponse
+      examples:
+        - path-parameters:
+            object_id: object_id
+          response:
+            body:
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+              deleted_object_ids:
+                - 7SB3ZQYJ5GDMVFL7JK46JCHT
+                - KQLFFHA6K6J3YQAQAWDQAL57
+              deleted_at: '2016-11-16T22:25:24.878Z'
+  source:
+    openapi: openapi/openapi.yaml

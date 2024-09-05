@@ -1,0 +1,65 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    submit:
+      path: /v1/batch
+      method: POST
+      auth: false
+      docs: >-
+        Bundle multiple requests to Connect V1 API endpoints as a single
+
+        request.
+
+
+
+        The __V1SubmitBatch__ endpoint does not require an access token
+
+        in the request header. Instead, provide an `access_token` parameter for
+
+        each request included in the batch.
+
+
+        __V1SubmitBatch__ responds with an array that contains response objects
+        for
+
+        each of the batched requests. There is no guarantee of the order in
+
+        which batched requests are performed.
+
+
+
+        __IMPORTANT__
+
+
+        You cannot include more than 30 requests in a single batch and
+
+        recursive requests to __V1SubmitBatch__ are not allowed. In
+
+        other words, none of the requests included in a batch can itself be a
+
+        request to the __V1SubmitBatch__ endpoint.
+      display-name: V1SubmitBatch
+      request:
+        body: root.BatchRequest
+      response:
+        docs: Success
+        type: list<root.BatchResponse>
+      availability: deprecated
+      examples:
+        - request:
+            method: GET
+            relative_path: relative_path
+            access_token: access_token
+          response:
+            body:
+              - status_code: 1
+                body:
+                  key: value
+                headers:
+                  key: value
+                request_id: request_id
+  source:
+    openapi: openapi/openapi.yaml

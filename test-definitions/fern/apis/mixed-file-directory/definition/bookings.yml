@@ -1,0 +1,587 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /v2/bookings
+      method: GET
+      auth: true
+      docs: >-
+        Retrieve a collection of bookings.
+
+
+        To call this endpoint with buyer-level permissions, set
+        `APPOINTMENTS_READ` for the OAuth scope.
+
+        To call this endpoint with seller-level permissions, set
+        `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
+      pagination:
+        cursor: $request.cursor
+        next_cursor: $response.cursor
+        results: $response.bookings
+      display-name: ListBookings
+      request:
+        name: BookingsListRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: >-
+              The maximum number of results per page to return in a paged
+              response.
+          cursor:
+            type: optional<string>
+            docs: >-
+              The pagination cursor from the preceding response to return the
+              next page of the results. Do not set this when retrieving the
+              first page of the results.
+          team_member_id:
+            type: optional<string>
+            docs: >-
+              The team member for whom to retrieve bookings. If this is not set,
+              bookings of all members are retrieved.
+          location_id:
+            type: optional<string>
+            docs: >-
+              The location for which to retrieve bookings. If this is not set,
+              all locations' bookings are retrieved.
+          start_at_min:
+            type: optional<string>
+            docs: >-
+              The RFC 3339 timestamp specifying the earliest of the start time.
+              If this is not set, the current time is used.
+          start_at_max:
+            type: optional<string>
+            docs: >-
+              The RFC 3339 timestamp specifying the latest of the start time. If
+              this is not set, the time of 31 days after `start_at_min` is used.
+      response:
+        docs: Success
+        type: root.ListBookingsResponse
+      examples:
+        - response:
+            body:
+              bookings:
+                - id: zkras0xv0xwswx
+                  version: 1
+                  status: ACCEPTED
+                  created_at: '2020-10-28T15:47:41Z'
+                  updated_at: '2020-10-28T15:49:25Z'
+                  start_at: '2020-11-26T13:00:00Z'
+                  location_id: LEQHH0YY8B42M
+                  customer_id: EX2QSVGTZN4K1E5QE1CBFNVQ8M
+                  customer_note: ''
+                  seller_note: ''
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMXUrsBWWcHTt79t
+                      service_variation_version: 1599775456731
+                  transition_time_minutes: 1
+                  all_day: true
+                  location_type: BUSINESS_LOCATION
+                  source: FIRST_PARTY_MERCHANT
+              cursor: cursor
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+    create:
+      path: /v2/bookings
+      method: POST
+      auth: true
+      docs: >-
+        Creates a booking.
+
+
+        To call this endpoint with buyer-level permissions, set
+        `APPOINTMENTS_WRITE` for the OAuth scope.
+
+        To call this endpoint with seller-level permissions, set
+        `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.
+
+
+        For calls to this endpoint with seller-level permissions to succeed, the
+        seller must have subscribed to *Appointments Plus*
+
+        or *Appointments Premium*.
+      display-name: CreateBooking
+      request:
+        name: CreateBookingRequest
+        body:
+          properties:
+            idempotency_key:
+              type: optional<string>
+              docs: A unique key to make this request an idempotent operation.
+              validation:
+                minLength: 0
+                maxLength: 255
+            booking:
+              type: root.Booking
+              docs: The details of the booking to be created.
+      response:
+        docs: Success
+        type: root.CreateBookingResponse
+      examples:
+        - request:
+            booking: {}
+          response:
+            body:
+              booking:
+                id: zkras0xv0xwswx
+                version: 0
+                status: ACCEPTED
+                created_at: '2020-10-28T15:47:41Z'
+                updated_at: '2020-10-28T15:47:41Z'
+                start_at: '2020-11-26T13:00:00Z'
+                location_id: LEQHH0YY8B42M
+                customer_id: EX2QSVGTZN4K1E5QE1CBFNVQ8M
+                customer_note: ''
+                seller_note: ''
+                appointment_segments:
+                  - duration_minutes: 60
+                    service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                    team_member_id: TMXUrsBWWcHTt79t
+                    service_variation_version: 1599775456731
+                transition_time_minutes: 1
+                all_day: true
+                location_type: BUSINESS_LOCATION
+                creator_details:
+                  creator_type: TEAM_MEMBER
+                  team_member_id: team_member_id
+                  customer_id: customer_id
+                source: FIRST_PARTY_MERCHANT
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+    SearchAvailability:
+      path: /v2/bookings/availability/search
+      method: POST
+      auth: true
+      docs: >-
+        Searches for availabilities for booking.
+
+
+        To call this endpoint with buyer-level permissions, set
+        `APPOINTMENTS_READ` for the OAuth scope.
+
+        To call this endpoint with seller-level permissions, set
+        `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
+      display-name: SearchAvailability
+      request:
+        name: SearchAvailabilityRequest
+        body:
+          properties:
+            query:
+              type: root.SearchAvailabilityQuery
+              docs: >-
+                Query conditions used to filter buyer-accessible booking
+                availabilities.
+      response:
+        docs: Success
+        type: root.SearchAvailabilityResponse
+      examples:
+        - request:
+            query:
+              filter:
+                start_at_range: {}
+          response:
+            body:
+              availabilities:
+                - start_at: '2020-11-26T13:00:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMXUrsBWWcHTt79t
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-26T13:30:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMXUrsBWWcHTt79t
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-26T14:00:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMaJcbiRqPIGZuS9
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-26T14:30:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMaJcbiRqPIGZuS9
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-26T15:00:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMaJcbiRqPIGZuS9
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-26T15:30:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMaJcbiRqPIGZuS9
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-26T16:00:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMaJcbiRqPIGZuS9
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-27T09:00:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMXUrsBWWcHTt79t
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-27T09:30:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMaJcbiRqPIGZuS9
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-27T10:00:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMXUrsBWWcHTt79t
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-27T10:30:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMXUrsBWWcHTt79t
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-27T11:00:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMXUrsBWWcHTt79t
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-27T11:30:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMaJcbiRqPIGZuS9
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-27T12:00:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMaJcbiRqPIGZuS9
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-27T12:30:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMaJcbiRqPIGZuS9
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-27T13:00:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMXUrsBWWcHTt79t
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-27T13:30:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMXUrsBWWcHTt79t
+                      service_variation_version: 1599775456731
+                - start_at: '2020-11-27T14:00:00Z'
+                  location_id: LEQHH0YY8B42M
+                  appointment_segments:
+                    - duration_minutes: 60
+                      service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                      team_member_id: TMaJcbiRqPIGZuS9
+                      service_variation_version: 1599775456731
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+    getBusinessProfile:
+      path: /v2/bookings/business-booking-profile
+      method: GET
+      auth: true
+      docs: Retrieves a seller's booking profile.
+      display-name: RetrieveBusinessBookingProfile
+      response:
+        docs: Success
+        type: root.GetBusinessBookingProfileResponse
+      examples:
+        - response:
+            body:
+              business_booking_profile:
+                seller_id: MLJQYZZRM0D3Y
+                created_at: '2020-09-10T21:40:38Z'
+                booking_enabled: true
+                customer_timezone_choice: CUSTOMER_CHOICE
+                booking_policy: ACCEPT_ALL
+                allow_user_cancel: true
+                business_appointment_settings:
+                  location_types:
+                    - BUSINESS_LOCATION
+                  alignment_time: HALF_HOURLY
+                  min_booking_lead_time_seconds: 0
+                  max_booking_lead_time_seconds: 31536000
+                  any_team_member_booking_enabled: true
+                  multiple_service_booking_enabled: true
+                  max_appointments_per_day_limit_type: PER_TEAM_MEMBER
+                  max_appointments_per_day_limit: 1
+                  cancellation_window_seconds: 1
+                  cancellation_fee_money:
+                    currency: USD
+                  cancellation_policy: CUSTOM_POLICY
+                  cancellation_policy_text: cancellation_policy_text
+                  skip_booking_flow_staff_selection: false
+                support_seller_level_writes: true
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+    get:
+      path: /v2/bookings/{booking_id}
+      method: GET
+      auth: true
+      docs: >-
+        Retrieves a booking.
+
+
+        To call this endpoint with buyer-level permissions, set
+        `APPOINTMENTS_READ` for the OAuth scope.
+
+        To call this endpoint with seller-level permissions, set
+        `APPOINTMENTS_ALL_READ` and `APPOINTMENTS_READ` for the OAuth scope.
+      path-parameters:
+        booking_id:
+          type: string
+          docs: >-
+            The ID of the [Booking](entity:Booking) object representing the
+            to-be-retrieved booking.
+      display-name: RetrieveBooking
+      response:
+        docs: Success
+        type: root.GetBookingResponse
+      examples:
+        - path-parameters:
+            booking_id: booking_id
+          response:
+            body:
+              booking:
+                id: zkras0xv0xwswx
+                version: 1
+                status: ACCEPTED
+                created_at: '2020-10-28T15:47:41Z'
+                updated_at: '2020-10-28T15:49:25Z'
+                start_at: '2020-11-26T13:00:00Z'
+                location_id: LEQHH0YY8B42M
+                customer_id: EX2QSVGTZN4K1E5QE1CBFNVQ8M
+                customer_note: ''
+                seller_note: ''
+                appointment_segments:
+                  - duration_minutes: 60
+                    service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                    team_member_id: TMXUrsBWWcHTt79t
+                    service_variation_version: 1599775456731
+                transition_time_minutes: 1
+                all_day: true
+                location_type: BUSINESS_LOCATION
+                creator_details:
+                  creator_type: TEAM_MEMBER
+                  team_member_id: team_member_id
+                  customer_id: customer_id
+                source: FIRST_PARTY_MERCHANT
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+    update:
+      path: /v2/bookings/{booking_id}
+      method: PUT
+      auth: true
+      docs: >-
+        Updates a booking.
+
+
+        To call this endpoint with buyer-level permissions, set
+        `APPOINTMENTS_WRITE` for the OAuth scope.
+
+        To call this endpoint with seller-level permissions, set
+        `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.
+
+
+        For calls to this endpoint with seller-level permissions to succeed, the
+        seller must have subscribed to *Appointments Plus*
+
+        or *Appointments Premium*.
+      path-parameters:
+        booking_id:
+          type: string
+          docs: >-
+            The ID of the [Booking](entity:Booking) object representing the
+            to-be-updated booking.
+      display-name: UpdateBooking
+      request:
+        name: UpdateBookingRequest
+        body:
+          properties:
+            idempotency_key:
+              type: optional<string>
+              docs: A unique key to make this request an idempotent operation.
+              validation:
+                minLength: 0
+                maxLength: 255
+            booking:
+              type: root.Booking
+              docs: >-
+                The booking to be updated. Individual attributes explicitly
+                specified here override the corresponding values of the existing
+                booking.
+      response:
+        docs: Success
+        type: root.UpdateBookingResponse
+      examples:
+        - path-parameters:
+            booking_id: booking_id
+          request:
+            booking: {}
+          response:
+            body:
+              booking:
+                id: zkras0xv0xwswx
+                version: 2
+                status: ACCEPTED
+                created_at: '2020-10-28T15:47:41Z'
+                updated_at: '2020-10-28T15:49:25Z'
+                start_at: '2020-11-26T13:00:00Z'
+                location_id: LEQHH0YY8B42M
+                customer_id: EX2QSVGTZN4K1E5QE1CBFNVQ8M
+                customer_note: I would like to sit near the window please
+                seller_note: ''
+                appointment_segments:
+                  - duration_minutes: 60
+                    service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                    team_member_id: TMXUrsBWWcHTt79t
+                    service_variation_version: 1599775456731
+                transition_time_minutes: 1
+                all_day: true
+                location_type: BUSINESS_LOCATION
+                creator_details:
+                  creator_type: TEAM_MEMBER
+                  team_member_id: team_member_id
+                  customer_id: customer_id
+                source: FIRST_PARTY_MERCHANT
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+    cancel:
+      path: /v2/bookings/{booking_id}/cancel
+      method: POST
+      auth: true
+      docs: >-
+        Cancels an existing booking.
+
+
+        To call this endpoint with buyer-level permissions, set
+        `APPOINTMENTS_WRITE` for the OAuth scope.
+
+        To call this endpoint with seller-level permissions, set
+        `APPOINTMENTS_ALL_WRITE` and `APPOINTMENTS_WRITE` for the OAuth scope.
+
+
+        For calls to this endpoint with seller-level permissions to succeed, the
+        seller must have subscribed to *Appointments Plus*
+
+        or *Appointments Premium*.
+      path-parameters:
+        booking_id:
+          type: string
+          docs: >-
+            The ID of the [Booking](entity:Booking) object representing the
+            to-be-cancelled booking.
+      display-name: CancelBooking
+      request:
+        name: CancelBookingRequest
+        body:
+          properties:
+            idempotency_key:
+              type: optional<string>
+              docs: A unique key to make this request an idempotent operation.
+              validation:
+                minLength: 0
+                maxLength: 255
+            booking_version:
+              type: optional<integer>
+              docs: >-
+                The revision number for the booking used for optimistic
+                concurrency.
+              validation:
+                min: 0
+      response:
+        docs: Success
+        type: root.CancelBookingResponse
+      examples:
+        - path-parameters:
+            booking_id: booking_id
+          request: {}
+          response:
+            body:
+              booking:
+                id: zkras0xv0xwswx
+                version: 1
+                status: CANCELLED_BY_CUSTOMER
+                created_at: '2020-10-28T15:47:41Z'
+                updated_at: '2020-10-28T15:49:25Z'
+                start_at: '2020-11-26T13:00:00Z'
+                location_id: LEQHH0YY8B42M
+                customer_id: EX2QSVGTZN4K1E5QE1CBFNVQ8M
+                customer_note: ''
+                seller_note: ''
+                appointment_segments:
+                  - duration_minutes: 60
+                    service_variation_id: RU3PBTZTK7DXZDQFCJHOK2MC
+                    team_member_id: TMXUrsBWWcHTt79t
+                    service_variation_version: 1599775456731
+                transition_time_minutes: 1
+                all_day: true
+                location_type: BUSINESS_LOCATION
+                creator_details:
+                  creator_type: TEAM_MEMBER
+                  team_member_id: team_member_id
+                  customer_id: customer_id
+                source: FIRST_PARTY_MERCHANT
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+  source:
+    openapi: openapi/openapi.yaml

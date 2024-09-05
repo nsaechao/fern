@@ -1,0 +1,112 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get:
+      path: /v2/labor/break-types/{id}
+      method: GET
+      auth: true
+      docs: Returns a single `BreakType` specified by `id`.
+      path-parameters:
+        id:
+          type: string
+          docs: The UUID for the `BreakType` being retrieved.
+      display-name: GetBreakType
+      response:
+        docs: Success
+        type: root.GetBreakTypeResponse
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              break_type:
+                id: lA0mj_RSOprNPwMUXdYp
+                location_id: 059SB0E0WCNWS
+                break_name: Lunch Break
+                expected_duration: PT30M
+                is_paid: true
+                version: 1
+                created_at: '2019-02-21T17:50:00Z'
+                updated_at: '2019-02-21T17:50:00Z'
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+    update:
+      path: /v2/labor/break-types/{id}
+      method: PUT
+      auth: true
+      docs: Updates an existing `BreakType`.
+      path-parameters:
+        id:
+          type: string
+          docs: ' The UUID for the `BreakType` being updated.'
+      display-name: UpdateBreakType
+      request:
+        name: UpdateBreakTypeRequest
+        body:
+          properties:
+            break_type:
+              type: root.BreakType
+              docs: The updated `BreakType`.
+      response:
+        docs: Success
+        type: root.UpdateBreakTypeResponse
+      examples:
+        - path-parameters:
+            id: id
+          request:
+            break_type:
+              location_id: 26M7H24AZ9N6R
+              break_name: Lunch
+              expected_duration: PT50M
+              is_paid: true
+              version: 1
+          response:
+            body:
+              break_type:
+                id: Q6JSJS6D4DBCH
+                location_id: 26M7H24AZ9N6R
+                break_name: Lunch
+                expected_duration: PT50M
+                is_paid: true
+                version: 2
+                created_at: '2018-06-12T20:19:12Z'
+                updated_at: '2019-02-26T23:12:59Z'
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+    delete:
+      path: /v2/labor/break-types/{id}
+      method: DELETE
+      auth: true
+      docs: |-
+        Deletes an existing `BreakType`.
+
+        A `BreakType` can be deleted even if it is referenced from a `Shift`.
+      path-parameters:
+        id:
+          type: string
+          docs: The UUID for the `BreakType` being deleted.
+      display-name: DeleteBreakType
+      response:
+        docs: Success
+        type: root.DeleteBreakTypeResponse
+      examples:
+        - path-parameters:
+            id: id
+          response:
+            body:
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+  source:
+    openapi: openapi/openapi.yaml

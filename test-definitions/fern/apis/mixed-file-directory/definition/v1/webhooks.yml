@@ -1,0 +1,57 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /v1/{location_id}/webhooks
+      method: GET
+      auth: true
+      docs: >-
+        Lists which types of events trigger webhook notifications for a
+        particular location.
+
+        See the [V1 Webhooks API
+        guide](https://developer.squareup.com/docs/webhooks-api/what-it-does-v1)
+        for more information.
+      path-parameters:
+        location_id:
+          type: string
+          docs: The ID of the location to list webhook notification types for.
+      display-name: ListWebhooks
+      response:
+        docs: Success
+        type: list<root.V1WebhooksEvents>
+      examples:
+        - path-parameters:
+            location_id: location_id
+          response:
+            body:
+              - PAYMENT_UPDATED
+    update:
+      path: /v1/{location_id}/webhooks
+      method: PUT
+      auth: true
+      docs: >-
+        Changes the webhook event subscriptions for a location.
+
+        See the [V1 Webhooks API
+        guide](https://developer.squareup.com/docs/webhooks-api/what-it-does-v1)
+        for more information.
+      path-parameters:
+        location_id:
+          type: string
+          docs: The ID of the location to list webhook notification types for.
+      display-name: UpdateWebhooks
+      response:
+        docs: Success
+        type: list<root.V1WebhooksEvents>
+      examples:
+        - path-parameters:
+            location_id: location_id
+          response:
+            body:
+              - PAYMENT_UPDATED
+  source:
+    openapi: openapi/openapi.yaml
