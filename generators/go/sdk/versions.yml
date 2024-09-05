@@ -1,3 +1,11 @@
+- version: 0.23.7
+  created_at: '2024-09-05'
+  changelog_entry:
+    - type: fix
+      summary: >-
+        Adds better support for nested root clients, which were sometimes generated with
+        import cycles.
+  ir_version: 40
 - version: 0.23.6
   created_at: '2024-09-05'
   changelog_entry:
