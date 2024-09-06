@@ -1,0 +1,285 @@
+imports:
+  root: ../../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /v1/{location_id}/payments
+      method: GET
+      auth: true
+      docs: |-
+        Provides summary information for all payments taken for a given
+        Square account during a date range. Date ranges cannot exceed 1 year in
+        length. See Date ranges for details of inclusive and exclusive dates.
+
+        *Note**: Details for payments processed with Square Point of Sale while
+        in offline mode may not be transmitted to Square for up to 72 hours.
+        Offline payments have a `created_at` value that reflects the time the
+        payment was originally processed, not the time it was subsequently
+        transmitted to Square. Consequently, the ListPayments endpoint might
+        list an offline payment chronologically between online payments that
+        were seen in a previous request.
+      path-parameters:
+        location_id:
+          type: string
+          docs: >-
+            The ID of the location to list payments for. If you specify me, this
+            endpoint returns payments aggregated from all of the business's
+            locations.
+          availability: deprecated
+      display-name: V1ListPayments
+      request:
+        name: PaymentsListRequest
+        query-parameters:
+          order:
+            type: optional<root.SortOrder>
+            docs: The order in which payments are listed in the response.
+            availability: deprecated
+          begin_time:
+            type: optional<string>
+            docs: >-
+              The beginning of the requested reporting period, in ISO 8601
+              format. If this value is before January 1, 2013
+              (2013-01-01T00:00:00Z), this endpoint returns an error. Default
+              value: The current time minus one year.
+            availability: deprecated
+          end_time:
+            type: optional<string>
+            docs: >-
+              The end of the requested reporting period, in ISO 8601 format. If
+              this value is more than one year greater than begin_time, this
+              endpoint returns an error. Default value: The current time.
+            availability: deprecated
+          limit:
+            type: optional<integer>
+            docs: >-
+              The maximum number of payments to return in a single response.
+              This value cannot exceed 200.
+            availability: deprecated
+          batch_token:
+            type: optional<string>
+            docs: |-
+              A pagination cursor to retrieve the next set of results for your
+              original query to the endpoint.
+            availability: deprecated
+          include_partial:
+            type: optional<boolean>
+            docs: >-
+              Indicates whether or not to include partial payments in the
+              response. Partial payments will have the tenders collected so far,
+              but the itemizations will be empty until the payment is completed.
+            availability: deprecated
+      response:
+        docs: Success
+        type: list<root.V1Payment>
+      availability: deprecated
+      examples:
+        - path-parameters:
+            location_id: location_id
+          response:
+            body:
+              - id: id
+                merchant_id: merchant_id
+                created_at: created_at
+                creator_id: creator_id
+                device:
+                  id: id
+                  name: name
+                payment_url: payment_url
+                receipt_url: receipt_url
+                inclusive_tax_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                additive_tax_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                tax_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                tip_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                discount_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                total_collected_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                processing_fee_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                net_total_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                refunded_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                swedish_rounding_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                gross_sales_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                net_sales_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                inclusive_tax:
+                  - {}
+                additive_tax:
+                  - {}
+                tender:
+                  - {}
+                refunds:
+                  - {}
+                itemizations:
+                  - {}
+                surcharge_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                surcharges:
+                  - {}
+                is_partial: true
+    get:
+      path: /v1/{location_id}/payments/{payment_id}
+      method: GET
+      auth: true
+      docs: Provides comprehensive information for a single payment.
+      path-parameters:
+        location_id:
+          type: string
+          docs: The ID of the payment's associated location.
+          availability: deprecated
+        payment_id:
+          type: string
+          docs: >-
+            The Square-issued payment ID. payment_id comes from Payment objects
+            returned by the List Payments endpoint, Settlement objects returned
+            by the List Settlements endpoint, or Refund objects returned by the
+            List Refunds endpoint.
+          availability: deprecated
+      display-name: RetrievePayment
+      response:
+        docs: Success
+        type: root.V1Payment
+      availability: deprecated
+      examples:
+        - path-parameters:
+            location_id: location_id
+            payment_id: payment_id
+          response:
+            body:
+              id: id
+              merchant_id: merchant_id
+              created_at: created_at
+              creator_id: creator_id
+              device:
+                id: id
+                name: name
+              payment_url: payment_url
+              receipt_url: receipt_url
+              inclusive_tax_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              additive_tax_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              tax_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              tip_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              discount_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              total_collected_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              processing_fee_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              net_total_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              refunded_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              swedish_rounding_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              gross_sales_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              net_sales_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              inclusive_tax:
+                - errors:
+                    - category: API_ERROR
+                      code: INTERNAL_SERVER_ERROR
+                  name: name
+                  rate: rate
+                  inclusion_type: ADDITIVE
+                  fee_id: fee_id
+              additive_tax:
+                - errors:
+                    - category: API_ERROR
+                      code: INTERNAL_SERVER_ERROR
+                  name: name
+                  rate: rate
+                  inclusion_type: ADDITIVE
+                  fee_id: fee_id
+              tender:
+                - id: id
+                  type: CREDIT_CARD
+                  name: name
+                  employee_id: employee_id
+                  receipt_url: receipt_url
+                  card_brand: OTHER_BRAND
+                  pan_suffix: pan_suffix
+                  entry_method: MANUAL
+                  payment_note: payment_note
+                  tendered_at: tendered_at
+                  settled_at: settled_at
+                  is_exchange: true
+              refunds:
+                - type: FULL
+                  reason: reason
+                  refunded_additive_tax:
+                    - {}
+                  refunded_inclusive_tax:
+                    - {}
+                  refunded_surcharges:
+                    - {}
+                  created_at: created_at
+                  processed_at: processed_at
+                  payment_id: payment_id
+                  merchant_id: merchant_id
+                  is_exchange: true
+              itemizations:
+                - name: name
+                  quantity: 1.1
+                  itemization_type: ITEM
+                  notes: notes
+                  item_variation_name: item_variation_name
+                  taxes:
+                    - {}
+                  discounts:
+                    - {}
+                  modifiers:
+                    - {}
+              surcharge_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              surcharges:
+                - name: name
+                  rate: rate
+                  type: UNKNOWN
+                  taxable: true
+                  taxes:
+                    - {}
+                  surcharge_id: surcharge_id
+              is_partial: true
+  source:
+    openapi: openapi/openapi.yaml

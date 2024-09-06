@@ -1,0 +1,154 @@
+imports:
+  root: ../../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /v1/{location_id}/settlements
+      method: GET
+      auth: true
+      docs: |-
+        Provides summary information for all deposits and withdrawals
+        initiated by Square to a linked bank account during a date range. Date
+        ranges cannot exceed one year in length.
+
+        *Note**: the ListSettlements endpoint does not provide entry
+        information.
+      path-parameters:
+        location_id:
+          type: string
+          docs: >-
+            The ID of the location to list settlements for. If you specify me,
+            this endpoint returns settlements aggregated from all of the
+            business's locations.
+          availability: deprecated
+      display-name: ListSettlements
+      request:
+        name: SettlementsListRequest
+        query-parameters:
+          order:
+            type: optional<root.SortOrder>
+            docs: The order in which settlements are listed in the response.
+            availability: deprecated
+          begin_time:
+            type: optional<string>
+            docs: >-
+              The beginning of the requested reporting period, in ISO 8601
+              format. If this value is before January 1, 2013
+              (2013-01-01T00:00:00Z), this endpoint returns an error. Default
+              value: The current time minus one year.
+            availability: deprecated
+          end_time:
+            type: optional<string>
+            docs: >-
+              The end of the requested reporting period, in ISO 8601 format. If
+              this value is more than one year greater than begin_time, this
+              endpoint returns an error. Default value: The current time.
+            availability: deprecated
+          limit:
+            type: optional<integer>
+            docs: >-
+              The maximum number of settlements to return in a single response.
+              This value cannot exceed 200.
+            availability: deprecated
+          status:
+            type: optional<root.V1ListSettlementsRequestStatus>
+            docs: >-
+              Provide this parameter to retrieve only settlements with a
+              particular status (SENT or FAILED).
+            availability: deprecated
+          batch_token:
+            type: optional<string>
+            docs: |-
+              A pagination cursor to retrieve the next set of results for your
+              original query to the endpoint.
+            availability: deprecated
+      response:
+        docs: Success
+        type: list<root.V1Settlement>
+      availability: deprecated
+      examples:
+        - path-parameters:
+            location_id: location_id
+          response:
+            body:
+              - id: id
+                status: FAILED
+                total_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                initiated_at: initiated_at
+                bank_account_id: bank_account_id
+                entries:
+                  - {}
+    get:
+      path: /v1/{location_id}/settlements/{settlement_id}
+      method: GET
+      auth: true
+      docs: >-
+        Provides comprehensive information for a single settlement.
+
+
+        The returned `Settlement` objects include an `entries` field that lists
+
+        the transactions that contribute to the settlement total. Most
+
+        settlement entries correspond to a payment payout, but settlement
+
+        entries are also generated for less common events, like refunds, manual
+
+        adjustments, or chargeback holds.
+
+
+        Square initiates its regular deposits as indicated in the
+
+        [Deposit Options with
+        Square](https://squareup.com/help/us/en/article/3807)
+
+        help article. Details for a regular deposit are usually not available
+
+        from Connect API endpoints before 10 p.m. PST the same day.
+
+
+        Square does not know when an initiated settlement **completes**, only
+
+        whether it has failed. A completed settlement is typically reflected in
+
+        a bank account within 3 business days, but in exceptional cases it may
+
+        take longer.
+      path-parameters:
+        location_id:
+          type: string
+          docs: The ID of the settlements's associated location.
+          availability: deprecated
+        settlement_id:
+          type: string
+          docs: >-
+            The settlement's Square-issued ID. You obtain this value from
+            Settlement objects returned by the List Settlements endpoint.
+          availability: deprecated
+      display-name: RetrieveSettlement
+      response:
+        docs: Success
+        type: root.V1Settlement
+      availability: deprecated
+      examples:
+        - path-parameters:
+            location_id: location_id
+            settlement_id: settlement_id
+          response:
+            body:
+              id: id
+              status: FAILED
+              total_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              initiated_at: initiated_at
+              bank_account_id: bank_account_id
+              entries:
+                - payment_id: payment_id
+                  type: ADJUSTMENT
+  source:
+    openapi: openapi/openapi.yaml

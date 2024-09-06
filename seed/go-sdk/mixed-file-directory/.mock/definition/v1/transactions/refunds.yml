@@ -1,0 +1,226 @@
+imports:
+  root: ../../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    list:
+      path: /v1/{location_id}/refunds
+      method: GET
+      auth: true
+      docs: >-
+        Provides the details for all refunds initiated by a merchant or any of
+        the merchant's mobile staff during a date range. Date ranges cannot
+        exceed one year in length.
+      path-parameters:
+        location_id:
+          type: string
+          docs: The ID of the location to list refunds for.
+          availability: deprecated
+      display-name: ListRefunds
+      request:
+        name: RefundsListRequest
+        query-parameters:
+          order:
+            type: optional<root.SortOrder>
+            docs: The order in which payments are listed in the response.
+            availability: deprecated
+          begin_time:
+            type: optional<string>
+            docs: >-
+              The beginning of the requested reporting period, in ISO 8601
+              format. If this value is before January 1, 2013
+              (2013-01-01T00:00:00Z), this endpoint returns an error. Default
+              value: The current time minus one year.
+            availability: deprecated
+          end_time:
+            type: optional<string>
+            docs: >-
+              The end of the requested reporting period, in ISO 8601 format. If
+              this value is more than one year greater than begin_time, this
+              endpoint returns an error. Default value: The current time.
+            availability: deprecated
+          limit:
+            type: optional<integer>
+            docs: >-
+              The approximate number of refunds to return in a single response.
+              Default: 100. Max: 200. Response may contain more results than the
+              prescribed limit when refunds are made simultaneously to multiple
+              tenders in a payment or when refunds are generated in an exchange
+              to account for the value of returned goods.
+            availability: deprecated
+          batch_token:
+            type: optional<string>
+            docs: |-
+              A pagination cursor to retrieve the next set of results for your
+              original query to the endpoint.
+            availability: deprecated
+      response:
+        docs: Success
+        type: list<root.V1Refund>
+      availability: deprecated
+      examples:
+        - path-parameters:
+            location_id: location_id
+          response:
+            body:
+              - type: FULL
+                reason: reason
+                refunded_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                refunded_processing_fee_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                refunded_tax_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                refunded_additive_tax_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                refunded_additive_tax:
+                  - {}
+                refunded_inclusive_tax_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                refunded_inclusive_tax:
+                  - {}
+                refunded_tip_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                refunded_discount_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                refunded_surcharge_money:
+                  amount: 1
+                  currency_code: UNKNOWN_CURRENCY
+                refunded_surcharges:
+                  - {}
+                created_at: created_at
+                processed_at: processed_at
+                payment_id: payment_id
+                merchant_id: merchant_id
+                is_exchange: true
+    create:
+      path: /v1/{location_id}/refunds
+      method: POST
+      auth: true
+      docs: |-
+        Issues a refund for a previously processed payment. You must issue
+        a refund within 60 days of the associated payment.
+
+        You cannot issue a partial refund for a split tender payment. You must
+        instead issue a full or partial refund for a particular tender, by
+        providing the applicable tender id to the V1CreateRefund endpoint.
+        Issuing a full refund for a split tender payment refunds all tenders
+        associated with the payment.
+
+        Issuing a refund for a card payment is not reversible. For development
+        purposes, you can create fake cash payments in Square Point of Sale and
+        refund them.
+      path-parameters:
+        location_id:
+          type: string
+          docs: The ID of the original payment's associated location.
+          availability: deprecated
+      display-name: CreateRefund
+      request:
+        name: V1CreateRefundRequest
+        body:
+          properties:
+            payment_id:
+              type: string
+              docs: |-
+                The ID of the payment to refund. If you are creating a `PARTIAL`
+                refund for a split tender payment, instead provide the id of the
+                particular tender you want to refund.
+            type:
+              type: root.V1CreateRefundRequestType
+              docs: >-
+                The type of refund (FULL or PARTIAL).
+
+                See [V1CreateRefundRequestType](#type-v1createrefundrequesttype)
+                for possible values
+            reason:
+              type: string
+              docs: The reason for the refund.
+            refunded_money:
+              type: optional<root.V1Money>
+              docs: >-
+                The amount of money to refund. Required only for PARTIAL
+                refunds.
+            request_idempotence_key:
+              type: optional<string>
+              docs: >-
+                An optional key to ensure idempotence if you issue the same
+                PARTIAL refund request more than once.
+      response:
+        docs: Success
+        type: root.V1Refund
+      availability: deprecated
+      examples:
+        - path-parameters:
+            location_id: location_id
+          request:
+            payment_id: payment_id
+            type: FULL
+            reason: reason
+          response:
+            body:
+              type: FULL
+              reason: reason
+              refunded_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              refunded_processing_fee_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              refunded_tax_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              refunded_additive_tax_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              refunded_additive_tax:
+                - errors:
+                    - category: API_ERROR
+                      code: INTERNAL_SERVER_ERROR
+                  name: name
+                  rate: rate
+                  inclusion_type: ADDITIVE
+                  fee_id: fee_id
+              refunded_inclusive_tax_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              refunded_inclusive_tax:
+                - errors:
+                    - category: API_ERROR
+                      code: INTERNAL_SERVER_ERROR
+                  name: name
+                  rate: rate
+                  inclusion_type: ADDITIVE
+                  fee_id: fee_id
+              refunded_tip_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              refunded_discount_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              refunded_surcharge_money:
+                amount: 1
+                currency_code: UNKNOWN_CURRENCY
+              refunded_surcharges:
+                - name: name
+                  rate: rate
+                  type: UNKNOWN
+                  taxable: true
+                  taxes:
+                    - {}
+                  surcharge_id: surcharge_id
+              created_at: created_at
+              processed_at: processed_at
+              payment_id: payment_id
+              merchant_id: merchant_id
+              is_exchange: true
+  source:
+    openapi: openapi/openapi.yaml

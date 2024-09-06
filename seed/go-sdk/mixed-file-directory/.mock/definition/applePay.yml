@@ -1,0 +1,59 @@
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    RegisterDomain:
+      path: /v2/apple-pay/domains
+      method: POST
+      auth: true
+      docs: >-
+        Activates a domain for use with Apple Pay on the Web and Square. A
+        validation
+
+        is performed on this domain by Apple to ensure that it is properly set
+        up as
+
+        an Apple Pay enabled domain.
+
+
+        This endpoint provides an easy way for platform developers to bulk
+        activate
+
+        Apple Pay on the Web with Square for merchants using their platform.
+
+
+        To learn more about Web Apple Pay, see
+
+        [Add the Apple Pay on the Web
+        Button](https://developer.squareup.com/docs/payment-form/add-digital-wallets/apple-pay).
+      display-name: RegisterDomain
+      request:
+        name: RegisterDomainRequest
+        body:
+          properties:
+            domain_name:
+              type: string
+              docs: >-
+                A domain name as described in RFC-1034 that will be registered
+                with ApplePay.
+              validation:
+                minLength: 1
+                maxLength: 255
+      response:
+        docs: Success
+        type: root.RegisterDomainResponse
+      examples:
+        - request:
+            domain_name: example.com
+          response:
+            body:
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+              status: VERIFIED
+  source:
+    openapi: openapi/openapi.yaml

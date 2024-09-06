@@ -11,6 +11,8 @@ export function convertToFernFilepath({
     relativeFilepath: RelativeFilePath;
     casingsGenerator: CasingsGenerator;
 }): FernFilepath {
+    console.log("Converting fernFilepath: ", relativeFilepath);
+
     const pathToPackage = dirname(relativeFilepath);
     const filename = basename(relativeFilepath);
 
@@ -28,9 +30,11 @@ export function convertToFernFilepath({
         allParts.push(file);
     }
 
-    return {
+    const result = {
         allParts,
         packagePath,
         file
     };
+    console.log("Result: ", JSON.stringify(result, null, 2));
+    return result;
 }

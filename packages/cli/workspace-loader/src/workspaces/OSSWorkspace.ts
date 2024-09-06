@@ -11,6 +11,7 @@ import { APIChangelog, FernDefinition, IdentifiableSource, Spec } from "../types
 import { getAllOpenAPISpecs } from "../utils/getAllOpenAPISpecs";
 import { AbstractAPIWorkspace } from "./AbstractAPIWorkspace";
 import { FernWorkspace } from "./FernWorkspace";
+import { writeFile } from "fs/promises";
 
 export declare namespace OSSWorkspace {
     export interface Args {
@@ -126,6 +127,11 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         settings?: OSSWorkspace.Settings
     ): Promise<FernWorkspace> {
         const definition = await this.getDefinition({ context }, settings);
+        await writeFile(
+            "/Users/alex/code/fern/square-fern-config/definition.json",
+            JSON.stringify(definition, null, 2)
+        );
+        console.log("Wrote definition");
         return new FernWorkspace({
             absoluteFilepath: this.absoluteFilepath,
             workspaceName: this.workspaceName,

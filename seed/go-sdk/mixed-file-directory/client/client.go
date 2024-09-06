@@ -3,10 +3,43 @@
 package client
 
 import (
+	applepay "github.com/mixed-file-directory/fern/applepay"
+	bankaccounts "github.com/mixed-file-directory/fern/bankaccounts"
+	bookingsclient "github.com/mixed-file-directory/fern/bookings/client"
+	cards "github.com/mixed-file-directory/fern/cards"
+	cashdrawersclient "github.com/mixed-file-directory/fern/cashdrawers/client"
+	catalogclient "github.com/mixed-file-directory/fern/catalog/client"
+	checkoutclient "github.com/mixed-file-directory/fern/checkout/client"
 	core "github.com/mixed-file-directory/fern/core"
+	customerclient "github.com/mixed-file-directory/fern/customer/client"
+	customerattributedefinitions "github.com/mixed-file-directory/fern/customerattributedefinitions"
+	customersclient "github.com/mixed-file-directory/fern/customers/client"
+	devicesclient "github.com/mixed-file-directory/fern/devices/client"
+	disputesclient "github.com/mixed-file-directory/fern/disputes/client"
+	employees "github.com/mixed-file-directory/fern/employees"
+	giftcardsclient "github.com/mixed-file-directory/fern/giftcards/client"
+	inventory "github.com/mixed-file-directory/fern/inventory"
+	invoices "github.com/mixed-file-directory/fern/invoices"
+	laborclient "github.com/mixed-file-directory/fern/labor/client"
+	locationsclient "github.com/mixed-file-directory/fern/locations/client"
+	loyaltyclient "github.com/mixed-file-directory/fern/loyalty/client"
+	merchants "github.com/mixed-file-directory/fern/merchants"
+	mobile "github.com/mixed-file-directory/fern/mobile"
+	oauth "github.com/mixed-file-directory/fern/oauth"
 	option "github.com/mixed-file-directory/fern/option"
-	organization "github.com/mixed-file-directory/fern/organization"
-	userclient "github.com/mixed-file-directory/fern/user/client"
+	orders "github.com/mixed-file-directory/fern/orders"
+	payments "github.com/mixed-file-directory/fern/payments"
+	payouts "github.com/mixed-file-directory/fern/payouts"
+	refunds "github.com/mixed-file-directory/fern/refunds"
+	sites "github.com/mixed-file-directory/fern/sites"
+	snippets "github.com/mixed-file-directory/fern/snippets"
+	subscriptions "github.com/mixed-file-directory/fern/subscriptions"
+	teamclient "github.com/mixed-file-directory/fern/team/client"
+	teammembers "github.com/mixed-file-directory/fern/teammembers"
+	terminalclient "github.com/mixed-file-directory/fern/terminal/client"
+	v1client "github.com/mixed-file-directory/fern/v1/client"
+	vendors "github.com/mixed-file-directory/fern/vendors"
+	webhooksclient "github.com/mixed-file-directory/fern/webhooks/client"
 	http "net/http"
 )
 
@@ -15,8 +48,41 @@ type Client struct {
 	caller  *core.Caller
 	header  http.Header
 
-	Organization *organization.Client
-	User         *userclient.Client
+	ApplePay                     *applepay.Client
+	BankAccounts                 *bankaccounts.Client
+	Bookings                     *bookingsclient.Client
+	Cards                        *cards.Client
+	CashDrawers                  *cashdrawersclient.Client
+	Catalog                      *catalogclient.Client
+	Checkout                     *checkoutclient.Client
+	Customer                     *customerclient.Client
+	CustomerAttributeDefinitions *customerattributedefinitions.Client
+	Customers                    *customersclient.Client
+	Devices                      *devicesclient.Client
+	Disputes                     *disputesclient.Client
+	Employees                    *employees.Client
+	GiftCards                    *giftcardsclient.Client
+	Inventory                    *inventory.Client
+	Invoices                     *invoices.Client
+	Labor                        *laborclient.Client
+	Locations                    *locationsclient.Client
+	Loyalty                      *loyaltyclient.Client
+	Merchants                    *merchants.Client
+	Mobile                       *mobile.Client
+	OAuth                        *oauth.Client
+	Orders                       *orders.Client
+	Payments                     *payments.Client
+	Payouts                      *payouts.Client
+	Refunds                      *refunds.Client
+	Sites                        *sites.Client
+	Snippets                     *snippets.Client
+	Subscriptions                *subscriptions.Client
+	Team                         *teamclient.Client
+	TeamMembers                  *teammembers.Client
+	Terminal                     *terminalclient.Client
+	V1                           *v1client.Client
+	Vendors                      *vendors.Client
+	Webhooks                     *webhooksclient.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -29,8 +95,41 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header:       options.ToHeader(),
-		Organization: organization.NewClient(opts...),
-		User:         userclient.NewClient(opts...),
+		header:                       options.ToHeader(),
+		ApplePay:                     applepay.NewClient(opts...),
+		BankAccounts:                 bankaccounts.NewClient(opts...),
+		Bookings:                     bookingsclient.NewClient(opts...),
+		Cards:                        cards.NewClient(opts...),
+		CashDrawers:                  cashdrawersclient.NewClient(opts...),
+		Catalog:                      catalogclient.NewClient(opts...),
+		Checkout:                     checkoutclient.NewClient(opts...),
+		Customer:                     customerclient.NewClient(opts...),
+		CustomerAttributeDefinitions: customerattributedefinitions.NewClient(opts...),
+		Customers:                    customersclient.NewClient(opts...),
+		Devices:                      devicesclient.NewClient(opts...),
+		Disputes:                     disputesclient.NewClient(opts...),
+		Employees:                    employees.NewClient(opts...),
+		GiftCards:                    giftcardsclient.NewClient(opts...),
+		Inventory:                    inventory.NewClient(opts...),
+		Invoices:                     invoices.NewClient(opts...),
+		Labor:                        laborclient.NewClient(opts...),
+		Locations:                    locationsclient.NewClient(opts...),
+		Loyalty:                      loyaltyclient.NewClient(opts...),
+		Merchants:                    merchants.NewClient(opts...),
+		Mobile:                       mobile.NewClient(opts...),
+		OAuth:                        oauth.NewClient(opts...),
+		Orders:                       orders.NewClient(opts...),
+		Payments:                     payments.NewClient(opts...),
+		Payouts:                      payouts.NewClient(opts...),
+		Refunds:                      refunds.NewClient(opts...),
+		Sites:                        sites.NewClient(opts...),
+		Snippets:                     snippets.NewClient(opts...),
+		Subscriptions:                subscriptions.NewClient(opts...),
+		Team:                         teamclient.NewClient(opts...),
+		TeamMembers:                  teammembers.NewClient(opts...),
+		Terminal:                     terminalclient.NewClient(opts...),
+		V1:                           v1client.NewClient(opts...),
+		Vendors:                      vendors.NewClient(opts...),
+		Webhooks:                     webhooksclient.NewClient(opts...),
 	}
 }

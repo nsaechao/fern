@@ -1,0 +1,412 @@
+imports:
+  root: ../__package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    create:
+      path: /v2/catalog/images
+      method: POST
+      auth: true
+      docs: >-
+        Uploads an image file to be represented by a
+        [CatalogImage](entity:CatalogImage) object that can be linked to an
+        existing
+
+        [CatalogObject](entity:CatalogObject) instance. The resulting
+        `CatalogImage` is unattached to any `CatalogObject` if the `object_id`
+
+        is not specified.
+
+
+        This `CreateCatalogImage` endpoint accepts HTTP multipart/form-data
+        requests with a JSON part and an image file part in
+
+        JPEG, PJPEG, PNG, or GIF format. The maximum file size is 15MB.
+      display-name: CreateCatalogImage
+      request:
+        name: ImagesCreateRequest
+        body:
+          properties:
+            request: optional<unknown>
+            image_file: optional<file>
+        content-type: multipart/form-data
+      response:
+        docs: Success
+        type: root.CreateCatalogImageResponse
+      examples:
+        - request: {}
+          response:
+            body:
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+              image:
+                type: IMAGE
+                id: KQLFFHA6K6J3YQAQAWDQAL57
+                updated_at: updated_at
+                version: 1000000
+                is_deleted: true
+                custom_attribute_values:
+                  key: {}
+                catalog_v1_ids:
+                  - {}
+                present_at_all_locations: true
+                present_at_location_ids:
+                  - present_at_location_ids
+                absent_at_location_ids:
+                  - absent_at_location_ids
+                image_id: image_id
+                item_data:
+                  name: name
+                  description: description
+                  abbreviation: abbreviation
+                  label_color: label_color
+                  available_online: true
+                  available_for_pickup: true
+                  available_electronically: true
+                  category_id: category_id
+                  tax_ids:
+                    - tax_ids
+                  modifier_list_info:
+                    - modifier_list_id: modifier_list_id
+                  image_url: image_url
+                  product_type: REGULAR
+                  skip_modifier_screen: true
+                  item_options:
+                    - {}
+                  image_ids:
+                    - image_ids
+                  sort_name: sort_name
+                  description_html: description_html
+                  description_plaintext: description_plaintext
+                category_data:
+                  name: name
+                  image_ids:
+                    - image_ids
+                item_variation_data:
+                  item_id: item_id
+                  name: name
+                  sku: sku
+                  upc: upc
+                  ordinal: 1
+                  pricing_type: FIXED_PRICING
+                  location_overrides:
+                    - {}
+                  track_inventory: true
+                  inventory_alert_type: INVENTORY_ALERT_TYPE_DO_NOT_USE
+                  inventory_alert_threshold: 1000000
+                  user_data: user_data
+                  service_duration: 1000000
+                  available_for_booking: true
+                  item_option_values:
+                    - {}
+                  measurement_unit_id: measurement_unit_id
+                  sellable: true
+                  stockable: true
+                  image_ids:
+                    - image_ids
+                  team_member_ids:
+                    - team_member_ids
+                  stockable_conversion:
+                    stockable_item_variation_id: stockable_item_variation_id
+                    stockable_quantity: stockable_quantity
+                    nonstockable_quantity: nonstockable_quantity
+                tax_data:
+                  name: name
+                  calculation_phase: TAX_SUBTOTAL_PHASE
+                  inclusion_type: ADDITIVE
+                  percentage: percentage
+                  applies_to_custom_amounts: true
+                  enabled: true
+                discount_data:
+                  name: name
+                  discount_type: FIXED_PERCENTAGE
+                  percentage: percentage
+                  pin_required: true
+                  label_color: label_color
+                  modify_tax_basis: MODIFY_TAX_BASIS
+                modifier_list_data:
+                  name: name
+                  ordinal: 1
+                  selection_type: SINGLE
+                  image_ids:
+                    - image_ids
+                modifier_data:
+                  name: name
+                  ordinal: 1
+                  modifier_list_id: modifier_list_id
+                  image_ids:
+                    - image_ids
+                time_period_data:
+                  event: event
+                product_set_data:
+                  name: name
+                  product_ids_any:
+                    - product_ids_any
+                  product_ids_all:
+                    - product_ids_all
+                  quantity_exact: 1000000
+                  quantity_min: 1000000
+                  quantity_max: 1000000
+                  all_products: true
+                pricing_rule_data:
+                  name: name
+                  time_period_ids:
+                    - time_period_ids
+                  discount_id: discount_id
+                  match_products_id: match_products_id
+                  apply_products_id: apply_products_id
+                  exclude_products_id: exclude_products_id
+                  valid_from_date: valid_from_date
+                  valid_from_local_time: valid_from_local_time
+                  valid_until_date: valid_until_date
+                  valid_until_local_time: valid_until_local_time
+                  exclude_strategy: EXCLUDE_STRATEGY_DO_NOT_USE
+                  customer_group_ids_any:
+                    - customer_group_ids_any
+                image_data:
+                  name: name
+                  url: https://...
+                  caption: A picture of a cup of coffee
+                  photo_studio_order_id: photo_studio_order_id
+                measurement_unit_data:
+                  precision: 1
+                subscription_plan_data:
+                  name: name
+                  phases:
+                    - cadence: SUBSCRIPTION_CADENCE_DO_NOT_USE
+                item_option_data:
+                  name: name
+                  display_name: display_name
+                  description: description
+                  show_colors: true
+                item_option_value_data:
+                  item_option_id: item_option_id
+                  name: name
+                  description: description
+                  color: color
+                  ordinal: 1
+                custom_attribute_definition_data:
+                  type: ATTRIBUTE_TYPE_DO_NOT_USE
+                  name: name
+                  description: description
+                  allowed_object_types:
+                    - CATALOG_OBJECT_TYPE_DO_NOT_USE
+                  seller_visibility: SELLER_VISIBILITY_DO_NOT_USE
+                  app_visibility: APP_VISIBILITY_DO_NOT_USE
+                  custom_attribute_usage_count: 1
+                  key: key
+                quick_amounts_settings_data:
+                  option: QUICK_AMOUNTS_SETTINGS_OPTION_DO_NOT_USE
+                  eligible_for_auto_amounts: true
+                  amounts:
+                    - type: QUICK_AMOUNT_TYPE_DO_NOT_USE
+                      amount: {}
+    update:
+      path: /v2/catalog/images/{image_id}
+      method: PUT
+      auth: true
+      docs: >-
+        Uploads a new image file to replace the existing one in the specified
+        [CatalogImage](entity:CatalogImage) object. 
+
+
+        This `UpdateCatalogImage` endpoint accepts HTTP multipart/form-data
+        requests with a JSON part and an image file part in
+
+        JPEG, PJPEG, PNG, or GIF format. The maximum file size is 15MB.
+      path-parameters:
+        image_id:
+          type: string
+          docs: >-
+            The ID of the `CatalogImage` object to update the encapsulated image
+            file.
+      display-name: UpdateCatalogImage
+      request:
+        name: ImagesUpdateRequest
+        body:
+          properties:
+            request: optional<unknown>
+            image_file: optional<file>
+        content-type: multipart/form-data
+      response:
+        docs: Success
+        type: root.UpdateCatalogImageResponse
+      examples:
+        - path-parameters:
+            image_id: image_id
+          request: {}
+          response:
+            body:
+              errors:
+                - category: API_ERROR
+                  code: INTERNAL_SERVER_ERROR
+                  detail: detail
+                  field: field
+              image:
+                type: IMAGE
+                id: L52QOQN2SW3M5QTF9JOCQKNB
+                updated_at: updated_at
+                version: 1000000
+                is_deleted: true
+                custom_attribute_values:
+                  key: {}
+                catalog_v1_ids:
+                  - {}
+                present_at_all_locations: true
+                present_at_location_ids:
+                  - present_at_location_ids
+                absent_at_location_ids:
+                  - absent_at_location_ids
+                image_id: image_id
+                item_data:
+                  name: name
+                  description: description
+                  abbreviation: abbreviation
+                  label_color: label_color
+                  available_online: true
+                  available_for_pickup: true
+                  available_electronically: true
+                  category_id: category_id
+                  tax_ids:
+                    - tax_ids
+                  modifier_list_info:
+                    - modifier_list_id: modifier_list_id
+                  image_url: image_url
+                  product_type: REGULAR
+                  skip_modifier_screen: true
+                  item_options:
+                    - {}
+                  image_ids:
+                    - image_ids
+                  sort_name: sort_name
+                  description_html: description_html
+                  description_plaintext: description_plaintext
+                category_data:
+                  name: name
+                  image_ids:
+                    - image_ids
+                item_variation_data:
+                  item_id: item_id
+                  name: name
+                  sku: sku
+                  upc: upc
+                  ordinal: 1
+                  pricing_type: FIXED_PRICING
+                  location_overrides:
+                    - {}
+                  track_inventory: true
+                  inventory_alert_type: INVENTORY_ALERT_TYPE_DO_NOT_USE
+                  inventory_alert_threshold: 1000000
+                  user_data: user_data
+                  service_duration: 1000000
+                  available_for_booking: true
+                  item_option_values:
+                    - {}
+                  measurement_unit_id: measurement_unit_id
+                  sellable: true
+                  stockable: true
+                  image_ids:
+                    - image_ids
+                  team_member_ids:
+                    - team_member_ids
+                  stockable_conversion:
+                    stockable_item_variation_id: stockable_item_variation_id
+                    stockable_quantity: stockable_quantity
+                    nonstockable_quantity: nonstockable_quantity
+                tax_data:
+                  name: name
+                  calculation_phase: TAX_SUBTOTAL_PHASE
+                  inclusion_type: ADDITIVE
+                  percentage: percentage
+                  applies_to_custom_amounts: true
+                  enabled: true
+                discount_data:
+                  name: name
+                  discount_type: FIXED_PERCENTAGE
+                  percentage: percentage
+                  pin_required: true
+                  label_color: label_color
+                  modify_tax_basis: MODIFY_TAX_BASIS
+                modifier_list_data:
+                  name: name
+                  ordinal: 1
+                  selection_type: SINGLE
+                  image_ids:
+                    - image_ids
+                modifier_data:
+                  name: name
+                  ordinal: 1
+                  modifier_list_id: modifier_list_id
+                  image_ids:
+                    - image_ids
+                time_period_data:
+                  event: event
+                product_set_data:
+                  name: name
+                  product_ids_any:
+                    - product_ids_any
+                  product_ids_all:
+                    - product_ids_all
+                  quantity_exact: 1000000
+                  quantity_min: 1000000
+                  quantity_max: 1000000
+                  all_products: true
+                pricing_rule_data:
+                  name: name
+                  time_period_ids:
+                    - time_period_ids
+                  discount_id: discount_id
+                  match_products_id: match_products_id
+                  apply_products_id: apply_products_id
+                  exclude_products_id: exclude_products_id
+                  valid_from_date: valid_from_date
+                  valid_from_local_time: valid_from_local_time
+                  valid_until_date: valid_until_date
+                  valid_until_local_time: valid_until_local_time
+                  exclude_strategy: EXCLUDE_STRATEGY_DO_NOT_USE
+                  customer_group_ids_any:
+                    - customer_group_ids_any
+                image_data:
+                  name: Coffee
+                  url: https://...
+                  caption: A picture of a cup of coffee
+                  photo_studio_order_id: photo_studio_order_id
+                measurement_unit_data:
+                  precision: 1
+                subscription_plan_data:
+                  name: name
+                  phases:
+                    - cadence: SUBSCRIPTION_CADENCE_DO_NOT_USE
+                item_option_data:
+                  name: name
+                  display_name: display_name
+                  description: description
+                  show_colors: true
+                item_option_value_data:
+                  item_option_id: item_option_id
+                  name: name
+                  description: description
+                  color: color
+                  ordinal: 1
+                custom_attribute_definition_data:
+                  type: ATTRIBUTE_TYPE_DO_NOT_USE
+                  name: name
+                  description: description
+                  allowed_object_types:
+                    - CATALOG_OBJECT_TYPE_DO_NOT_USE
+                  seller_visibility: SELLER_VISIBILITY_DO_NOT_USE
+                  app_visibility: APP_VISIBILITY_DO_NOT_USE
+                  custom_attribute_usage_count: 1
+                  key: key
+                quick_amounts_settings_data:
+                  option: QUICK_AMOUNTS_SETTINGS_OPTION_DO_NOT_USE
+                  eligible_for_auto_amounts: true
+                  amounts:
+                    - type: QUICK_AMOUNT_TYPE_DO_NOT_USE
+                      amount: {}
+  source:
+    openapi: openapi/openapi.yaml

@@ -50,6 +50,7 @@ import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
 import { isGeneric } from "@fern-api/fern-definition-schema";
 import { parseErrorName } from "./utils/parseErrorName";
+import { writeFile } from "fs/promises";
 
 export async function generateIntermediateRepresentation({
     fdrApiDefinitionId,
@@ -76,6 +77,12 @@ export async function generateIntermediateRepresentation({
     version: string | undefined;
     context: TaskContext;
 }): Promise<IntermediateRepresentation> {
+    console.log("Wrote Fern definition");
+    await writeFile(
+        "/Users/alex/code/fern/square-fern-config/fern_definition.json",
+        JSON.stringify(workspace.definition, null, 2)
+    );
+
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
     const irGraph = new IrGraph(audiences);
