@@ -101,10 +101,11 @@ function convertHttpEndpoint({
     environments: EnvironmentsConfig | undefined;
     mode: Mode;
 }): ConvertedHttpEndpoint {
-    let fullPath = urlJoin(convertHttpPathToString(httpService.basePath), convertHttpPathToString(httpEndpoint.path));
-    if (ir.basePath != null) {
-        fullPath = urlJoin(convertHttpPathToString(ir.basePath), fullPath);
-    }
+    let fullPath = urlJoin(
+        ir.basePath != null ? convertHttpPathToString(ir.basePath) : "",
+        convertHttpPathToString(httpService.basePath),
+        convertHttpPathToString(httpEndpoint.path)
+    );
     fullPath = !fullPath.startsWith("/") ? `/${fullPath}` : fullPath;
     const convertedHttpMethod = convertHttpMethod(httpEndpoint.method);
     const convertedServicePathParameters = httpService.pathParameters.map((pathParameter) =>

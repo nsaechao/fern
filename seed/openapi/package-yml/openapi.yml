@@ -3,7 +3,7 @@ info:
   title: package-yml
   version: ''
 paths:
-  /{id}:
+  /{id}/:
     post:
       operationId: echo
       tags:
@@ -30,7 +30,7 @@ paths:
                 value:
                   name: Hello world!
                   size: 20
-  /{id}/{nestedId}:
+  /{id}//{nestedId}:
     get:
       operationId: service_nop
       tags:
