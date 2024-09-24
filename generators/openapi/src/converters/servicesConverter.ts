@@ -91,7 +91,7 @@ function convertHttpEndpoint({
     environments,
     mode
 }: {
-    ir: IntermediateRepresentation,
+    ir: IntermediateRepresentation;
     httpEndpoint: HttpEndpoint;
     httpService: HttpService;
     typesByName: Record<string, TypeDeclaration>;
