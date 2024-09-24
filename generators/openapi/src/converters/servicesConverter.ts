@@ -14,6 +14,7 @@ import {
     HttpRequestBody,
     HttpResponse,
     HttpService,
+    IntermediateRepresentation,
     PathParameter,
     QueryParameter,
     ResponseError,
@@ -31,6 +32,7 @@ import { convertObject } from "./convertObject";
 import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
 
 export function convertServices({
+    ir,
     httpServices,
     typesByName,
     errorsByName,
@@ -39,6 +41,7 @@ export function convertServices({
     environments,
     mode
 }: {
+    ir: IntermediateRepresentation;
     httpServices: HttpService[];
     typesByName: Record<string, TypeDeclaration>;
     errorsByName: Record<string, ErrorDeclaration>;
@@ -51,6 +54,7 @@ export function convertServices({
     httpServices.forEach((httpService) => {
         httpService.endpoints.forEach((httpEndpoint) => {
             const { fullPath, convertedHttpMethod, operationObject } = convertHttpEndpoint({
+                ir,
                 httpEndpoint,
                 httpService,
                 typesByName,
@@ -77,6 +81,7 @@ interface ConvertedHttpEndpoint {
 }
 
 function convertHttpEndpoint({
+    ir,
     httpEndpoint,
     httpService,
     typesByName,
@@ -86,6 +91,7 @@ function convertHttpEndpoint({
     environments,
     mode
 }: {
+    ir: IntermediateRepresentation,
     httpEndpoint: HttpEndpoint;
     httpService: HttpService;
     typesByName: Record<string, TypeDeclaration>;
@@ -96,6 +102,9 @@ function convertHttpEndpoint({
     mode: Mode;
 }): ConvertedHttpEndpoint {
     let fullPath = urlJoin(convertHttpPathToString(httpService.basePath), convertHttpPathToString(httpEndpoint.path));
+    if (ir.basePath != null) {
+        fullPath = urlJoin(convertHttpPathToString(ir.basePath), fullPath);
+    }
     fullPath = !fullPath.startsWith("/") ? `/${fullPath}` : fullPath;
     const convertedHttpMethod = convertHttpMethod(httpEndpoint.method);
     const convertedServicePathParameters = httpService.pathParameters.map((pathParameter) =>
