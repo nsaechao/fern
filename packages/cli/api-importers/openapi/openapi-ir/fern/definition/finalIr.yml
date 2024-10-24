@@ -391,21 +391,23 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithSource
+      - commons.WithContentType
     properties: {}
 
   JsonRequest:
     extends:
       - commons.WithDescription
       - commons.WithSource
+      - commons.WithContentType
     properties:
       schema: Schema
-      contentType: optional<string>
       additionalProperties: boolean
 
   MultipartRequest:
     extends:
       - commons.WithDescription
       - commons.WithSource
+      - commons.WithContentType
     properties:
       name:
         type: optional<string>
@@ -413,11 +415,12 @@ types:
       properties: list<MultipartRequestProperty>
 
   MultipartRequestProperty:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithContentType
     properties:
       key: string
       schema: MultipartSchema
-      contentType: optional<string>
 
   FileSchema:
     properties:

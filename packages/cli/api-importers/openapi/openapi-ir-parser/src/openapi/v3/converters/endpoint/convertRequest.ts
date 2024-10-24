@@ -11,23 +11,28 @@ function getMultipartFormDataRequest(requestBody: OpenAPIV3.RequestBodyObject):
     | {
           schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
           encoding: Record<string, OpenAPIV3.EncodingObject> | undefined;
+          contentType: string | undefined;
       }
     | undefined {
     for (const [mediaType, mediaTypeObject] of Object.entries(requestBody.content)) {
         if (MediaType.parse(mediaType)?.isMultipart()) {
-            return { schema: mediaTypeObject.schema, encoding: mediaTypeObject.encoding };
+            return { schema: mediaTypeObject.schema, encoding: mediaTypeObject.encoding, contentType: mediaType };
         }
     }
     return undefined;
 }
 
-function isOctetStreamRequest(requestBody: OpenAPIV3.RequestBodyObject): boolean {
+function isOctetStreamRequest(requestBody: OpenAPIV3.RequestBodyObject):
+    | {
+          contentType: string | undefined;
+      }
+    | undefined {
     for (const mediaType in requestBody.content) {
         if (MediaType.parse(mediaType)?.isOctetStream()) {
-            return true;
+            return { contentType: mediaType };
         }
     }
-    return false;
+    return undefined;
 }
 
 function multipartRequestHasFile(
@@ -72,10 +77,13 @@ export function convertRequest({
 
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
 
+    const octetStreamRequest = isOctetStreamRequest(resolvedRequestBody);
+
     // convert as application/octet-stream
-    if (isOctetStreamRequest(resolvedRequestBody)) {
+    if (octetStreamRequest != null) {
         return RequestWithExample.octetStream({
             description: resolvedRequestBody.description,
+            contentType: octetStreamRequest.contentType,
             source
         });
     }
@@ -182,7 +190,8 @@ export function convertRequest({
                     : undefined,
             description: resolvedMultipartSchema.schema.description,
             properties,
-            source
+            source,
+            contentType: multipartFormData?.contentType
         });
     }
 

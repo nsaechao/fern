@@ -7,21 +7,21 @@ import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithSource } from "../../commons/types/WithSource";
+import { WithContentType } from "../../commons/types/WithContentType";
 
 export const JsonRequest: core.serialization.ObjectSchema<serializers.JsonRequest.Raw, FernOpenapiIr.JsonRequest> =
     core.serialization
         .objectWithoutOptionalProperties({
             schema: core.serialization.lazy(() => serializers.Schema),
-            contentType: core.serialization.string().optional(),
             additionalProperties: core.serialization.boolean(),
         })
         .extend(WithDescription)
-        .extend(WithSource);
+        .extend(WithSource)
+        .extend(WithContentType);
 
 export declare namespace JsonRequest {
-    interface Raw extends WithDescription.Raw, WithSource.Raw {
+    interface Raw extends WithDescription.Raw, WithSource.Raw, WithContentType.Raw {
         schema: serializers.Schema.Raw;
-        contentType?: string | null;
         additionalProperties: boolean;
     }
 }

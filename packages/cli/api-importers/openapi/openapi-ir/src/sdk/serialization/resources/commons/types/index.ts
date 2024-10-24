@@ -3,6 +3,7 @@ export * from "./WithSource";
 export * from "./WithEncoding";
 export * from "./WithDescription";
 export * from "./WithAvailability";
+export * from "./WithContentType";
 export * from "./WithName";
 export * from "./Source";
 export * from "./OpenApiSource";

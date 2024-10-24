@@ -7,12 +7,17 @@ import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithSource } from "../../commons/types/WithSource";
+import { WithContentType } from "../../commons/types/WithContentType";
 
 export const OctetStreamRequest: core.serialization.ObjectSchema<
     serializers.OctetStreamRequest.Raw,
     FernOpenapiIr.OctetStreamRequest
-> = core.serialization.objectWithoutOptionalProperties({}).extend(WithDescription).extend(WithSource);
+> = core.serialization
+    .objectWithoutOptionalProperties({})
+    .extend(WithDescription)
+    .extend(WithSource)
+    .extend(WithContentType);
 
 export declare namespace OctetStreamRequest {
-    interface Raw extends WithDescription.Raw, WithSource.Raw {}
+    interface Raw extends WithDescription.Raw, WithSource.Raw, WithContentType.Raw {}
 }

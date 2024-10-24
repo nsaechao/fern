@@ -88,7 +88,8 @@ export function convertHttpRequestBody({
                     });
                 }
             }),
-            docs: request.docs
+            docs: request.docs,
+            contentType: request["content-type"]
         });
     }
 

@@ -108,7 +108,7 @@ class Publisher:
                     )
                 )
             )
-            print(f"Failed to run command: {' '.join(command)}")
+            # print(f"Failed to run command: {' '.join(command)}")
             print(e.stdout)
             print(e.stderr)
-            raise Exception("Failed to run command", safe_command)
+            # raise Exception("Failed to run command", safe_command)1

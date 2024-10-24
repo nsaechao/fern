@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { MultipartRequestProperty } from "./MultipartRequestProperty";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithSource } from "../../commons/types/WithSource";
+import { WithContentType } from "../../commons/types/WithContentType";
 
 export const MultipartRequest: core.serialization.ObjectSchema<
     serializers.MultipartRequest.Raw,
@@ -18,10 +19,11 @@ export const MultipartRequest: core.serialization.ObjectSchema<
         properties: core.serialization.list(MultipartRequestProperty),
     })
     .extend(WithDescription)
-    .extend(WithSource);
+    .extend(WithSource)
+    .extend(WithContentType);
 
 export declare namespace MultipartRequest {
-    interface Raw extends WithDescription.Raw, WithSource.Raw {
+    interface Raw extends WithDescription.Raw, WithSource.Raw, WithContentType.Raw {
         name?: string | null;
         properties: MultipartRequestProperty.Raw[];
     }

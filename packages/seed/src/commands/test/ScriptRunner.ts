@@ -49,17 +49,19 @@ export class ScriptRunner {
     }
 
     public async run({ taskContext, id, outputDir }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
-        await this.startContainersFn;
-        for (const script of this.scripts) {
-            const result = await this.runScript({
-                taskContext,
-                containerId: script.containerId,
-                outputDir,
-                script,
-                id
-            });
-            if (result.type === "failure") {
-                return result;
+        if (!this.skipScripts) {
+            await this.startContainersFn;
+            for (const script of this.scripts) {
+                const result = await this.runScript({
+                    taskContext,
+                    containerId: script.containerId,
+                    outputDir,
+                    script,
+                    id
+                });
+                if (result.type === "failure") {
+                    return result;
+                }
             }
         }
         return { type: "success" };

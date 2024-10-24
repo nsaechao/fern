@@ -21,6 +21,10 @@ types:
   WithAvailability:
     properties:
       availability: optional<finalIr.Availability>
+  
+  WithContentType:
+    properties:
+      contentType: optional<string>
 
   WithName:
     properties:

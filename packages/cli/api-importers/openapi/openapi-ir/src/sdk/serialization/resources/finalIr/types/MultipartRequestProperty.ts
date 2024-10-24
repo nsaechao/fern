@@ -7,6 +7,7 @@ import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { MultipartSchema } from "./MultipartSchema";
 import { WithDescription } from "../../commons/types/WithDescription";
+import { WithContentType } from "../../commons/types/WithContentType";
 
 export const MultipartRequestProperty: core.serialization.ObjectSchema<
     serializers.MultipartRequestProperty.Raw,
@@ -15,14 +16,13 @@ export const MultipartRequestProperty: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         key: core.serialization.string(),
         schema: MultipartSchema,
-        contentType: core.serialization.string().optional(),
     })
-    .extend(WithDescription);
+    .extend(WithDescription)
+    .extend(WithContentType);
 
 export declare namespace MultipartRequestProperty {
-    interface Raw extends WithDescription.Raw {
+    interface Raw extends WithDescription.Raw, WithContentType.Raw {
         key: string;
         schema: MultipartSchema.Raw;
-        contentType?: string | null;
     }
 }

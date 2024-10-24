@@ -538,7 +538,7 @@ function getRequest({
             schemaIdsToExclude: [],
             value: {
                 body: "bytes",
-                "content-type": MediaType.APPLICATION_OCTET_STREAM,
+                "content-type": request.contentType ?? MediaType.APPLICATION_OCTET_STREAM,
                 ...(request.description ? { docs: request.description } : {})
             }
         };
@@ -592,7 +592,7 @@ function getRequest({
                 body: {
                     properties
                 },
-                "content-type": MediaType.MULTIPART_FORM_DATA,
+                "content-type": request.contentType ?? MediaType.MULTIPART_FORM_DATA,
                 ...(request.description ? { docs: request.description } : {})
             }
         };

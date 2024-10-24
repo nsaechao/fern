@@ -1181,6 +1181,17 @@ class EndpointFunctionGenerator:
                     )
                 )
 
+        content_type = None
+        if endpoint.request_body is not None: 
+            request_body = endpoint.request_body.get_as_union()
+            if request_body.type == "inlinedRequestBody": 
+                content_type = request_body.content_type
+        
+        if content_type is not None: 
+            headers.append(("Content-Type", AST.Expression(f'"${content_type}')))
+        
+        print(f"{endpoint.id} has content-type={content_type}")
+
         if len(headers) == 0:
             return None
 
